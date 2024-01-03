@@ -138,7 +138,7 @@ Widget commonTextField(
             fillColor: filledColor,
             contentPadding: contentPadding ?? const EdgeInsets.fromLTRB(15.0, 10.0, 10.0, 10.0),
             focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: colorBrown, width: 1),
+              borderSide: const BorderSide(color: colorLightGrey, width: 1),
               borderRadius: BorderRadius.circular(5.0),
             ),
             disabledBorder: textFieldBorderStyle,
