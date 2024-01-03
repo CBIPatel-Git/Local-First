@@ -24,6 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
               width: getScreenWidth(context),
               height: getScreenHeight(context),
             ),
+
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
