@@ -12,6 +12,7 @@ const Color colorGrey = Color(0xFF878787);
 const Color colorLightGrey = Color(0xFFD6D6D6);
 const Color black = Color(0xFF101010);
 const Color textColor = Color(0xFF101010);
+const Color textGrey = Color(0xFF878787);
 const Color offWhite = Color(0xFFF9F4F1);
 const Color white = Color(0xFFFFFFFF);
 const Color red = Color(0xFFFF0000);

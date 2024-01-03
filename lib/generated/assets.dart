@@ -22,6 +22,11 @@ class Assets {
   static const String fontsWorkSansRegular = 'assets/fonts/WorkSans-Regular.ttf';
   static const String fontsWorkSansSemiBold = 'assets/fonts/WorkSans-SemiBold.ttf';
   static const String fontsWorkSansThin = 'assets/fonts/WorkSans-Thin.ttf';
+  static const String imagesAppLogo = 'assets/images/app_logo.png';
   static const String imagesBg = 'assets/images/bg.jpg';
+  static const String imagesBg1 = 'assets/images/bg1.jpg';
+  static const String imagesOnBoarding1 = 'assets/images/on_boarding_1.png';
+  static const String imagesOnBoarding2 = 'assets/images/on_boarding_2.png';
+  static const String imagesOnBoarding3 = 'assets/images/on_boarding_3.png';
 
 }
