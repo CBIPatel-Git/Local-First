@@ -11,31 +11,5 @@ class Assets {
   static const String fontsInterRegular = 'assets/fonts/Inter-Regular.ttf';
   static const String fontsInterSemiBold = 'assets/fonts/Inter-SemiBold.ttf';
   static const String fontsInterThin = 'assets/fonts/Inter-Thin.ttf';
-  static const String fontsOpenSansBold = 'assets/fonts/OpenSans-Bold.ttf';
-  static const String fontsOpenSansExtraBold = 'assets/fonts/OpenSans-ExtraBold.ttf';
-  static const String fontsOpenSansLight = 'assets/fonts/OpenSans-Light.ttf';
-  static const String fontsOpenSansMedium = 'assets/fonts/OpenSans-Medium.ttf';
-  static const String fontsOpenSansRegular = 'assets/fonts/OpenSans-Regular.ttf';
-  static const String fontsOpenSansSemiBold = 'assets/fonts/OpenSans-SemiBold.ttf';
-  static const String fontsWorkSansBlack = 'assets/fonts/WorkSans-Black.ttf';
-  static const String fontsWorkSansBold = 'assets/fonts/WorkSans-Bold.ttf';
-  static const String fontsWorkSansExtraBold = 'assets/fonts/WorkSans-ExtraBold.ttf';
-  static const String fontsWorkSansExtraLight = 'assets/fonts/WorkSans-ExtraLight.ttf';
-  static const String fontsWorkSansLight = 'assets/fonts/WorkSans-Light.ttf';
-  static const String fontsWorkSansMedium = 'assets/fonts/WorkSans-Medium.ttf';
-  static const String fontsWorkSansRegular = 'assets/fonts/WorkSans-Regular.ttf';
-  static const String fontsWorkSansSemiBold = 'assets/fonts/WorkSans-SemiBold.ttf';
-  static const String fontsWorkSansThin = 'assets/fonts/WorkSans-Thin.ttf';
-  static const String iconsFacebook = 'assets/icons/facebook.png';
-  static const String iconsGoogle = 'assets/icons/google.png';
-  static const String imagesAccessLocation = 'assets/images/access_location.png';
-  static const String imagesAppLogo = 'assets/images/app_logo.png';
-  static const String imagesBg = 'assets/images/bg.jpg';
-  static const String imagesBg1 = 'assets/images/bg1.jpg';
-  static const String imagesMailPic = 'assets/images/mailPic.png';
-  static const String imagesOnBoarding1 = 'assets/images/on_boarding_1.png';
-  static const String imagesOnBoarding2 = 'assets/images/on_boarding_2.png';
-  static const String imagesOnBoarding3 = 'assets/images/on_boarding_3.png';
-  static const String imagesPasswordPic = 'assets/images/passwordPic.png';
 
 }
