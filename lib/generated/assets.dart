@@ -2,14 +2,22 @@
 class Assets {
   Assets._();
 
-  static const String fontsInterBlack = 'assets/fonts/Inter-Black.ttf';
-  static const String fontsInterBold = 'assets/fonts/Inter-Bold.ttf';
-  static const String fontsInterExtraBold = 'assets/fonts/Inter-ExtraBold.ttf';
-  static const String fontsInterExtraLight = 'assets/fonts/Inter-ExtraLight.ttf';
-  static const String fontsInterLight = 'assets/fonts/Inter-Light.ttf';
-  static const String fontsInterMedium = 'assets/fonts/Inter-Medium.ttf';
-  static const String fontsInterRegular = 'assets/fonts/Inter-Regular.ttf';
-  static const String fontsInterSemiBold = 'assets/fonts/Inter-SemiBold.ttf';
-  static const String fontsInterThin = 'assets/fonts/Inter-Thin.ttf';
+  static const String fontsOpenSansBold = 'assets/fonts/OpenSans-Bold.ttf';
+  static const String fontsOpenSansExtraBold = 'assets/fonts/OpenSans-ExtraBold.ttf';
+  static const String fontsOpenSansLight = 'assets/fonts/OpenSans-Light.ttf';
+  static const String fontsOpenSansMedium = 'assets/fonts/OpenSans-Medium.ttf';
+  static const String fontsOpenSansRegular = 'assets/fonts/OpenSans-Regular.ttf';
+  static const String fontsOpenSansSemiBold = 'assets/fonts/OpenSans-SemiBold.ttf';
+  static const String iconsFacebook = 'assets/icons/facebook.png';
+  static const String iconsGoogle = 'assets/icons/google.png';
+  static const String imagesAccessLocation = 'assets/images/access_location.png';
+  static const String imagesAppLogo = 'assets/images/app_logo.png';
+  static const String imagesBg = 'assets/images/bg.jpg';
+  static const String imagesBg1 = 'assets/images/bg1.jpg';
+  static const String imagesMailPic = 'assets/images/mailPic.png';
+  static const String imagesOnBoarding1 = 'assets/images/on_boarding_1.png';
+  static const String imagesOnBoarding2 = 'assets/images/on_boarding_2.png';
+  static const String imagesOnBoarding3 = 'assets/images/on_boarding_3.png';
+  static const String imagesPasswordPic = 'assets/images/passwordPic.png';
 
 }
