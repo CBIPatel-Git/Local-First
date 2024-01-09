@@ -1,3 +1,5 @@
+import 'package:local_first/Controller/authentication_controller.dart';
+
 import '../../Utility/utility_export.dart';
 import '../Authentication/login_screen.dart';
 
@@ -9,19 +11,21 @@ class OnBoardingScreen extends StatefulWidget {
 }
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
-  List<String> titles = [
-    'Welcome to \nLocalFirst',
-    'Fast and Reliable \nDelivery',
-    'Seamless Checkout, \nSecure Payments'
-  ];
-  List<String> descriptions = [
-    'Discover a world of convenience and endless possibilities. Get ready to embark on a seamless shopping experience tailored just for you.',
-    'Experience swift and dependable delivery services. Track your orders in real-time and receive updates every step of the way."',
-    'Your financial security is our top priority. All transactions are encrypted and processed through secure channels to protect your sensitive information."'
-  ];
   List<ExactAssetImage> images = [imagesOnBoarding1, imagesOnBoarding2, imagesOnBoarding3];
+  int _currentIndex = 0;
+  PageController pageController = PageController();
 
-  RxInt selectedIndex = 0.obs;
+  createCircle({required int index}) {
+    return AnimatedContainer(
+        duration: const Duration(milliseconds: 100),
+        margin: const EdgeInsets.only(right: 4),
+        height: 5,
+        width: _currentIndex == index ? 15 : 5,
+        // current indicator is wider
+        decoration: BoxDecoration(
+            color: _currentIndex == index ? colorPrimary : colorPrimary.withOpacity(0.7),
+            borderRadius: BorderRadius.circular(3)));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,32 +41,52 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             ),
             Container(
               margin: const EdgeInsets.only(bottom: 100),
-              child: Obx(() {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text(
-                      titles[selectedIndex.value],
-                      textAlign: TextAlign.center,
-                      style: AppFontStyle.blackWorkSans28W600,
-                    ),
-                    Image(
-                      image: images[selectedIndex.value],
-                      fit: BoxFit.fitWidth,
-                      width: 326,
-                      height: 271,
-                    ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 33),
-                      child: Text(
-                        descriptions[selectedIndex.value],
-                        style: AppFontStyle.greyWorkSans14W400,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ],
-                );
-              }),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: getScreenHeight(context) - 100,
+                    width: getScreenWidth(context),
+                    child: PageView(
+                        scrollDirection: Axis.horizontal,
+                        controller: pageController,
+                        onPageChanged: (value) {
+                          setState(() {
+                            _currentIndex = value;
+                          });
+                        },
+                        children: kAuthenticationController.titles.map((e) {
+                          return AnimatedContainer(
+                            duration: const Duration(milliseconds: 500),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Text(
+                                  kAuthenticationController.titles[_currentIndex],
+                                  textAlign: TextAlign.center,
+                                  style: AppFontStyle.blackOpenSans22W700.copyWith(fontSize: 26),
+                                ),
+                                Image(
+                                  image: images[_currentIndex],
+                                  fit: BoxFit.fitWidth,
+                                  width: 326,
+                                  height: 271,
+                                ),
+                                Container(
+                                  margin: const EdgeInsets.symmetric(horizontal: 33),
+                                  child: Text(
+                                    kAuthenticationController.descriptions[_currentIndex],
+                                    style: AppFontStyle.greyOpenSans14W400,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }).toList()),
+                  ),
+                ],
+              ),
             ),
             Align(
               alignment: Alignment.bottomCenter,
@@ -73,25 +97,46 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          'Skip',
-                          style: AppFontStyle.blackWorkSans16W400.copyWith(color: lightOrange),
-                        )),
-                    ElevatedButton(
-                        onPressed: () {
-                          if (selectedIndex.value == 2) {
-                            Get.offAll(() => const LoginScreen());
-                          } else {
-                            selectedIndex.value = selectedIndex.value + 1;
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(backgroundColor: colorPrimary),
-                        child: Text(
-                          'Skip',
-                          style: AppFontStyle.blackWorkSans16W400.copyWith(color: white),
-                        )),
+                    if (_currentIndex != 2)
+                      TextButton(
+                          onPressed: () {
+                            pageController.jumpToPage(2);
+                          },
+                          child: Text(
+                            'Skip',
+                            style: AppFontStyle.blackOpenSans16W400.copyWith(color: lightOrange),
+                          )),
+                    if (_currentIndex != 2)
+                      Container(
+                          margin: const EdgeInsets.symmetric(vertical: 24),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: List.generate(kAuthenticationController.titles.length,
+                                (index) => createCircle(index: index)),
+                          )),
+                    _currentIndex == 2
+                        ? Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 20),
+                              child: commonFilledButton(
+                                onTap: () {
+                                 Get.offAll(() => const LoginScreen());
+                                },
+                                title: 'Let’s Get Started',
+                              ),
+                            ),
+                          )
+                        : SizedBox(
+                            width: 98,
+                            child: commonFilledButton(
+                              onTap: () {
+                                pageController.nextPage(
+                                    duration: const Duration(milliseconds: 500),
+                                    curve: Curves.easeIn);
+                              },
+                              title: 'Next',
+                            ),
+                          ),
                   ],
                 ),
               ),
@@ -99,4 +144,16 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           ],
         ));
   }
+}
+
+class ExplanationData {
+  final String title;
+  final String description;
+  final ExactAssetImage localImageSrc;
+
+  ExplanationData({
+    required this.title,
+    required this.description,
+    required this.localImageSrc,
+  });
 }
