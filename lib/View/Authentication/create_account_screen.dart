@@ -1,22 +1,25 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
-import 'package:local_first/View/Authentication/create_account_screen.dart';
-import 'package:local_first/View/Authentication/forgot_password_screen.dart';
-import 'package:local_first/View/Authentication/location_access_screen.dart';
+import 'package:local_first/View/Authentication/login_screen.dart';
 
 import '../../Utility/utility_export.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class CreateAccountScreen extends StatefulWidget {
+  const CreateAccountScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<CreateAccountScreen> createState() => _CreateAccountScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _CreateAccountScreenState extends State<CreateAccountScreen> {
   TextEditingController numberController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
   TextEditingController passController = TextEditingController();
+  TextEditingController confPassController = TextEditingController();
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
+
+  RxBool isChecked = true.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -39,25 +42,23 @@ class _LoginScreenState extends State<LoginScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       customHeight(70),
-                      Center(
-                        child: Column(
-                          children: [
-                            Image(
-                              image: imagesAppLogo,
-                              height: 60,
-                              width: 260,
-                            ),
-                            customHeight(38),
-                            Text(
-                              'Login to your account',
-                              style: AppFontStyle.blackOpenSans24W600,
-                            ),
-                            customHeight(8),
-                            Text(
-                              'Please sign in to your account ',
-                              style: AppFontStyle.greyOpenSans14W500,
-                            ),
-                          ],
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Center(
+                          child: Column(
+                            children: [
+                              Text(
+                                'Create your new account',
+                                style: AppFontStyle.blackOpenSans24W600,
+                              ),
+                              customHeight(8),
+                              Text(
+                                'Create an account to start looking for the \nfood you like',
+                                style: AppFontStyle.greyOpenSans14W500,
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       customHeight(38),
@@ -78,6 +79,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           }),
                       height14,
                       commonTextField(
+                          labelText: 'Enter Name',
+                          hintText: 'John Wick',
+                          textEditingController: nameController,
+                          validationFunction: (val) {
+                            return emailValidation(val);
+                          }),
+                      height14,
+                      commonTextField(
                           labelText: 'Password',
                           hintText: '**********',
                           isPassword: true,
@@ -85,25 +94,61 @@ class _LoginScreenState extends State<LoginScreen> {
                           validationFunction: (val) {
                             return passwordValidation(val);
                           }),
+                      height14,
+                      commonTextField(
+                          labelText: 'Confirm Password',
+                          hintText: '**********',
+                          isPassword: true,
+                          textEditingController: confPassController,
+                          validationFunction: (val) {
+                            return passwordValidation(val);
+                          }),
                       height05,
-                      Align(
-                          alignment: Alignment.centerRight,
-                          child: commonClickableText(
-                            callBack: () {
-                              // Forgot pass click
-                              Get.to(() => const ForgotPasswordScreen());
-                            },
-                            text: 'Forgot Password?',
-                          )),
+                      Row(
+                        children: [
+                          Obx(() {
+                            return CupertinoCheckbox(
+                                value: isChecked.value,
+                                activeColor: colorPrimary,
+                                onChanged: (val) {
+                                  isChecked.value = val ?? false;
+                                });
+                          }),
+                          RichText(
+                            text: TextSpan(children: [
+                              TextSpan(
+                                  text: 'I Agree with', style: AppFontStyle.greyOpenSans12W600),
+                              TextSpan(
+                                  text: " Terms of Service ",
+                                  style:
+                                      AppFontStyle.greyOpenSans12W600.copyWith(color: colorPrimary),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      // your Terms of Service here
+                                      print('your Terms of Service Click here');
+                                    }),
+                              TextSpan(text: 'and', style: AppFontStyle.greyOpenSans12W600),
+                              TextSpan(
+                                  text: " Privacy Policy",
+                                  style:
+                                      AppFontStyle.greyOpenSans12W600.copyWith(color: colorPrimary),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      // your Privacy Policy Click here
+                                      print('your Privacy Policy Click here');
+                                    }),
+                            ]),
+                          ),
+                        ],
+                      ),
                       customHeight(30),
                       commonFilledButton(
                         onTap: () {
-                          if (globalKey.currentState!.validate()) {
-                            // Click on Sign In
-                            Get.to(() => const LocationAccessScreen());
-                          }
+                          // if (globalKey.currentState!.validate()) {
+                          //   // Click on Sign Up
+                          // }
                         },
-                        title: 'Sign In',
+                        title: 'Sign Up',
                       ),
                       customHeight(24),
                       SizedBox(
@@ -135,15 +180,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       RichText(
                         text: TextSpan(children: [
                           TextSpan(
-                              text: 'Don\'t have an account?',
+                              text: 'Already have an account?',
                               style: AppFontStyle.blackOpenSans16W500),
                           TextSpan(
-                              text: " Sign Up",
+                              text: " Sign In",
                               style: AppFontStyle.blackOpenSans16W500.copyWith(color: colorPrimary),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
                                   // your Sign Up Click here
-                                  Get.off(() => const CreateAccountScreen());
+
+                                  Get.off(() => const LoginScreen());
                                 }),
                         ]),
                       ),

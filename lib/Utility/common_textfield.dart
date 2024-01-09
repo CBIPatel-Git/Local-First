@@ -5,8 +5,8 @@ import 'package:local_first/Utility/utility_export.dart';
 Color? borderColor;
 
 OutlineInputBorder textFieldBorderStyle = OutlineInputBorder(
-  borderSide: BorderSide(color: borderColor ?? colorGrey, width: 1),
-  borderRadius: BorderRadius.circular(5.0),
+  borderSide: BorderSide(color: borderColor ?? colorLightGrey, width: 1),
+  borderRadius: BorderRadius.circular(8),
 );
 // _fieldFocusChange(BuildContext context, FocusNode currentFocus,FocusNode nextFocus) {
 //   currentFocus.unfocus();
@@ -52,7 +52,7 @@ Widget commonTextField(
     TextStyle? hintStyle}) {
   bool passwordVisible = isPassword;
   return StatefulBuilder(builder: (context, newSetState) {
-    borderColor = black.withOpacity(borderOpacity ?? 0.1);
+    borderColor = colorLightGrey;
     if (initialText != null && initialText.isNotEmpty) {
       textEditingController?.text = initialText;
     }
@@ -68,7 +68,7 @@ Widget commonTextField(
           ),
         labelText == null || labelText.isEmpty
             ? const SizedBox()
-            : Text(labelText, style: AppFontStyle.blackInter14W500),
+            : Text(labelText, style: AppFontStyle.blackOpenSans14W500),
         const SizedBox(
           height: 10.0,
         ),
@@ -139,7 +139,7 @@ Widget commonTextField(
             contentPadding: contentPadding ?? const EdgeInsets.fromLTRB(15.0, 10.0, 10.0, 10.0),
             focusedBorder: OutlineInputBorder(
               borderSide: const BorderSide(color: colorLightGrey, width: 1),
-              borderRadius: BorderRadius.circular(5.0),
+              borderRadius: BorderRadius.circular(8),
             ),
             disabledBorder: textFieldBorderStyle,
             enabledBorder: textFieldBorderStyle,
@@ -163,11 +163,11 @@ Widget commonTextField(
                     child: passwordVisible
                         ? const Icon(
                             CupertinoIcons.eye,
-                            color: textColor,
+                            color: colorGrey,
                           )
                         : const Icon(
                             CupertinoIcons.eye_slash,
-                            color: textColor,
+                            color: colorGrey,
                           ))
                 : suffixIcon ??
                     const SizedBox(
@@ -175,7 +175,7 @@ Widget commonTextField(
                       width: 0,
                     ),
             hintStyle: hintStyle ??
-                AppFontStyle.blackInter14W500
+                AppFontStyle.blackOpenSans14W500
                     .copyWith(color: colorGrey.withOpacity(0.8), fontWeight: FontWeight.normal),
           ),
         ),
