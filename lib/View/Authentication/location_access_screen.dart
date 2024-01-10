@@ -1,3 +1,5 @@
+import 'package:local_first/View/Authentication/select_location_screen.dart';
+
 import '../../Utility/utility_export.dart';
 
 class LocationAccessScreen extends StatefulWidget {
@@ -37,7 +39,8 @@ class _LocationAccessScreenState extends State<LocationAccessScreen> {
                     customHeight(51),
                     Text(
                       'Grant Current location',
-                      style: AppFontStyle.blackOpenSans22W600.copyWith(fontSize: 24),
+                      style: AppFontStyle.blackOpenSans22W600
+                          .copyWith(fontSize: 24),
                     ),
                     customHeight(8),
                     Text(
@@ -47,7 +50,9 @@ class _LocationAccessScreenState extends State<LocationAccessScreen> {
                     ),
                     customHeight(30),
                     commonFilledButton(
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(() => const SelectLocationScreen());
+                      },
                       title: 'Use current location',
                     ),
                     customHeight(30),

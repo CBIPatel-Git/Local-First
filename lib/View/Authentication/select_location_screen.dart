@@ -59,7 +59,7 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
                     itemBuilder: (context, index) {
                       return ListTile(
                         onTap: () {
-                          Get.to(() => const MapScreen());
+                          Get.to(() => MapScreen(lat: 2.30, long: 203.0));
                         },
                         contentPadding: EdgeInsets.zero,
                         leading: Container(

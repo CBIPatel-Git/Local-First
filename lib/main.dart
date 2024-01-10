@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:local_first/Utility/colors_utility.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+import 'View/Authentication/map_screen.dart';
 import 'View/OnBoarding/on_boarding_screen.dart';
 
 void main() {
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
           const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
         ],
       ),
-      home: const OnBoardingScreen(),
+      home: const MapScreen(),
     );
   }
 }

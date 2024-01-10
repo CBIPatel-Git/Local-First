@@ -6,7 +6,10 @@ import '../../Utility/utility_export.dart';
 import '../../generated/assets.dart';
 
 class MapScreen extends StatefulWidget {
-  const MapScreen({super.key});
+  double lat;
+  double long;
+
+  MapScreen({super.key, required this.lat, required this.long});
 
   @override
   State<MapScreen> createState() => MapScreenState();
@@ -27,7 +30,7 @@ class MapScreenState extends State<MapScreen> {
 
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 18,
+    zoom: 16,
   );
 
   static const CameraPosition _kLake = CameraPosition(
