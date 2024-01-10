@@ -8,8 +8,14 @@ class Assets {
   static const String fontsOpenSansMedium = 'assets/fonts/OpenSans-Medium.ttf';
   static const String fontsOpenSansRegular = 'assets/fonts/OpenSans-Regular.ttf';
   static const String fontsOpenSansSemiBold = 'assets/fonts/OpenSans-SemiBold.ttf';
+  static const String iconsBackIcon = 'assets/icons/back_icon.png';
   static const String iconsFacebook = 'assets/icons/facebook.png';
   static const String iconsGoogle = 'assets/icons/google.png';
+  static const String iconsGpsIcon = 'assets/icons/gps_icon.png';
+  static const String iconsLocationIcon = 'assets/icons/location_icon.png';
+  static const String iconsMarkerIcon = 'assets/icons/marker_icon.png';
+  static const String iconsSearchBackIcon = 'assets/icons/search_back_icon.png';
+  static const String iconsSearchIcon = 'assets/icons/search_icon.png';
   static const String imagesAccessLocation = 'assets/images/access_location.png';
   static const String imagesAppLogo = 'assets/images/app_logo.png';
   static const String imagesBg = 'assets/images/bg.jpg';
