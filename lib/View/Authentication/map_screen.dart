@@ -4,7 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../Utility/utility_export.dart';
 import '../../generated/assets.dart';
-import '../Home/bottom_navigation_screen.dart';
+import '../Dashboard/bottom_navigation_screen.dart';
 
 class MapScreen extends StatefulWidget {
   double lat;

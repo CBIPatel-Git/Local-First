@@ -1,4 +1,4 @@
-import '../../Utility/utility_export.dart';
+import '../../../Utility/utility_export.dart';
 
 class WishlistScreen extends StatefulWidget {
   const WishlistScreen({super.key});
