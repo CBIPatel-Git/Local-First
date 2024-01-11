@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:local_first/View/Home/home_screen.dart';
 
 import '../../Utility/utility_export.dart';
 import '../../generated/assets.dart';
@@ -17,8 +18,7 @@ class MapScreen extends StatefulWidget {
 
 class MapScreenState extends State<MapScreen> {
   TextEditingController searchController = TextEditingController();
-  final Completer<GoogleMapController> _controller =
-      Completer<GoogleMapController>();
+  final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   late BitmapDescriptor icons;
 
@@ -65,9 +65,12 @@ class MapScreenState extends State<MapScreen> {
           Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40),
-                child: commonFilledButton(onTap: () {}, title: 'Done'),
+                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40),
+                child: commonFilledButton(
+                    onTap: () {
+                      Get.offAll(() => const HomeScreen());
+                    },
+                    title: 'Done'),
               ))
         ],
       ),

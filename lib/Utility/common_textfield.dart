@@ -6,7 +6,7 @@ Color? borderColor;
 
 OutlineInputBorder textFieldBorderStyle = OutlineInputBorder(
   borderSide: BorderSide(color: borderColor ?? colorLightGrey, width: 1),
-  borderRadius: BorderRadius.circular(8),
+  borderRadius: BorderRadius.circular(100),
 );
 // _fieldFocusChange(BuildContext context, FocusNode currentFocus,FocusNode nextFocus) {
 //   currentFocus.unfocus();
@@ -126,13 +126,7 @@ Widget commonTextField(
           obscureText: passwordVisible,
           textInputAction: inputAction ?? TextInputAction.done,
 
-          style: style ??
-              const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                fontFamily: 'Poppins',
-                color: textColor,
-              ),
+          style: style ?? AppFontStyle.blackOpenSans14W500,
           inputFormatters: inputFormatter,
           decoration: InputDecoration(
             counterText: '',
@@ -143,7 +137,7 @@ Widget commonTextField(
                 const EdgeInsets.fromLTRB(15.0, 10.0, 10.0, 10.0),
             focusedBorder: OutlineInputBorder(
               borderSide: const BorderSide(color: colorLightGrey, width: 1),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(100),
             ),
             disabledBorder: textFieldBorderStyle,
             enabledBorder: textFieldBorderStyle,
@@ -185,10 +179,7 @@ Widget commonTextField(
                       height: 0,
                       width: 0,
                     ),
-            hintStyle: hintStyle ??
-                AppFontStyle.blackOpenSans14W500.copyWith(
-                    color: colorGrey.withOpacity(0.8),
-                    fontWeight: FontWeight.normal),
+            hintStyle: hintStyle ?? AppFontStyle.greyOpenSans14W500,
           ),
         ),
       ],

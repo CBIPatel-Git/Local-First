@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart' as f_auth;
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 ///Google
@@ -9,16 +11,100 @@ f_auth.FirebaseAuth auth = f_auth.FirebaseAuth.instance;
 
 ///Facebook
 ///https://developers.facebook.com/docs/android/getting-started#client-token
+FacebookUserProfile? profile;
+var facebookLogin = FacebookLogin();
+
+
+///Facebook
+Future initiateFacebookLogin(Function success) async {
+  // // show progress
+  // showProgressDialog();
+  var facebookLoginResult = await facebookLogin.logIn(permissions: [
+    FacebookPermission.publicProfile,
+    FacebookPermission.email,
+  ]);
+
+  switch (facebookLoginResult.status) {
+    case FacebookLoginStatus.error:
+    // hideProgressDialog();
+      print("Error");
+      break;
+    case FacebookLoginStatus.cancel:
+      print("CancelledByUser");
+      // hideProgressDialog();
+      break;
+    case FacebookLoginStatus.success:
+
+
+      final imageUrl = await facebookLogin.getProfileImageUrl(width: 100);
+      profile = await facebookLogin.getUserProfile();
+      final email = await facebookLogin.getUserEmail();
+      final token = facebookLoginResult.accessToken?.token;
+
+      final AuthCredential facebookCredential = FacebookAuthProvider.credential(token!);
+      final userCredential = await auth.signInWithCredential(facebookCredential).catchError((onError) {
+        print('asdasda=====>>>${onError}');
+      });
+      // hideProgressDialog();
+      print('~~~~~> ${facebookCredential}');
+
+
+      /// FACEBOOK LOGIN API CALL
+      // apiServiceCall(
+      //     params: {
+      //       ApiConfig.rSocialLogin: 1,
+      //       ApiConfig.rEmail: email,
+      //       ApiConfig.rSocialLoginToken: token,
+      //       ApiConfig.rSocialType: "facebook",
+      //       ApiConfig.rMobile: "",
+      //       ApiConfig.rName: profile?.name,
+      //       ApiConfig.rFamilyName: "",
+      //       ApiConfig.rProfileImage: imageUrl ?? "",
+      //       ApiConfig.rSocialId: profile?.userId,
+      //       ApiConfig.fcmToken: fcmToken
+      //     },
+      //     serviceUrl: ApiConfig.loginSignupWithSocialApi,
+      //     success: (dio.Response<dynamic> response) {
+      //       kAuthenticationController.loginModel.value = LoginModel.fromJson(response.data);
+      //       kAuthenticationController.userModel.value = LoginModelData(user: kAuthenticationController.loginModel.value.data?.user);
+      //       getPreference.write(PrefConstants.loginToken, kAuthenticationController.loginModel.value.data?.token);
+      //
+      //       setObject(PrefConstants.subscriptionKey, kAuthenticationController.loginModel.value.data?.user?.userPlan ?? 0);
+      //       kAuthenticationController.isTrialOver.value = kAuthenticationController.loginModel.value.data?.user?.isTrialOver ?? 0;
+      //       setObject(PrefConstants.isTrialOverKey, kAuthenticationController.loginModel.value.data?.user?.isTrialOver ?? 0);
+      //       setObject(PrefConstants.userDetails, kAuthenticationController.loginModel.value.data?.user);
+      //       setObject(PrefConstants.userFlags, kAuthenticationController.loginModel.value.data?.flag);
+      //       // setIsLogin(isLogin: true);
+      //
+      //       // if(Get.isDialogOpen ??  false){
+      //       //   Get.back();
+      //       // }
+      //       hideProgressDialog();
+      //       success();
+      //     },
+      //     error: (dio.Response<dynamic> response) {
+      //       hideProgressDialog();
+      //       showSnackBar(message: response.data['message'], color: Colors.red);
+      //     },
+      //     isProgressShow: false,
+      //     methodType: ApiConfig.methodPOST);
+
+      break;
+  }
+}
+
 
 ///Google
-googleAUth({required Function success, BuildContext? context}) async {
+googleAuth({required Function success, BuildContext? context}) async {
   final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
 
   if (googleSignInAccount != null) {
     // Show progress
     // showProgressDialog();
     final GoogleSignInAuthentication googleSignInAuthentication =
-        await googleSignInAccount.authentication;
+    await googleSignInAccount.authentication;
+
+    print('accessToken ====>>>${googleSignInAuthentication.accessToken}');
 
     final f_auth.AuthCredential credential = f_auth.GoogleAuthProvider.credential(
       accessToken: googleSignInAuthentication.accessToken,
@@ -102,7 +188,7 @@ profileGoogleAUth({required Function success}) async {
     // Show progress
     // showProgressDialog();
     final GoogleSignInAuthentication googleSignInAuthentication =
-        await googleSignInAccount.authentication;
+    await googleSignInAccount.authentication;
 
     final f_auth.AuthCredential credential = f_auth.GoogleAuthProvider.credential(
       accessToken: googleSignInAuthentication.accessToken,

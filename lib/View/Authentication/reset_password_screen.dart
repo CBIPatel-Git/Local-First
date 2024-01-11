@@ -44,10 +44,13 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         style: AppFontStyle.blackOpenSans22W600.copyWith(fontSize: 24),
                       ),
                       customHeight(8),
-                      Text(
-                        'You’re a step away from accessing your \naccount!',
-                        style: AppFontStyle.greyOpenSans14W400,
-                        textAlign: TextAlign.center,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Text(
+                          'You’re a step away from accessing your account!',
+                          style: AppFontStyle.greyOpenSans14W400,
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                       height14,
                       commonTextField(

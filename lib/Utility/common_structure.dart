@@ -10,7 +10,7 @@ Widget commonStructure({
 }) {
   ///Pass null in appbar when it's optional ex = appBar : null
   return Scaffold(
-    backgroundColor: bgColor ?? transparent,
+    backgroundColor: bgColor ?? white,
     resizeToAvoidBottomInset: true,
     appBar: appBar,
     bottomNavigationBar: bottomNavigation,

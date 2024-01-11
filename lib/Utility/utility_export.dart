@@ -12,3 +12,6 @@ export 'common_widgets.dart';
 export 'constants.dart';
 export 'pref_constants.dart';
 export '../Utility/common_structure.dart';
+export '../Controller/authentication_controller.dart';
+export '../Controller/home_controller.dart';
+export '../Controller/social_login_manager.dart';

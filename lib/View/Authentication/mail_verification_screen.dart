@@ -50,13 +50,13 @@ class _MailVerificationScreenState extends State<MailVerificationScreen> {
                           textAlign: TextAlign.center,
                           text: TextSpan(children: [
                             TextSpan(
-                              text: 'Click on the email verification link sent to \nyou on',
+                              text: 'Click on the email verification link sent to you on',
                               style: AppFontStyle.greyOpenSans16W400,
                             ),
                             TextSpan(
                                 text: " ${widget.email}\n",
                                 style:
-                                    AppFontStyle.greyOpenSans16W400.copyWith(color: colorPrimary2),
+                                AppFontStyle.greyOpenSans16W400.copyWith(color: colorPrimary2),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     // your Sign Up Click here

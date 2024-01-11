@@ -36,6 +36,106 @@ Widget commonFilledButton(
   );
 }
 
+Widget commonSwitchButton({required Function isDelivery}) {
+  return Container(
+    height: 40,
+    width: 150,
+    decoration: BoxDecoration(
+      color: offWhite,
+      borderRadius: BorderRadius.circular(100),
+    ),
+    child: Row(
+      children: [
+        InkWell(
+          splashColor: white,
+          highlightColor: white,
+          onTap: () {
+            kHomeController.isDeliveryEnable.value = true;
+            isDelivery(kHomeController.isDeliveryEnable.value);
+          },
+          child: Obx(() {
+            return Container(
+              width: kHomeController.isDeliveryEnable.value ? 95 : 45,
+              height: 35,
+              margin: const EdgeInsets.all(2),
+              decoration: BoxDecoration(
+                  color: kHomeController.isDeliveryEnable.value ? colorPrimary : offWhite,
+                  borderRadius: BorderRadius.circular(100)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Image(
+                    image: iconsDeliveryCar,
+                    color: kHomeController.isDeliveryEnable.value ? white : colorGrey,
+                  ),
+                  if (kHomeController.isDeliveryEnable.value)
+                    Text(
+                      "Delivery",
+                      style: AppFontStyle.blackOpenSans12W500.copyWith(color: white),
+                    )
+                ],
+              ),
+            );
+          }),
+        ),
+        InkWell(
+          splashColor: white,
+          highlightColor: white,
+          onTap: () {
+            kHomeController.isDeliveryEnable.value = false;
+            isDelivery(kHomeController.isDeliveryEnable.value);
+          },
+          child: Obx(() {
+            return Container(
+              width: kHomeController.isDeliveryEnable.value ? 45 : 95,
+              height: 35,
+              margin: const EdgeInsets.all(2),
+              decoration: BoxDecoration(
+                  color: kHomeController.isDeliveryEnable.value ? offWhite : colorPrimary,
+                  borderRadius: BorderRadius.circular(100)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Image(
+                    image: iconsTakeAway,
+                    color: kHomeController.isDeliveryEnable.value ? colorGrey : white,
+                  ),
+                  if (!kHomeController.isDeliveryEnable.value)
+                    Text(
+                      "Pick-up",
+                      style: AppFontStyle.blackOpenSans12W500.copyWith(color: white),
+                    )
+                ],
+              ),
+            );
+          }),
+        )
+      ],
+    ),
+  );
+}
+
+Widget appBarButton({required ExactAssetImage image, required Function callBack}) {
+  return InkWell(
+    splashColor: white,
+    highlightColor: white,
+    onTap: () {
+      callBack();
+    },
+    child: Container(
+      height: 40,
+      width: 40,
+      decoration: BoxDecoration(
+          color: white,
+          borderRadius: BorderRadius.circular(100),
+          border: Border.all(color: colorGrey.withOpacity(0.3), width: 1)),
+      child: Image(
+        image: image,
+      ),
+    ),
+  );
+}
+
 Widget commonFilledButtonGrey(
     {required Function onTap, required String title, TextStyle? textStyle}) {
   return InkWell(

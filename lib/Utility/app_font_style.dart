@@ -4,6 +4,8 @@ class AppFontStyle {
   ///===================================   OpenSans   ===============================
   ///Black text
 
+  static TextStyle blackOpenSans12W400 = const TextStyle(
+      color: textColor, fontSize: 12, fontFamily: 'OpenSans', fontWeight: FontWeight.w400);
   static TextStyle blackOpenSans14W400 = const TextStyle(
       color: textColor, fontSize: 14, fontFamily: 'OpenSans', fontWeight: FontWeight.w400);
   static TextStyle blackOpenSans16W400 = const TextStyle(
@@ -54,6 +56,8 @@ class AppFontStyle {
       color: textColor, fontSize: 24, fontFamily: 'OpenSans', fontWeight: FontWeight.w800);
 
   ///Grey text
+  static TextStyle greyOpenSans12W400 = const TextStyle(
+      color: textGrey, fontSize: 12, fontFamily: 'OpenSans', fontWeight: FontWeight.w400);
   static TextStyle greyOpenSans14W400 = const TextStyle(
       color: textGrey, fontSize: 14, fontFamily: 'OpenSans', fontWeight: FontWeight.w400);
   static TextStyle greyOpenSans16W400 = const TextStyle(

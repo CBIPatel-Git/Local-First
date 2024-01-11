@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:local_first/View/Authentication/login_screen.dart';
 import 'package:local_first/View/Authentication/mail_verification_screen.dart';
-import 'package:local_first/View/Authentication/reset_password_screen.dart';
 
 import '../../Utility/utility_export.dart';
 
@@ -46,7 +45,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       ),
                       customHeight(8),
                       Text(
-                        'Enter your registered email below to receive \npassword reset instruction',
+                        'Enter your registered email below to receive password reset instruction',
                         style: AppFontStyle.greyOpenSans14W400,
                         textAlign: TextAlign.center,
                       ),

@@ -2,27 +2,46 @@
 class Assets {
   Assets._();
 
+  static const String assetsIconsBackIcon = 'assets/icons/back_icon.png';
   static const String fontsOpenSansBold = 'assets/fonts/OpenSans-Bold.ttf';
   static const String fontsOpenSansExtraBold = 'assets/fonts/OpenSans-ExtraBold.ttf';
   static const String fontsOpenSansLight = 'assets/fonts/OpenSans-Light.ttf';
   static const String fontsOpenSansMedium = 'assets/fonts/OpenSans-Medium.ttf';
   static const String fontsOpenSansRegular = 'assets/fonts/OpenSans-Regular.ttf';
   static const String fontsOpenSansSemiBold = 'assets/fonts/OpenSans-SemiBold.ttf';
-  static const String iconsBackIcon = 'assets/icons/back_icon.png';
+  static const String iconsBackIcon = 'assets/icons/backIcon.png';
+  static const String iconsCart = 'assets/icons/cart.png';
+  static const String iconsCartRound = 'assets/icons/cart_round.png';
+  static const String iconsDeliveryCar = 'assets/icons/delivery_car.png';
   static const String iconsFacebook = 'assets/icons/facebook.png';
+  static const String iconsFilter = 'assets/icons/filter.png';
   static const String iconsGoogle = 'assets/icons/google.png';
   static const String iconsGpsIcon = 'assets/icons/gps_icon.png';
+  static const String iconsLike = 'assets/icons/like.png';
+  static const String iconsLocation = 'assets/icons/location.png';
   static const String iconsLocationIcon = 'assets/icons/location_icon.png';
   static const String iconsMarkerIcon = 'assets/icons/marker_icon.png';
+  static const String iconsNotification = 'assets/icons/notification.png';
+  static const String iconsSearch = 'assets/icons/search.png';
   static const String iconsSearchBackIcon = 'assets/icons/search_back_icon.png';
   static const String iconsSearchIcon = 'assets/icons/search_icon.png';
+  static const String iconsTakeAway = 'assets/icons/take_away.png';
   static const String imagesAccessLocation = 'assets/images/access_location.png';
   static const String imagesAppLogo = 'assets/images/app_logo.png';
+  static const String imagesBanner1 = 'assets/images/banner1.png';
   static const String imagesBg = 'assets/images/bg.jpg';
   static const String imagesBg1 = 'assets/images/bg1.jpg';
   static const String imagesMailPic = 'assets/images/mailPic.png';
+  static const String imagesNearbyStore = 'assets/images/nearby_store.png';
+  static const String imagesOfferBanner = 'assets/images/offer_banner.png';
   static const String imagesOnBoarding1 = 'assets/images/on_boarding_1.png';
   static const String imagesOnBoarding2 = 'assets/images/on_boarding_2.png';
   static const String imagesOnBoarding3 = 'assets/images/on_boarding_3.png';
   static const String imagesPasswordPic = 'assets/images/passwordPic.png';
+  static const String imagesPickupBanner = 'assets/images/pickup_banner.png';
+  static const String imagesPopularBanner1 = 'assets/images/popularBanner1.png';
+  static const String imagesPopularStore1 = 'assets/images/popularStore1.png';
+  static const String imagesProduct1 = 'assets/images/product1.png';
+  static const String imagesTodayOffer1 = 'assets/images/todayOffer1.png';
+
 }

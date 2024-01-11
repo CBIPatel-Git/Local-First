@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:local_first/Utility/colors_utility.dart';
@@ -5,7 +7,13 @@ import 'package:responsive_framework/responsive_framework.dart';
 
 import 'View/OnBoarding/on_boarding_screen.dart';
 
-void main() {
+late final FirebaseApp app;
+late final FirebaseAuth auth;
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  app = await Firebase.initializeApp();
+  auth = FirebaseAuth.instanceFor(app: app);
   runApp(const MyApp());
 }
 
