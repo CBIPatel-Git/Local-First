@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:local_first/View/Home/home_screen.dart';
 
 import '../../Utility/utility_export.dart';
 import '../../generated/assets.dart';
+import '../Home/bottom_navigation_screen.dart';
 
 class MapScreen extends StatefulWidget {
   double lat;
@@ -68,7 +68,7 @@ class MapScreenState extends State<MapScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40),
                 child: commonFilledButton(
                     onTap: () {
-                      Get.offAll(() => const HomeScreen());
+                      Get.offAll(() => const BottomNavigationScreen());
                     },
                     title: 'Done'),
               ))

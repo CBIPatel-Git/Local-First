@@ -9,6 +9,7 @@ class Assets {
   static const String fontsOpenSansMedium = 'assets/fonts/OpenSans-Medium.ttf';
   static const String fontsOpenSansRegular = 'assets/fonts/OpenSans-Regular.ttf';
   static const String fontsOpenSansSemiBold = 'assets/fonts/OpenSans-SemiBold.ttf';
+  static const String iconsAccount = 'assets/icons/account.png';
   static const String iconsBackIcon = 'assets/icons/backIcon.png';
   static const String iconsCart = 'assets/icons/cart.png';
   static const String iconsCartRound = 'assets/icons/cart_round.png';
@@ -17,15 +18,19 @@ class Assets {
   static const String iconsFilter = 'assets/icons/filter.png';
   static const String iconsGoogle = 'assets/icons/google.png';
   static const String iconsGpsIcon = 'assets/icons/gps_icon.png';
+  static const String iconsHome = 'assets/icons/home.png';
   static const String iconsLike = 'assets/icons/like.png';
   static const String iconsLocation = 'assets/icons/location.png';
   static const String iconsLocationIcon = 'assets/icons/location_icon.png';
   static const String iconsMarkerIcon = 'assets/icons/marker_icon.png';
+  static const String iconsMyCart = 'assets/icons/my_cart.png';
   static const String iconsNotification = 'assets/icons/notification.png';
   static const String iconsSearch = 'assets/icons/search.png';
   static const String iconsSearchBackIcon = 'assets/icons/search_back_icon.png';
   static const String iconsSearchIcon = 'assets/icons/search_icon.png';
+  static const String iconsSore = 'assets/icons/sore.png';
   static const String iconsTakeAway = 'assets/icons/take_away.png';
+  static const String iconsWishlist = 'assets/icons/wishlist.png';
   static const String imagesAccessLocation = 'assets/images/access_location.png';
   static const String imagesAppLogo = 'assets/images/app_logo.png';
   static const String imagesBanner1 = 'assets/images/banner1.png';
