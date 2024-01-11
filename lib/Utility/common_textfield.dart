@@ -101,7 +101,9 @@ Widget commonTextField(
             }
           },
           validator: (value) {
-            return validationFunction != null ? validationFunction(value) : null;
+            return validationFunction != null
+                ? validationFunction(value)
+                : null;
           },
           // onSaved: onSavedFunction != null ? onSavedFunction : (value) {},
           onSaved: (value) {
@@ -137,7 +139,8 @@ Widget commonTextField(
             errorMaxLines: errorMaxLines ?? 1,
             filled: true,
             fillColor: filledColor,
-            contentPadding: contentPadding ?? const EdgeInsets.fromLTRB(15.0, 10.0, 10.0, 10.0),
+            contentPadding: contentPadding ??
+                const EdgeInsets.fromLTRB(15.0, 10.0, 10.0, 10.0),
             focusedBorder: OutlineInputBorder(
               borderSide: const BorderSide(color: colorLightGrey, width: 1),
               borderRadius: BorderRadius.circular(8),
@@ -183,8 +186,9 @@ Widget commonTextField(
                       width: 0,
                     ),
             hintStyle: hintStyle ??
-                AppFontStyle.blackOpenSans14W500
-                    .copyWith(color: colorGrey.withOpacity(0.8), fontWeight: FontWeight.normal),
+                AppFontStyle.blackOpenSans14W500.copyWith(
+                    color: colorGrey.withOpacity(0.8),
+                    fontWeight: FontWeight.normal),
           ),
         ),
       ],

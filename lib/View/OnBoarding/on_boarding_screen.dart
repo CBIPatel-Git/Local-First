@@ -11,7 +11,11 @@ class OnBoardingScreen extends StatefulWidget {
 }
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
-  List<ExactAssetImage> images = [imagesOnBoarding1, imagesOnBoarding2, imagesOnBoarding3];
+  List<ExactAssetImage> images = [
+    imagesOnBoarding1,
+    imagesOnBoarding2,
+    imagesOnBoarding3
+  ];
   int _currentIndex = 0;
   PageController pageController = PageController();
 
@@ -23,7 +27,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         width: _currentIndex == index ? 15 : 5,
         // current indicator is wider
         decoration: BoxDecoration(
-            color: _currentIndex == index ? colorPrimary : colorPrimary.withOpacity(0.7),
+            color: _currentIndex == index
+                ? colorPrimary
+                : colorPrimary.withOpacity(0.7),
             borderRadius: BorderRadius.circular(3)));
   }
 
@@ -62,9 +68,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 Text(
-                                  kAuthenticationController.titles[_currentIndex],
+                                  kAuthenticationController
+                                      .titles[_currentIndex],
                                   textAlign: TextAlign.center,
-                                  style: AppFontStyle.blackOpenSans22W700.copyWith(fontSize: 26),
+                                  style: AppFontStyle.blackOpenSans22W700
+                                      .copyWith(fontSize: 26),
                                 ),
                                 Image(
                                   image: images[_currentIndex],
@@ -73,9 +81,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                                   height: 271,
                                 ),
                                 Container(
-                                  margin: const EdgeInsets.symmetric(horizontal: 33),
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 33),
                                   child: Text(
-                                    kAuthenticationController.descriptions[_currentIndex],
+                                    kAuthenticationController
+                                        .descriptions[_currentIndex],
                                     style: AppFontStyle.greyOpenSans14W400,
                                     textAlign: TextAlign.center,
                                   ),
@@ -104,23 +114,26 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                           },
                           child: Text(
                             'Skip',
-                            style: AppFontStyle.blackOpenSans16W400.copyWith(color: lightOrange),
+                            style: AppFontStyle.blackOpenSans16W400
+                                .copyWith(color: lightOrange),
                           )),
                     if (_currentIndex != 2)
                       Container(
                           margin: const EdgeInsets.symmetric(vertical: 24),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: List.generate(kAuthenticationController.titles.length,
+                            children: List.generate(
+                                kAuthenticationController.titles.length,
                                 (index) => createCircle(index: index)),
                           )),
                     _currentIndex == 2
                         ? Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 20),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
                               child: commonFilledButton(
                                 onTap: () {
-                                 Get.offAll(() => const LoginScreen());
+                                  Get.offAll(() => const LoginScreen());
                                 },
                                 title: 'Let’s Get Started',
                               ),
