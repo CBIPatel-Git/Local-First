@@ -15,6 +15,8 @@ const Color textColor = Color(0xFF101010);
 const Color textGrey = Color(0xFF878787);
 const Color offWhite = Color(0xFFF0F0F0);
 const Color white = Color(0xFFFFFFFF);
+const Color whiteF7F7F7 = Color(0xFFF7F7F7);
+const Color cardBorder = Color(0xFFD0D5DD);
 const Color red = Color(0xFFFF0000);
 const Color transparent = Color(0x00ff0000);
 

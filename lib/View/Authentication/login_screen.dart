@@ -3,6 +3,7 @@ import 'package:local_first/View/Authentication/create_account_screen.dart';
 import 'package:local_first/View/Authentication/forgot_password_screen.dart';
 import 'package:local_first/View/Authentication/location_access_screen.dart';
 
+import '../../Controller/social_login_manager.dart';
 import '../../Utility/utility_export.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -35,7 +36,6 @@ class _LoginScreenState extends State<LoginScreen> {
               SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -66,6 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           labelText: 'Mobile Number',
                           hintText: '+91 98765432190',
                           textEditingController: numberController,
+                          keyboardType: TextInputType.number,
                           validationFunction: (val) {
                             return phoneNumberValidation(val);
                           }),
@@ -127,9 +128,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          commonSocialButton(onTap: () {}, icon: iconsGoogle),
+                          commonSocialButton(onTap: () {
+                            googleAuth(success: (){
+
+                            });
+                          }, icon: iconsGoogle),
                           width16,
-                          commonSocialButton(onTap: () {}, icon: iconsFacebook),
+                          commonSocialButton(onTap: () {
+                          }, icon: iconsFacebook),
                         ],
                       ),
                       customHeight(24),
@@ -140,6 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               style: AppFontStyle.blackOpenSans16W500),
                           TextSpan(
                               text: " Sign Up",
+
                               style: AppFontStyle.blackOpenSans16W500.copyWith(color: colorPrimary),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {

@@ -49,11 +49,12 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                             children: [
                               Text(
                                 'Create your new account',
+                                textAlign: TextAlign.center,
                                 style: AppFontStyle.blackOpenSans24W600,
                               ),
                               customHeight(8),
                               Text(
-                                'Create an account to start looking for the \nfood you like',
+                                'Create an account to start looking for the food you like',
                                 style: AppFontStyle.greyOpenSans14W500,
                                 textAlign: TextAlign.center,
                               ),
@@ -66,6 +67,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                           labelText: 'Mobile Number',
                           hintText: '+91 98765432190',
                           textEditingController: numberController,
+                          keyboardType: TextInputType.number,
                           validationFunction: (val) {
                             return phoneNumberValidation(val);
                           }),
@@ -121,7 +123,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                               TextSpan(
                                   text: " Terms of Service ",
                                   style:
-                                      AppFontStyle.greyOpenSans12W600.copyWith(color: colorPrimary),
+                                  AppFontStyle.greyOpenSans12W600.copyWith(color: colorPrimary),
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {
                                       // your Terms of Service here
@@ -131,7 +133,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                               TextSpan(
                                   text: " Privacy Policy",
                                   style:
-                                      AppFontStyle.greyOpenSans12W600.copyWith(color: colorPrimary),
+                                  AppFontStyle.greyOpenSans12W600.copyWith(color: colorPrimary),
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {
                                       // your Privacy Policy Click here
