@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:local_first/View/Home/store_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 
-import '../../Utility/utility_export.dart';
+import '../../../Utility/utility_export.dart';
+import '../Store/store_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

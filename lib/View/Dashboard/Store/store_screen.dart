@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../Utility/utility_export.dart';
+import '../../../Utility/utility_export.dart';
 
 class StoreScreen extends StatefulWidget {
   const StoreScreen({super.key});
