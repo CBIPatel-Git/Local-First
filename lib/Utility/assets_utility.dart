@@ -12,6 +12,7 @@ ExactAssetImage imagesOnBoarding3 = const ExactAssetImage(Assets.imagesOnBoardin
 ExactAssetImage imagesPasswordPic = const ExactAssetImage(Assets.imagesPasswordPic, scale: 4);
 ExactAssetImage imagesMailPic = const ExactAssetImage(Assets.imagesMailPic, scale: 4);
 ExactAssetImage imagesAccessLocation = const ExactAssetImage(Assets.imagesAccessLocation, scale: 4);
+ExactAssetImage iconsSearchBackIcon = const ExactAssetImage(Assets.iconsSearchBackIcon, scale: 4);
 
 
 

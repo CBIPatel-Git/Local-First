@@ -30,6 +30,7 @@ Widget commonTextField(
     TextInputType? keyboardType,
     Function? onEditingComplete,
     Function? onTapFunction,
+    Function? prefixIconTap,
     Function? onChangedFunction,
     TextAlign? align,
     TextInputAction? inputAction,
@@ -147,10 +148,17 @@ Widget commonTextField(
             focusedErrorBorder: textFieldBorderStyle,
             hintText: hintText,
             prefixIcon: preFixIcon != null
-                ? Image(
-                    image: preFixIcon,
-                    height: 15,
-                    // color: color_8D8D8D,
+                ? InkWell(
+                    onTap: () {
+                      if (prefixIconTap != null) {
+                        prefixIconTap();
+                      }
+                    },
+                    child: Image(
+                      image: preFixIcon,
+                      height: 15,
+                      // color: color_8D8D8D,
+                    ),
                   )
                 : preFixWidget,
             suffixIcon: isPassword && isShowEye

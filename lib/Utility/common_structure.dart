@@ -4,7 +4,7 @@ import 'package:local_first/Utility/utility_export.dart';
 Widget commonStructure({
   required BuildContext context,
   required Widget child,
-  PreferredSize? appBar,
+  AppBar? appBar,
   Color? bgColor,
   Widget? bottomNavigation,
 }) {
