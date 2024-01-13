@@ -115,7 +115,13 @@ Widget commonSwitchButton({required Function isDelivery}) {
   );
 }
 
-Widget appBarButton({required ExactAssetImage image, required Function callBack}) {
+Widget appBarButton(
+    {required ExactAssetImage image,
+    required Function callBack,
+    double? height,
+    double? width,
+    Color? iconColor,
+    double? iconPadding}) {
   return InkWell(
     splashColor: white,
     highlightColor: white,
@@ -123,15 +129,16 @@ Widget appBarButton({required ExactAssetImage image, required Function callBack}
       callBack();
     },
     child: Container(
-      height: 40,
-      width: 40,
+      height: height ?? 40,
+      width: width ?? 40,
       decoration: BoxDecoration(
           color: white,
           borderRadius: BorderRadius.circular(100),
           border: Border.all(color: colorGrey.withOpacity(0.3), width: 1)),
       child: Image(
         image: image,
-      ),
+        color: iconColor,
+      ).paddingAll(iconPadding ?? 0),
     ),
   );
 }
@@ -185,4 +192,28 @@ Widget commonSocialButton({required Function onTap, required ExactAssetImage ico
       ),
     ),
   );
+}
+
+Widget commonIconTextButton(
+    {Widget? icon,
+    required String title,
+    required Function callBack,
+    Color? bgColor,
+    TextStyle? textStyle}) {
+  return ElevatedButton(
+      style: ElevatedButton.styleFrom(backgroundColor: bgColor ?? colorPrimary),
+      onPressed: () {
+        callBack();
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (icon != null) icon,
+          if (icon != null) width10,
+          Text(
+            title,
+            style: textStyle ?? AppFontStyle.blackOpenSans16W600.copyWith(color: white),
+          )
+        ],
+      ).paddingSymmetric(vertical: 12));
 }

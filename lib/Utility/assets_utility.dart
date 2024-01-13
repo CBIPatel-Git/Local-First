@@ -21,6 +21,19 @@ ExactAssetImage imagesTodayOffer1 = const ExactAssetImage(Assets.imagesTodayOffe
 ExactAssetImage imagesProduct1 = const ExactAssetImage(Assets.imagesProduct1, scale: 4);
 ExactAssetImage imagesPickupBanner = const ExactAssetImage(Assets.imagesPickupBanner, scale: 4);
 ExactAssetImage imagesOfferBanner = const ExactAssetImage(Assets.imagesOfferBanner, scale: 4);
+ExactAssetImage imagesPopularItem = const ExactAssetImage(Assets.imagesPopularItem, scale: 4);
+ExactAssetImage imagesMobileBanner = const ExactAssetImage(Assets.imagesMobileBanner, scale: 4);
+ExactAssetImage imagesUserProfile = const ExactAssetImage(Assets.imagesUserProfile, scale: 4);
+ExactAssetImage imagesReviewImage = const ExactAssetImage(Assets.imagesReviewImage, scale: 4);
+ExactAssetImage imagesStoreProfile = const ExactAssetImage(Assets.imagesStoreProfile, scale: 4);
+ExactAssetImage imagesStoreOfferBanner =
+    const ExactAssetImage(Assets.imagesStoreOfferBanner, scale: 4);
+ExactAssetImage imagesStoreDetailBanner =
+    const ExactAssetImage(Assets.imagesStoreDetailBanner, scale: 4);
+ExactAssetImage imagesCategoryProduct1 =
+    const ExactAssetImage(Assets.imagesCategoryProduct1, scale: 4);
+ExactAssetImage imagesCategoryProductBanner =
+    const ExactAssetImage(Assets.imagesCategoryProductBanner, scale: 4);
 
 /// Icons
 
@@ -43,3 +56,9 @@ ExactAssetImage iconsHome = const ExactAssetImage(Assets.iconsHome, scale: 4);
 ExactAssetImage iconsMyCart = const ExactAssetImage(Assets.iconsMyCart, scale: 4);
 ExactAssetImage iconsSore = const ExactAssetImage(Assets.iconsSore, scale: 4);
 ExactAssetImage iconsWishlist = const ExactAssetImage(Assets.iconsWishlist, scale: 4);
+ExactAssetImage iconsMainCategories = const ExactAssetImage(Assets.iconsMainCategories, scale: 4);
+ExactAssetImage iconsSubCategories = const ExactAssetImage(Assets.iconsSubCategories, scale: 4);
+ExactAssetImage iconsShare = const ExactAssetImage(Assets.iconsShare, scale: 4);
+ExactAssetImage iconsInstagram = const ExactAssetImage(Assets.iconsInstagram, scale: 4);
+ExactAssetImage iconsTwitter = const ExactAssetImage(Assets.iconsTwitter, scale: 4);
+ExactAssetImage iconsMore = const ExactAssetImage(Assets.iconsMore, scale: 4);
