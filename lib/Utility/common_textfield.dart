@@ -6,7 +6,7 @@ Color? borderColor;
 
 OutlineInputBorder textFieldBorderStyle = OutlineInputBorder(
   borderSide: BorderSide(color: borderColor ?? colorLightGrey, width: 1),
-  borderRadius: BorderRadius.circular(100),
+  borderRadius: BorderRadius.circular(8),
 );
 // _fieldFocusChange(BuildContext context, FocusNode currentFocus,FocusNode nextFocus) {
 //   currentFocus.unfocus();
@@ -20,6 +20,7 @@ Widget commonTextField(
     String? initialText,
     bool isPassword = false,
     bool isShowEye = true,
+    double borderRadius = 8,
     required TextEditingController? textEditingController,
     Function? validationFunction,
     Function? onSavedFunction,
@@ -101,9 +102,7 @@ Widget commonTextField(
             }
           },
           validator: (value) {
-            return validationFunction != null
-                ? validationFunction(value)
-                : null;
+            return validationFunction != null ? validationFunction(value) : null;
           },
           // onSaved: onSavedFunction != null ? onSavedFunction : (value) {},
           onSaved: (value) {
@@ -133,16 +132,27 @@ Widget commonTextField(
             errorMaxLines: errorMaxLines ?? 1,
             filled: true,
             fillColor: filledColor,
-            contentPadding: contentPadding ??
-                const EdgeInsets.fromLTRB(15.0, 10.0, 10.0, 10.0),
+            contentPadding: contentPadding ?? const EdgeInsets.fromLTRB(15.0, 10.0, 10.0, 10.0),
             focusedBorder: OutlineInputBorder(
               borderSide: const BorderSide(color: colorLightGrey, width: 1),
-              borderRadius: BorderRadius.circular(100),
+              borderRadius: BorderRadius.circular(borderRadius),
             ),
-            disabledBorder: textFieldBorderStyle,
-            enabledBorder: textFieldBorderStyle,
-            errorBorder: textFieldBorderStyle,
-            focusedErrorBorder: textFieldBorderStyle,
+            disabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: borderColor ?? colorLightGrey, width: 1),
+              borderRadius: BorderRadius.circular(borderRadius),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: borderColor ?? colorLightGrey, width: 1),
+              borderRadius: BorderRadius.circular(borderRadius),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: borderColor ?? colorLightGrey, width: 1),
+              borderRadius: BorderRadius.circular(borderRadius),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: borderColor ?? colorLightGrey, width: 1),
+              borderRadius: BorderRadius.circular(borderRadius),
+            ),
             hintText: hintText,
             prefixIcon: preFixIcon != null
                 ? InkWell(
