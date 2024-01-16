@@ -19,6 +19,7 @@ class _StoreDetailScreenState extends State<StoreDetailScreen> {
         child: SafeArea(
           child: ListView(
             children: [
+
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -35,9 +36,12 @@ class _StoreDetailScreenState extends State<StoreDetailScreen> {
                         Row(
                           children: [
                             appBarButton(
-                                image: iconsBackIcon, callBack: () {
+                                image: iconsBackIcon,
+                                callBack: () {
                                   Get.back();
-                            }, height: 32, width: 32),
+                                },
+                                height: 32,
+                                width: 32),
                             const Spacer(),
                             appBarButton(image: iconsShare, callBack: () {}, height: 32, width: 32),
                             appBarButton(image: iconsLike, callBack: () {}, height: 32, width: 32)

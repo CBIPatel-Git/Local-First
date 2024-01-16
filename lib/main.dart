@@ -3,8 +3,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:local_first/Utility/colors_utility.dart';
+import 'package:local_first/View/Dashboard/Account/account_screen.dart';
+import 'package:local_first/View/Dashboard/MyCart/my_order_screen.dart';
+import 'package:local_first/View/Dashboard/bottom_navigation_screen.dart';
 import 'package:local_first/View/OnBoarding/splash_screen.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+
+import 'View/Dashboard/Account/coupon_screen.dart';
+import 'View/Dashboard/Wishlist/wishlist_screen.dart';
 
 late final FirebaseApp app;
 late final FirebaseAuth auth;
@@ -41,7 +47,7 @@ class MyApp extends StatelessWidget {
           const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
         ],
       ),
-      home: const SplashScreen(),
+      home: const CouponScreen(),
     );
   }
 }

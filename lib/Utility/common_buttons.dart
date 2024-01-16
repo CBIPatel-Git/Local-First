@@ -144,13 +144,13 @@ Widget appBarButton(
 }
 
 Widget commonFilledButtonGrey(
-    {required Function onTap, required String title, TextStyle? textStyle}) {
+    {required Function onTap, required String title, TextStyle? textStyle, double? height}) {
   return InkWell(
     onTap: () {
       onTap();
     },
     child: Container(
-      height: 50,
+      height: height ?? 50,
       decoration: BoxDecoration(
           color: offWhite,
           borderRadius: const BorderRadius.all(
