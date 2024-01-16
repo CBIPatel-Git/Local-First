@@ -1,7 +1,10 @@
 import 'package:local_first/Utility/utility_export.dart';
 
 Widget commonClickableText(
-    {required Function callBack, required String text, TextStyle? textStyle}) {
+    {required Function callBack,
+    required String text,
+    TextStyle? textStyle,
+    EdgeInsetsGeometry? padding}) {
   return InkWell(
     splashColor: white,
     highlightColor: white,
@@ -9,7 +12,7 @@ Widget commonClickableText(
       callBack();
     },
     child: Padding(
-      padding: const EdgeInsets.all(6),
+      padding: padding ?? const EdgeInsets.all(6),
       child: Text(
         text,
         style: textStyle ?? AppFontStyle.greyOpenSans14W500,
@@ -61,3 +64,26 @@ customRoundIndicator({required int currentIndex, required int index}) {
           borderRadius: BorderRadius.circular(3)));
 }
 
+Widget commonBoxShadowContainer(
+    {required Widget child,
+    double? borderRadius,
+    EdgeInsetsGeometry? padding,
+    EdgeInsetsGeometry? margin}) {
+  return Container(
+    padding: padding,
+    margin: margin,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(borderRadius ?? 10),
+      color: white,
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey.withOpacity(0.2),
+          spreadRadius: 1,
+          blurRadius: 12,
+          offset: const Offset(0, 0), // changes position of shadow
+        ),
+      ],
+    ),
+    child: child,
+  );
+}

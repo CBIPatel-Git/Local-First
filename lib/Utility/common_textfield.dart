@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:local_first/Utility/utility_export.dart';
 
-Color? borderColor;
+
 
 OutlineInputBorder textFieldBorderStyle = OutlineInputBorder(
-  borderSide: BorderSide(color: borderColor ?? colorLightGrey, width: 1),
+  borderSide: const BorderSide(color: colorLightGrey, width: 1),
   borderRadius: BorderRadius.circular(8),
 );
 // _fieldFocusChange(BuildContext context, FocusNode currentFocus,FocusNode nextFocus) {
@@ -46,6 +46,7 @@ Widget commonTextField(
     ExactAssetImage? preFixIcon,
     Widget? preFixWidget,
     Color? filledColor = white,
+    Color? borderColor,
     RxBool? showPassword,
     int? maxLength,
     EdgeInsetsGeometry? contentPadding,
@@ -54,7 +55,6 @@ Widget commonTextField(
     TextStyle? hintStyle}) {
   bool passwordVisible = isPassword;
   return StatefulBuilder(builder: (context, newSetState) {
-    borderColor = colorLightGrey;
     if (initialText != null && initialText.isNotEmpty) {
       textEditingController?.text = initialText;
     }
@@ -134,7 +134,7 @@ Widget commonTextField(
             fillColor: filledColor,
             contentPadding: contentPadding ?? const EdgeInsets.fromLTRB(15.0, 10.0, 10.0, 10.0),
             focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: colorLightGrey, width: 1),
+              borderSide: BorderSide(color: borderColor ?? colorLightGrey, width: 1),
               borderRadius: BorderRadius.circular(borderRadius),
             ),
             disabledBorder: OutlineInputBorder(

@@ -26,6 +26,11 @@ ExactAssetImage imagesMobileBanner = const ExactAssetImage(Assets.imagesMobileBa
 ExactAssetImage imagesUserProfile = const ExactAssetImage(Assets.imagesUserProfile, scale: 4);
 ExactAssetImage imagesReviewImage = const ExactAssetImage(Assets.imagesReviewImage, scale: 4);
 ExactAssetImage imagesStoreProfile = const ExactAssetImage(Assets.imagesStoreProfile, scale: 4);
+ExactAssetImage imagesCouponBg = const ExactAssetImage(Assets.imagesCouponBg, scale: 4);
+ExactAssetImage imagesUserAccountProfile =
+    const ExactAssetImage(Assets.imagesUserAccountProfile, scale: 4);
+ExactAssetImage imagesNewNotificationProfile =
+    const ExactAssetImage(Assets.imagesNewNotificationProfile, scale: 4);
 ExactAssetImage imagesStoreOfferBanner =
     const ExactAssetImage(Assets.imagesStoreOfferBanner, scale: 4);
 ExactAssetImage imagesStoreDetailBanner =
@@ -62,3 +67,12 @@ ExactAssetImage iconsShare = const ExactAssetImage(Assets.iconsShare, scale: 4);
 ExactAssetImage iconsInstagram = const ExactAssetImage(Assets.iconsInstagram, scale: 4);
 ExactAssetImage iconsTwitter = const ExactAssetImage(Assets.iconsTwitter, scale: 4);
 ExactAssetImage iconsMore = const ExactAssetImage(Assets.iconsMore, scale: 4);
+ExactAssetImage iconsAddress = const ExactAssetImage(Assets.iconsAddress, scale: 4);
+ExactAssetImage iconsCamera = const ExactAssetImage(Assets.iconsCamera, scale: 4);
+ExactAssetImage iconsCoupon = const ExactAssetImage(Assets.iconsCoupon, scale: 4);
+ExactAssetImage iconsCouponSymbol = const ExactAssetImage(Assets.iconsCouponSymbol, scale: 4);
+ExactAssetImage iconsInfo = const ExactAssetImage(Assets.iconsInfo, scale: 4);
+ExactAssetImage iconsMyOrders = const ExactAssetImage(Assets.iconsMyOrders, scale: 4);
+ExactAssetImage iconsNextArrow = const ExactAssetImage(Assets.iconsNextArrow, scale: 4);
+ExactAssetImage iconsEditProfile = const ExactAssetImage(Assets.iconsEditProfile, scale: 4);
+ExactAssetImage iconsLogout = const ExactAssetImage(Assets.iconsLogout, scale: 4);
