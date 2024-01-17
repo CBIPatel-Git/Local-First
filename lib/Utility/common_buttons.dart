@@ -115,7 +115,8 @@ Widget commonSwitchButton({required Function isDelivery}) {
   );
 }
 
-Widget appBarButton({required ExactAssetImage image, required Function callBack}) {
+Widget appBarButton(
+    {required ExactAssetImage image, required Function callBack, double? height, double? width}) {
   return InkWell(
     splashColor: white,
     highlightColor: white,
@@ -123,8 +124,8 @@ Widget appBarButton({required ExactAssetImage image, required Function callBack}
       callBack();
     },
     child: Container(
-      height: 40,
-      width: 40,
+      height: height ?? 40,
+      width: width ?? 40,
       decoration: BoxDecoration(
           color: white,
           borderRadius: BorderRadius.circular(100),

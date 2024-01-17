@@ -18,6 +18,24 @@ Widget commonClickableText(
   );
 }
 
+Widget commonAppBar({
+  required Widget preFix,
+  required Widget title,
+  required Widget sufFix,
+}) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        preFix,
+        title,
+        sufFix,
+      ],
+    ),
+  );
+}
 
 customIndicator({required int currentIndex, required int index}) {
   return AnimatedContainer(
@@ -29,4 +47,37 @@ customIndicator({required int currentIndex, required int index}) {
       decoration: BoxDecoration(
           color: currentIndex == index ? colorPrimary : colorGrey.withOpacity(0.7),
           borderRadius: BorderRadius.circular(3)));
+}
+
+Widget commonBoxShadowContainer(
+    {required Widget child,
+    double? borderRadius,
+    EdgeInsetsGeometry? padding,
+    EdgeInsetsGeometry? margin}) {
+  return Container(
+    padding: padding,
+    margin: margin,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(borderRadius ?? 10),
+      color: white,
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey.withOpacity(0.2),
+          spreadRadius: 1,
+          blurRadius: 12,
+          offset: const Offset(0, 0), // changes position of shadow
+        ),
+      ],
+    ),
+    child: child,
+  );
+}
+
+Widget commonCheckBoxContainer() {
+  return Container(
+    height: 20,
+    width: 20,
+    decoration:
+        const BoxDecoration(color: whiteF7F7F7, borderRadius: BorderRadius.all(Radius.circular(5))),
+  );
 }

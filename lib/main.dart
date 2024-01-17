@@ -3,9 +3,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:local_first/Utility/colors_utility.dart';
+import 'package:local_first/View/Dashboard/MyCart/add_address_screen.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-import 'View/OnBoarding/on_boarding_screen.dart';
+import 'View/Dashboard/Account/track_order_screen.dart';
+import 'View/Dashboard/Home/customer_review_screen.dart';
+import 'View/Dashboard/MyCart/my_cart_screen.dart';
+import 'View/Dashboard/MyCart/payment_method_screen.dart';
+import 'View/subscription_view.dart';
 
 late final FirebaseApp app;
 late final FirebaseAuth auth;
@@ -42,7 +47,7 @@ class MyApp extends StatelessWidget {
           const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
         ],
       ),
-      home: const OnBoardingScreen(),
+      home: const TrackOrderScreen(),
     );
   }
 }
