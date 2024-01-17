@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:local_first/Utility/app_font_style.dart';
-import 'package:local_first/Utility/colors_utility.dart';
+import 'package:local_first/Utility/constants.dart';
 
 class CustomBottomNavBarDot extends StatefulWidget {
   final int defaultSelectedIndex;
@@ -70,38 +70,44 @@ class _CustomBottomNavBarDotState extends State<CustomBottomNavBarDot> {
         widget.onChange(index);
         _selectedIndex = index;
       },
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width / _iconList.length,
-            padding: const EdgeInsets.only(top: 20),
-            child: Image(
-              image: icon,
-              height: widget.sizeIcon,
-              width: widget.sizeIcon,
-              color: _selectedIndex == index ? widget.selectedColor : widget.unselectedColor,
-            ),
-          ),
-          Visibility(
-            visible: widget.showLabel,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5),
-              //_selectedIndex == index ? widget.selectedColor : widget.unselectedColor
-              child: Text(
-                text,
-                style: _selectedIndex == index
-                    ? AppFontStyle.blackOpenSans12W500
-                        .copyWith(color: widget.selectedColor, fontWeight: FontWeight.w700)
-                    : AppFontStyle.blackOpenSans12W500.copyWith(color: widget.unselectedColor),
+      child: StreamBuilder(
+        stream: kHomeController.currentTabIndex.stream,
+        builder: (context, snapshot) {
+          _selectedIndex = kHomeController.currentTabIndex.value;
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width / _iconList.length,
+                padding: const EdgeInsets.only(top: 20),
+                child: Image(
+                  image: icon,
+                  height: widget.sizeIcon,
+                  width: widget.sizeIcon,
+                  color: _selectedIndex == index ? widget.selectedColor : widget.unselectedColor,
+                ),
               ),
-            ),
-          ),
-          _selectedIndex == index ? selectedDot() : unselectedDot(),
-          const SizedBox(
-            height: 20,
-          )
-        ],
+              Visibility(
+                visible: widget.showLabel,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  //_selectedIndex == index ? widget.selectedColor : widget.unselectedColor
+                  child: Text(
+                    text,
+                    style: _selectedIndex == index
+                        ? AppFontStyle.blackOpenSans12W500
+                            .copyWith(color: widget.selectedColor, fontWeight: FontWeight.w700)
+                        : AppFontStyle.blackOpenSans12W500.copyWith(color: widget.unselectedColor),
+                  ),
+                ),
+              ),
+              _selectedIndex == index ? selectedDot() : unselectedDot(),
+              const SizedBox(
+                height: 20,
+              )
+            ],
+          );
+        }
       ),
     );
   }

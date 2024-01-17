@@ -21,57 +21,63 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           child: Column(
             children: [
               commonAppBar(
-                  preFix: Image(image: iconsBackIcon),
+                  preFix: appBarButton(
+                      image: iconsBackIcon,
+                      callBack: () {
+                        Get.back();
+                      }),
                   title: Text(
                     'Account',
                     style: AppFontStyle.blackOpenSans18W600,
                   ),
-                  sufFix: Image(image: iconsInfo)),
+                  sufFix: appBarButton(image: iconsInfo, callBack: () {})),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  children: [
-                    height20,
-                    commonTextField(
-                        labelText: 'Name',
-                        hintText: 'John Wick',
-                        filledColor: whiteFAFAFA,
-                        borderColor: whiteFAFAFA,
-                        textEditingController: nameController,
-                        validationFunction: (val) {
-                          return isNotEmptyValidation(val);
-                        }),
-                    height16,
-                    commonTextField(
-                        labelText: 'Email Address',
-                        hintText: 'Albertstevano@gmail.com',
-                        filledColor: whiteFAFAFA,
-                        borderColor: whiteFAFAFA,
-                        textEditingController: emailController,
-                        keyboardType: TextInputType.emailAddress,
-                        validationFunction: (val) {
-                          return emailValidation(val);
-                        }),
-                    height16,
-                    commonTextField(
-                        labelText: 'Mobile Number',
-                        hintText: '+91 98765432190',
-                        filledColor: whiteFAFAFA,
-                        borderColor: whiteFAFAFA,
-                        textEditingController: numberController,
-                        keyboardType: TextInputType.number,
-                        validationFunction: (val) {
-                          return phoneNumberValidation(val);
-                        }),
-                    height16,
-                    createRoundedDropDown(title: '', dropDownItems: const [
-                      DropdownMenuItem(value: "Qty 1", child: Text("Male")),
-                      DropdownMenuItem(value: "Qty 2", child: Text("Female")),
-                      DropdownMenuItem(value: "Qty 3", child: Text("Other")),
-                    ]),
-                    customHeight(50),
-                    commonFilledButton(onTap: () {}, title: 'Update')
-                  ],
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      height20,
+                      commonTextField(
+                          labelText: 'Name',
+                          hintText: 'John Wick',
+                          filledColor: whiteFAFAFA,
+                          borderColor: whiteFAFAFA,
+                          textEditingController: nameController,
+                          validationFunction: (val) {
+                            return isNotEmptyValidation(val);
+                          }),
+                      height16,
+                      commonTextField(
+                          labelText: 'Email Address',
+                          hintText: 'Albertstevano@gmail.com',
+                          filledColor: whiteFAFAFA,
+                          borderColor: whiteFAFAFA,
+                          textEditingController: emailController,
+                          keyboardType: TextInputType.emailAddress,
+                          validationFunction: (val) {
+                            return emailValidation(val);
+                          }),
+                      height16,
+                      commonTextField(
+                          labelText: 'Mobile Number',
+                          hintText: '+91 98765432190',
+                          filledColor: whiteFAFAFA,
+                          borderColor: whiteFAFAFA,
+                          textEditingController: numberController,
+                          keyboardType: TextInputType.number,
+                          validationFunction: (val) {
+                            return phoneNumberValidation(val);
+                          }),
+                      height16,
+                      createRoundedDropDown(title: 'Gender', dropDownItems: const [
+                        DropdownMenuItem(child: Text("Male")),
+                        DropdownMenuItem(child: Text("Female")),
+                        DropdownMenuItem(child: Text("Other")),
+                      ]),
+                      customHeight(50),
+                      commonFilledButton(onTap: () {}, title: 'Update')
+                    ],
+                  ),
                 ),
               ),
             ],

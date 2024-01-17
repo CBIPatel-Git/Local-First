@@ -19,7 +19,6 @@ class _StoreDetailScreenState extends State<StoreDetailScreen> {
         child: SafeArea(
           child: ListView(
             children: [
-
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -169,8 +168,8 @@ class _StoreDetailScreenState extends State<StoreDetailScreen> {
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: 6,
                           shrinkWrap: true,
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 4, childAspectRatio: 2 / 2.4),
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4, childAspectRatio: getSliverGridDelegate(context)),
                           itemBuilder: (context, index) {
                             return Column(
                               mainAxisAlignment: MainAxisAlignment.center,

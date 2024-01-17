@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   RxBool isDeliveryEnable = true.obs;
+  RxInt currentTabIndex = 0.obs;
 
   RxList<int> likedOffer = <int>[].obs;
 

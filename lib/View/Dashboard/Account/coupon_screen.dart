@@ -17,12 +17,16 @@ class _CouponScreenState extends State<CouponScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               commonAppBar(
-                  preFix: Image(image: iconsBackIcon),
+                  preFix: appBarButton(
+                      image: iconsBackIcon,
+                      callBack: () {
+                        Get.back();
+                      }),
                   title: Text(
                     'Coupon',
                     style: AppFontStyle.blackOpenSans18W600,
                   ),
-                  sufFix: Image(image: iconsInfo)),
+                  sufFix: appBarButton(image: iconsInfo, callBack: () {})),
               Text(
                 'Best offers for you',
                 style: AppFontStyle.blackOpenSans16W600,
@@ -84,38 +88,6 @@ class _CouponScreenState extends State<CouponScreen> {
                               ],
                             ),
                           ),
-                          // Positioned(
-                          //   top: 0,
-                          //   bottom: 0,
-                          //   left: 0,
-                          //   child: Center(
-                          //     child: Container(
-                          //       height: 32,
-                          //       width: 32,
-                          //       decoration: const BoxDecoration(
-                          //         color: white,
-                          //         borderRadius: BorderRadius.all(Radius.circular(100)),
-                          //         // border: Border.all(color: )
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-                          // Positioned(
-                          //   top: 0,
-                          //   bottom: 0,
-                          //   right: 0,
-                          //   child: Center(
-                          //     child: Container(
-                          //       height: 32,
-                          //       width: 32,
-                          //       decoration: const BoxDecoration(
-                          //         color: white,
-                          //         borderRadius: BorderRadius.all(Radius.circular(100)),
-                          //         // border: Border.all(color: )
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
                         ],
                       ).paddingOnly(bottom: 14);
                     }),

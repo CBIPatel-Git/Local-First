@@ -134,8 +134,8 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
                               return GridView.builder(
                                 shrinkWrap: true,
                                 itemCount: selectedCategory.value + 1,
-                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3, childAspectRatio: 2 / 2.5),
+                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 3, childAspectRatio: getSliverGridDelegate(context)/*2 / 2.5*/),
                                 itemBuilder: (context, index) {
                                   return Column(
                                     children: [

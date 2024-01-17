@@ -201,7 +201,8 @@ Widget commonIconTextButton(
     Color? bgColor,
     TextStyle? textStyle}) {
   return ElevatedButton(
-      style: ElevatedButton.styleFrom(backgroundColor: bgColor ?? colorPrimary),
+      style: ElevatedButton.styleFrom(
+          backgroundColor: bgColor ?? colorPrimary, padding: EdgeInsets.zero),
       onPressed: () {
         callBack();
       },

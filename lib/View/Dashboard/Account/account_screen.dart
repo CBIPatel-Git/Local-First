@@ -1,3 +1,9 @@
+import 'dart:io';
+
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
+
 import '../../../Utility/utility_export.dart';
 import 'coupon_screen.dart';
 import 'edit_profile_screen.dart';
@@ -10,6 +16,8 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
+  RxString selectedImage = ''.obs;
+
   @override
   Widget build(BuildContext context) {
     return commonStructure(
@@ -18,12 +26,15 @@ class _AccountScreenState extends State<AccountScreen> {
           child: Column(
             children: <Widget>[
               commonAppBar(
-                  preFix: const SizedBox(),
+                  preFix: const SizedBox(
+                    height: 40,
+                    width: 40,
+                  ),
                   title: Text(
                     'Account',
                     style: AppFontStyle.blackOpenSans18W600,
                   ),
-                  sufFix: Image(image: iconsInfo)),
+                  sufFix: appBarButton(image: iconsInfo, callBack: () {})),
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
@@ -62,20 +73,29 @@ class _AccountScreenState extends State<AccountScreen> {
                                             decoration: BoxDecoration(
                                                 border: Border.all(color: colorPrimary2, width: 3),
                                                 borderRadius: BorderRadius.circular(22)),
-                                            child: ClipRRect(
-                                              borderRadius: BorderRadius.circular(20),
-                                              child: Image(
-                                                image: imagesUserAccountProfile,
-                                                fit: BoxFit.cover,
-                                              ),
-                                            )),
+                                            child: Obx(() {
+                                              return ClipRRect(
+                                                borderRadius: BorderRadius.circular(20),
+                                                child: selectedImage.value.isEmpty
+                                                    ? Image(
+                                                        image: imagesUserAccountProfile,
+                                                        fit: BoxFit.cover,
+                                                      )
+                                                    : Image(
+                                                        image: FileImage(File(selectedImage.value)),
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                              );
+                                            })),
                                         Positioned(
                                           bottom: 0,
                                           right: 0,
                                           child: InkWell(
                                             splashColor: white,
                                             highlightColor: white,
-                                            onTap: () {},
+                                            onTap: () {
+                                              picImageFromGallery();
+                                            },
                                             child: Container(
                                               width: 30,
                                               height: 30,
@@ -165,7 +185,13 @@ class _AccountScreenState extends State<AccountScreen> {
                             style: AppFontStyle.blackOpenSans16W700,
                           ),
                           commonListTile(title: 'My Orders', icon: iconsMyOrders, onTap: () {}),
-                          commonListTile(title: 'Wishlist', icon: iconsLike, onTap: () {}),
+                          commonListTile(
+                              title: 'Wishlist',
+                              icon: iconsLike,
+                              onTap: () {
+                                kHomeController.currentTabIndex.value = 3;
+                                kHomeController.currentTabIndex.refresh();
+                              }),
                           commonListTile(title: 'Address', icon: iconsAddress, onTap: () {}),
                           commonListTile(
                               title: 'Notification', icon: iconsNotification, onTap: () {}),
@@ -245,5 +271,33 @@ class _AccountScreenState extends State<AccountScreen> {
       ),
       trailing: Image(image: iconsNextArrow),
     );
+  }
+
+  Future<void> picImageFromGallery() async {
+    var permissionStatus = await Permission.photos.status;
+    if (!permissionStatus.isGranted) {
+      showToast(message: "Provide Storage permission to pic photos.");
+      await Permission.photos.request();
+      return;
+    }
+    if (await Permission.photos.isGranted) {
+      // Pick an image
+      try {
+        final image =
+            await ImagePicker().pickImage(source: ImageSource.gallery /*, imageQuality: 25*/);
+        if (image != null) {
+          final imageTemporary = File(image.path);
+          selectedImage.value = imageTemporary.path;
+        }
+      } on PlatformException catch (e) {
+        print('failed to pic image: $e');
+      }
+    } else {
+      if (permissionStatus.isPermanentlyDenied) {
+        print('====> Permanently denied');
+        openAppSettings();
+      }
+      showToast(message: "Provide Storage permission to pic photos.");
+    }
   }
 }
