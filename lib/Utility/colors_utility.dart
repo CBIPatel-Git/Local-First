@@ -20,10 +20,13 @@ const Color whiteF7F7F7 = Color(0xFFF7F7F7);
 const Color whiteFAFAFA = Color(0xFFFAFAFA);
 const Color whiteEDEDED = Color(0xFFEDEDED);
 const Color cardBorder = Color(0xFFD0D5DD);
+const Color colorE3E3E3 = Color(0xFFE3E3E3);
 const Color red = Color(0xFFFF0000);
 const Color green = Color(0xFF398F3D);
 const Color redLight = Color(0xFFF15F3F);
 const Color transparent = Color(0x00ff0000);
+const Color green = Color(0xFF398F3D);
+const Color liteGreen = Color(0xFF65B348);
 
 // Product Selected Colors
 const Color amber = Colors.amber;

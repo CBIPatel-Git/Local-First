@@ -52,7 +52,7 @@ class MapScreenState extends State<MapScreen> {
               markers: markers.values.toSet(),
               onMapCreated: onMapCreated),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 60),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 60),
             child: commonTextField(
                 hintText: '1901 Thornridge Cir. Shiloh, Hawaii 81063',
                 textEditingController: searchController,
@@ -65,7 +65,7 @@ class MapScreenState extends State<MapScreen> {
           Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40),
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 40),
                 child: commonFilledButton(
                     onTap: () {
                       Get.offAll(() => const BottomNavigationScreen());
