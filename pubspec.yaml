@@ -49,7 +49,9 @@ dependencies:
   dotted_line: ^3.2.2
   dropdown_button2: ^2.3.9
   flutter_rating_bar: ^4.0.1
-
+  permission_handler: ^11.1.0
+  image_picker: ^1.0.7
+  fluttertoast: ^8.2.4
 
 
 dev_dependencies:

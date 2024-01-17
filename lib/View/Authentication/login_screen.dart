@@ -3,7 +3,6 @@ import 'package:local_first/View/Authentication/create_account_screen.dart';
 import 'package:local_first/View/Authentication/forgot_password_screen.dart';
 import 'package:local_first/View/Authentication/location_access_screen.dart';
 
-import '../../Controller/social_login_manager.dart';
 import '../../Utility/utility_export.dart';
 
 class LoginScreen extends StatefulWidget {

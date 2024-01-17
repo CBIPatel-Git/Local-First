@@ -1,3 +1,4 @@
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:local_first/Utility/utility_export.dart';
 import 'package:pinput/pinput.dart';
 
@@ -80,3 +81,22 @@ final submittedPinTheme = defaultPinTheme.copyWith(
     color: colorPrimary,
   ),
 );
+
+double getSliverGridDelegate(BuildContext context) {
+  return getScreenHeight(context) < 810
+      ? 2 / 2.7
+      : getScreenHeight(context) < 850
+          ? 2 / 2.5
+          : 2 / 2.4;
+}
+
+void showToast({required String message, Color? bgColor, Toast? toastLength}) {
+  Fluttertoast.showToast(
+      msg: message,
+      toastLength: toastLength ?? Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: bgColor ?? Colors.white,
+      textColor: Colors.black,
+      fontSize: 16.0);
+}

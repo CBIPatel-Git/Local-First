@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-
+import 'package:local_first/View/Dashboard/Home/search_screen.dart';
 
 import '../../../Utility/utility_export.dart';
+import '../Store/store_detail_screen.dart';
 import '../Store/store_screen.dart';
+import 'all_category_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -79,9 +81,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     height05,
                     commonTextField(
+                        borderRadius: 100,
                         hintText: 'Search Products & store',
                         textEditingController: searchController,
                         preFixIcon: iconsSearch,
+                        isReadOnly: true,
+                        onTapFunction: () {
+                          Get.to(() => const SearchScreen());
+                        },
                         suffixIcon: SizedBox(
                           width: 70,
                           child: Row(
@@ -134,14 +141,19 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Column(
                             children: [
                               customHeight(12),
-                              commonTitleRow(title: 'Products Category', seeAllClick: () {}),
+                              commonTitleRow(
+                                  title: 'Products Category',
+                                  seeAllClick: () {
+                                    Get.to(() => const AllCategoryScreen());
+                                  }),
                               height05,
                               GridView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemCount: kHomeController.productCategoryList.length,
                                 shrinkWrap: true,
-                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 4, childAspectRatio: 2 / 2.4),
+                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 4,
+                                    childAspectRatio: getSliverGridDelegate(context)),
                                 itemBuilder: (context, index) {
                                   return Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -174,103 +186,112 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: const EdgeInsets.only(left: 10, right: 20),
                           physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
-                            return Stack(
-                              children: [
-                                Container(
-                                  height: 183,
-                                  margin: const EdgeInsets.only(top: 7, bottom: 7, left: 10),
-                                  decoration: BoxDecoration(
-                                      border: Border.all(color: cardBorder, width: 1),
-                                      borderRadius: BorderRadius.circular(12)),
-                                  child: Stack(
-                                    children: [
-                                      Column(
-                                        children: [
-                                          Stack(
-                                            children: [
-                                              SizedBox(
-                                                height: 120,
-                                                width: getScreenWidth(context),
-                                                child: ClipRRect(
-                                                    borderRadius: const BorderRadius.only(
-                                                        topLeft: Radius.circular(12),
-                                                        topRight: Radius.circular(12)),
-                                                    child: Image(
-                                                      image: imagesNearbyStore,
-                                                      fit: BoxFit.cover,
-                                                    )),
-                                              ),
-                                              const Padding(
-                                                padding: EdgeInsets.all(10),
-                                                child: Align(
-                                                  alignment: Alignment.topRight,
-                                                  child: Icon(
-                                                    CupertinoIcons.heart,
-                                                    size: 24,
-                                                    color: white,
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(10),
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            return InkWell(
+                              highlightColor: white,
+                              splashColor: white,
+                              onTap: () {
+                                Get.to(() => const StoreDetailScreen());
+                              },
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    height: 183,
+                                    margin: const EdgeInsets.only(top: 7, bottom: 7, left: 10),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(color: cardBorder, width: 1),
+                                        borderRadius: BorderRadius.circular(12)),
+                                    child: Stack(
+                                      children: [
+                                        Column(
+                                          children: [
+                                            Stack(
                                               children: [
-                                                Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      'The Stylish Satchel',
-                                                      style: AppFontStyle.blackOpenSans16W600,
-                                                    ),
-                                                    Row(
-                                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                                      mainAxisAlignment: MainAxisAlignment.center,
-                                                      children: [
-                                                        const Icon(
-                                                          Icons.star,
-                                                          size: 17,
-                                                          color: colorPrimary,
-                                                        ),
-                                                        width05,
-                                                        Text(
-                                                          '4.0 (2.4K) • Delivery • 2.2Km',
-                                                          style: AppFontStyle.greyOpenSans12W400,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
+                                                SizedBox(
+                                                  height: 120,
+                                                  width: getScreenWidth(context),
+                                                  child: ClipRRect(
+                                                      borderRadius: const BorderRadius.only(
+                                                          topLeft: Radius.circular(12),
+                                                          topRight: Radius.circular(12)),
+                                                      child: Image(
+                                                        image: imagesNearbyStore,
+                                                        fit: BoxFit.cover,
+                                                      )),
                                                 ),
-                                                Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                  children: [
-                                                    Text(
-                                                      '\$0 Delivery',
-                                                      style: AppFontStyle.blackOpenSans12W500
-                                                          .copyWith(color: colorPrimary2),
+                                                const Padding(
+                                                  padding: EdgeInsets.all(10),
+                                                  child: Align(
+                                                    alignment: Alignment.topRight,
+                                                    child: Icon(
+                                                      CupertinoIcons.heart,
+                                                      size: 24,
+                                                      color: white,
                                                     ),
-                                                    height05,
-                                                    Text('Closes 10:30am',
-                                                        style: AppFontStyle.blackOpenSans12W400
-                                                            .copyWith(color: red)),
-                                                  ],
-                                                ),
+                                                  ),
+                                                )
                                               ],
                                             ),
-                                          )
-                                        ],
-                                      )
-                                    ],
+                                            Padding(
+                                              padding: const EdgeInsets.all(10),
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        'The Stylish Satchel',
+                                                        style: AppFontStyle.blackOpenSans16W600,
+                                                      ),
+                                                      Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment.center,
+                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        children: [
+                                                          const Icon(
+                                                            Icons.star,
+                                                            size: 17,
+                                                            color: colorPrimary,
+                                                          ),
+                                                          width05,
+                                                          Text(
+                                                            '4.0 (2.4K) • Delivery • 2.2Km',
+                                                            style: AppFontStyle.greyOpenSans12W400,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.spaceEvenly,
+                                                    children: [
+                                                      Text(
+                                                        '\$0 Delivery',
+                                                        style: AppFontStyle.blackOpenSans12W500
+                                                            .copyWith(color: colorPrimary2),
+                                                      ),
+                                                      height05,
+                                                      Text('Closes 10:30am',
+                                                          style: AppFontStyle.blackOpenSans12W400
+                                                              .copyWith(color: red)),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                if (index == 1)
-                                  Container(
-                                      margin: const EdgeInsets.only(top: 25),
-                                      child: Image(image: imagesOfferBanner)),
-                              ],
+                                  if (index == 1)
+                                    Container(
+                                        margin: const EdgeInsets.only(top: 25),
+                                        child: Image(image: imagesOfferBanner)),
+                                ],
+                              ),
                             );
                           },
                         ),
@@ -339,8 +360,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: kHomeController.todayOfferList.length,
                             shrinkWrap: true,
-                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2, childAspectRatio: 2 / 2.4),
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                childAspectRatio: getSliverGridDelegate(context)),
                             itemBuilder: (context, index) {
                               return Container(
                                 decoration: BoxDecoration(
@@ -407,6 +429,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Text(
                                       kHomeController.todayOfferList[index],
                                       style: AppFontStyle.blackOpenSans16W600,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                     height05,
                                     Row(

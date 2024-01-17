@@ -116,7 +116,12 @@ Widget commonSwitchButton({required Function isDelivery}) {
 }
 
 Widget appBarButton(
-    {required ExactAssetImage image, required Function callBack, double? height, double? width}) {
+    {required ExactAssetImage image,
+    required Function callBack,
+    double? height,
+    double? width,
+    Color? iconColor,
+    double? iconPadding}) {
   return InkWell(
     splashColor: white,
     highlightColor: white,
@@ -132,19 +137,20 @@ Widget appBarButton(
           border: Border.all(color: colorGrey.withOpacity(0.3), width: 1)),
       child: Image(
         image: image,
-      ),
+        color: iconColor,
+      ).paddingAll(iconPadding ?? 0),
     ),
   );
 }
 
 Widget commonFilledButtonGrey(
-    {required Function onTap, required String title, TextStyle? textStyle}) {
+    {required Function onTap, required String title, TextStyle? textStyle, double? height}) {
   return InkWell(
     onTap: () {
       onTap();
     },
     child: Container(
-      height: 50,
+      height: height ?? 50,
       decoration: BoxDecoration(
           color: offWhite,
           borderRadius: const BorderRadius.all(
@@ -186,4 +192,29 @@ Widget commonSocialButton({required Function onTap, required ExactAssetImage ico
       ),
     ),
   );
+}
+
+Widget commonIconTextButton(
+    {Widget? icon,
+    required String title,
+    required Function callBack,
+    Color? bgColor,
+    TextStyle? textStyle}) {
+  return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+          backgroundColor: bgColor ?? colorPrimary, padding: EdgeInsets.zero),
+      onPressed: () {
+        callBack();
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (icon != null) icon,
+          if (icon != null) width10,
+          Text(
+            title,
+            style: textStyle ?? AppFontStyle.blackOpenSans16W600.copyWith(color: white),
+          )
+        ],
+      ).paddingSymmetric(vertical: 12));
 }
