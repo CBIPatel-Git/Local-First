@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:local_first/Utility/assets_utility.dart';
 import 'package:local_first/Utility/colors_utility.dart';
+import 'package:local_first/Utility/constants.dart';
 import '../../CustomWidget/custom_bottom_nav_bar_dot.dart';
 import 'Account/account_screen.dart';
 import 'Home/home_screen.dart';
@@ -17,7 +18,6 @@ class BottomNavigationScreen extends StatefulWidget {
 }
 
 class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
-  RxInt currentIndex = 0.obs;
   List<Widget> tabs = const [
     HomeScreen(), //The problem
     StoreScreen(),
@@ -29,14 +29,14 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<Object>(
-        stream: currentIndex.stream,
+        stream: kHomeController.currentTabIndex.stream,
         builder: (context, snapshot) {
           return Scaffold(
             bottomNavigationBar: CustomBottomNavBarDot(
               onChange: (index) {
-                currentIndex.value = index;
+                kHomeController.currentTabIndex.value = index;
               },
-              defaultSelectedIndex: 0,
+              defaultSelectedIndex: kHomeController.currentTabIndex.value,
               selectedColor: colorPrimary,
               unselectedColor: textColor,
               backgroundColor: Colors.grey.shade100,
@@ -58,7 +58,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
               ],
             ),
             extendBody: true,
-            body: tabs[currentIndex.value],
+            body: tabs[kHomeController.currentTabIndex.value],
           );
         });
   }

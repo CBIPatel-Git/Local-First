@@ -34,7 +34,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   RxString selectedRam = ''.obs;
   List<String> ramVariantList = [
-    '4 Gb',
+    '4 GB',
     '8 GB',
     '12 GB',
   ];
@@ -297,11 +297,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                           ),
                                           title: 'Add to Cart',
                                           callBack: () {})
-                                      .marginSymmetric(horizontal: 5),
+                                      .marginOnly(right: 5),
                                 ),
                                 Expanded(
                                   child: commonIconTextButton(title: 'Buy Now', callBack: () {})
-                                      .marginSymmetric(horizontal: 5),
+                                      .marginOnly(left: 5),
                                 ),
                               ],
                             ),
@@ -434,8 +434,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               shrinkWrap: true,
                               itemCount: 4,
                               physics: const NeverScrollableScrollPhysics(),
-                              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2, childAspectRatio: 2 / 2.85),
+                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  childAspectRatio:
+                                      getScreenHeight(context) < 810 ? 2 / 3.02 : 2 / 2.85),
                               itemBuilder: (context, index) {
                                 return Container(
                                   margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
@@ -460,7 +462,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       Column(
                                         children: [
                                           SizedBox(
-                                              height: 100,
+                                              height: 95,
                                               child: Image(
                                                 image: imagesCategoryProduct1,
                                                 fit: BoxFit.cover,
@@ -468,6 +470,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                           height10,
                                           Text(
                                             'SAMSUNG Galaxy M34 5G without charger (Prism Silver, 128 GB)',
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
                                             style: AppFontStyle.blackOpenSans12W600
                                                 .copyWith(height: 1.5),
                                           ),

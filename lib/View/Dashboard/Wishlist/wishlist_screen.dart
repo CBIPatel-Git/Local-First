@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
 import '../../../Utility/utility_export.dart';
 
 class WishlistScreen extends StatefulWidget {
@@ -18,19 +16,20 @@ class _WishlistScreenState extends State<WishlistScreen> {
         child: Column(
           children: [
             commonAppBar(
-                preFix: Image(image: iconsBackIcon),
+                preFix: appBarButton(image: iconsBackIcon, callBack: () {}),
                 title: Text(
                   'Wishlist',
                   style: AppFontStyle.blackOpenSans18W600,
                 ),
-                sufFix: Image(image: iconsInfo)),
+                sufFix: appBarButton(image: iconsInfo, callBack: () {})),
             height10,
             Expanded(
               child: GridView.builder(
                 itemCount: kHomeController.todayOfferList.length,
                 shrinkWrap: true,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, childAspectRatio: 2 / 2.4),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2, childAspectRatio: getSliverGridDelegate(context)),
                 itemBuilder: (context, index) {
                   return Container(
                     decoration: BoxDecoration(
@@ -87,6 +86,8 @@ class _WishlistScreenState extends State<WishlistScreen> {
                         Text(
                           kHomeController.todayOfferList[index],
                           style: AppFontStyle.blackOpenSans16W600,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                         height05,
                         Row(

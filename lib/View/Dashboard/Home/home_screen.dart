@@ -151,8 +151,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemCount: kHomeController.productCategoryList.length,
                                 shrinkWrap: true,
-                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 4, childAspectRatio: 2 / 2.4),
+                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 4,
+                                    childAspectRatio: getSliverGridDelegate(context)),
                                 itemBuilder: (context, index) {
                                   return Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -359,8 +360,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: kHomeController.todayOfferList.length,
                             shrinkWrap: true,
-                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2, childAspectRatio: 2 / 2.4),
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                childAspectRatio: getSliverGridDelegate(context)),
                             itemBuilder: (context, index) {
                               return Container(
                                 decoration: BoxDecoration(
@@ -427,6 +429,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Text(
                                       kHomeController.todayOfferList[index],
                                       style: AppFontStyle.blackOpenSans16W600,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                     height05,
                                     Row(

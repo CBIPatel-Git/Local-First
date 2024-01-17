@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:local_first/Utility/colors_utility.dart';
+import 'package:local_first/Utility/utility_export.dart';
 import 'package:local_first/View/Dashboard/Account/account_screen.dart';
 import 'package:local_first/View/Dashboard/MyCart/my_order_screen.dart';
 import 'package:local_first/View/Dashboard/bottom_navigation_screen.dart';
@@ -19,6 +21,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   app = await Firebase.initializeApp();
   auth = FirebaseAuth.instanceFor(app: app);
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
   runApp(const MyApp());
 }
 
@@ -31,6 +35,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    print("height :: >>> ${getScreenHeight(context)}");
+    print("width  :: >>> ${getScreenWidth(context)}");
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -47,7 +53,7 @@ class MyApp extends StatelessWidget {
           const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
         ],
       ),
-      home: const CouponScreen(),
+      home: const BottomNavigationScreen(),
     );
   }
 }
