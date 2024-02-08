@@ -23,10 +23,8 @@ class Assets {
   static const String iconsDeliveryCar = 'assets/icons/delivery_car.png';
   static const String iconsDown = 'assets/icons/down.png';
   static const String iconsEditLine = 'assets/icons/edit_line.png';
-  static const String iconsFacebook = 'assets/icons/facebook.png';
   static const String iconsCoupon = 'assets/icons/coupon.png';
   static const String iconsCouponSymbol = 'assets/icons/coupon-symbol.png';
-  static const String iconsDeliveryCar = 'assets/icons/delivery_car.png';
   static const String iconsEditProfile = 'assets/icons/edit-profile.png';
   static const String iconsFacebook = 'assets/icons/Facebook.png';
   static const String iconsFilter = 'assets/icons/filter.png';

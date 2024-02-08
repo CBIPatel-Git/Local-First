@@ -25,7 +25,6 @@ const Color red = Color(0xFFFF0000);
 const Color green = Color(0xFF398F3D);
 const Color redLight = Color(0xFFF15F3F);
 const Color transparent = Color(0x00ff0000);
-const Color green = Color(0xFF398F3D);
 const Color liteGreen = Color(0xFF65B348);
 
 // Product Selected Colors
