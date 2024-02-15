@@ -4,7 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:local_first/View/OnBoarding/splash_screen.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+
 import 'package:local_first/Utility/utility_export.dart';
+
 
 late final FirebaseApp app;
 late final FirebaseAuth auth;
@@ -43,7 +45,9 @@ class MyApp extends StatelessWidget {
           const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
         ],
       ),
+
       home: const SplashScreen(),
+
     );
   }
 }
