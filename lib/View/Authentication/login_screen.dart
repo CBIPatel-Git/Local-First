@@ -65,7 +65,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           labelText: 'Mobile Number',
                           hintText: '+91 98765432190',
                           textEditingController: numberController,
-                          keyboardType: TextInputType.number,
                           validationFunction: (val) {
                             return phoneNumberValidation(val);
                           }),
@@ -101,7 +100,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         onTap: () {
                           if (globalKey.currentState!.validate()) {
                             // Click on Sign In
-                            Get.to(() => const LocationAccessScreen());
+                            Map<String, dynamic> params = {
+                              "user_email": emailController.text,
+                              "user_pass": passController.text,
+                            };
+                            kAuthenticationController.logInApiCall(params, () {
+                              Get.to(() => const LocationAccessScreen());
+                            });
                           }
                         },
                         title: 'Sign In',
@@ -127,14 +132,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          commonSocialButton(onTap: () {
-                            googleAuth(success: (){
-
-                            });
-                          }, icon: iconsGoogle),
+                          commonSocialButton(onTap: () {}, icon: iconsGoogle),
                           width16,
-                          commonSocialButton(onTap: () {
-                          }, icon: iconsFacebook),
+                          commonSocialButton(onTap: () {}, icon: iconsFacebook),
                         ],
                       ),
                       customHeight(24),
@@ -145,7 +145,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               style: AppFontStyle.blackOpenSans16W500),
                           TextSpan(
                               text: " Sign Up",
-
                               style: AppFontStyle.blackOpenSans16W500.copyWith(color: colorPrimary),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {

@@ -49,12 +49,11 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                             children: [
                               Text(
                                 'Create your new account',
-                                textAlign: TextAlign.center,
                                 style: AppFontStyle.blackOpenSans24W600,
                               ),
                               customHeight(8),
                               Text(
-                                'Create an account to start looking for the food you like',
+                                'Create an account to start looking for the \nfood you like',
                                 style: AppFontStyle.greyOpenSans14W500,
                                 textAlign: TextAlign.center,
                               ),
@@ -67,7 +66,6 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                           labelText: 'Mobile Number',
                           hintText: '+91 98765432190',
                           textEditingController: numberController,
-                          keyboardType: TextInputType.number,
                           validationFunction: (val) {
                             return phoneNumberValidation(val);
                           }),
@@ -85,7 +83,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                           hintText: 'John Wick',
                           textEditingController: nameController,
                           validationFunction: (val) {
-                            return emailValidation(val);
+                            return isNotEmptyValidation(val);
                           }),
                       height14,
                       commonTextField(
@@ -127,7 +125,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {
                                       // your Terms of Service here
-                                      print('your Terms of Service Click here');
+                                      printLog('your Terms of Service Click here');
                                     }),
                               TextSpan(text: 'and', style: AppFontStyle.greyOpenSans12W600),
                               TextSpan(
@@ -137,7 +135,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {
                                       // your Privacy Policy Click here
-                                      print('your Privacy Policy Click here');
+                                      printLog('your Privacy Policy Click here');
                                     }),
                             ]),
                           ),
@@ -149,6 +147,19 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                           // if (globalKey.currentState!.validate()) {
                           //   // Click on Sign Up
                           // }
+                          disableFocusScopeNode(context);
+                          // Your Click
+                          if (globalKey.currentState?.validate() == true) {
+                            Map<String, dynamic> params = {
+                              "user_nicename": nameController.text,
+                              "user_email": emailController.text,
+                              "user_pass": passController.text,
+                              "user_pass_confirmation": confPassController.text,
+                            };
+                            kAuthenticationController.signUpAuthenticationAPICall(params, () {
+                              Get.to(() => const LoginScreen());
+                            });
+                          }
                         },
                         title: 'Sign Up',
                       ),
