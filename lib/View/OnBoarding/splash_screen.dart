@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:local_first/View/OnBoarding/on_boarding_screen.dart';
 
 import '../../Utility/utility_export.dart';
+import '../Dashboard/bottom_navigation_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -18,7 +19,11 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
 
     Future.delayed(const Duration(seconds: 2), () {
-      Get.off(() => const OnBoardingScreen());
+      if (getIsLogin()) {
+        Get.offAll(() => const BottomNavigationScreen());
+      } else {
+        Get.off(() => const OnBoardingScreen());
+      }
     });
   }
 
