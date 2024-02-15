@@ -27,7 +27,7 @@ Widget commonAppBar({
   required Widget sufFix,
 }) {
   return Padding(
-    padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10),
+    padding: const EdgeInsets.only(left: 16, right: 16, top: 20, bottom: 10),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -85,5 +85,14 @@ Widget commonBoxShadowContainer(
       ],
     ),
     child: child,
+  );
+}
+
+Widget commonCheckBoxContainer() {
+  return Container(
+    height: 20,
+    width: 20,
+    decoration:
+        const BoxDecoration(color: whiteF7F7F7, borderRadius: BorderRadius.all(Radius.circular(5))),
   );
 }
