@@ -11,6 +11,7 @@ import 'package:local_first/View/Dashboard/bottom_navigation_screen.dart';
 import 'package:local_first/View/OnBoarding/splash_screen.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+import 'View/Authentication/map_screen.dart';
 import 'View/Dashboard/Account/coupon_screen.dart';
 import 'View/Dashboard/Wishlist/wishlist_screen.dart';
 
@@ -53,7 +54,7 @@ class MyApp extends StatelessWidget {
           const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
         ],
       ),
-      home: const BottomNavigationScreen(),
+      home: MapScreen(),
     );
   }
 }

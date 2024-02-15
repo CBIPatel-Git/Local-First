@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../Utility/utility_export.dart';
@@ -7,10 +8,10 @@ import '../../generated/assets.dart';
 import '../Dashboard/bottom_navigation_screen.dart';
 
 class MapScreen extends StatefulWidget {
-  double lat;
-  double long;
+  double? lat;
+  double? long;
 
-  MapScreen({super.key, required this.lat, required this.long});
+  MapScreen({super.key, this.lat, this.long});
 
   @override
   State<MapScreen> createState() => MapScreenState();
@@ -22,14 +23,31 @@ class MapScreenState extends State<MapScreen> {
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   late BitmapDescriptor icons;
 
+  late GoogleMapController mapController;
+  double _originLatitude = 21.2346472, _originLongitude = 72.8770518;
+  double _destLatitude = 21.7362, _destLongitude = 72.135925;
+
+  Map<PolylineId, Polyline> polylines = {};
+  List<LatLng> polylineCoordinates = [];
+  PolylinePoints polylinePoints = PolylinePoints();
+  String googleAPiKey = "AIzaSyAHKno9ZmWWbMM8tBpQ27p6JHCmoSF62BA";
+
   @override
   void initState() {
     getIcons();
     super.initState();
+
+    _addMarker(LatLng(_originLatitude, _originLongitude), "origin", BitmapDescriptor.defaultMarker);
+
+    /// destination marker
+    _addMarker(LatLng(_destLatitude, _destLongitude), "destination",
+        BitmapDescriptor.defaultMarkerWithHue(90));
+
+    _getPolyline();
   }
 
   static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
+    target: LatLng(21.2346472, 72.8770518),
     zoom: 16,
   );
 
@@ -45,12 +63,14 @@ class MapScreenState extends State<MapScreen> {
       body: Stack(
         children: [
           GoogleMap(
-              mapType: MapType.normal,
-              initialCameraPosition: _kGooglePlex,
-              zoomControlsEnabled: false,
-              myLocationButtonEnabled: false,
-              markers: markers.values.toSet(),
-              onMapCreated: onMapCreated),
+            mapType: MapType.normal,
+            initialCameraPosition: _kGooglePlex,
+            zoomControlsEnabled: false,
+            myLocationButtonEnabled: false,
+            markers: markers.values.toSet(),
+            onMapCreated: _onMapCreated,
+            // onMapCreated: onMapCreated,
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 60),
             child: commonTextField(
@@ -77,6 +97,47 @@ class MapScreenState extends State<MapScreen> {
     );
   }
 
+  void _onMapCreated(GoogleMapController controller) async {
+    mapController = controller;
+
+    mapController.animateCamera(CameraUpdate.newCameraPosition(
+      // on below line we have given positions of Location 5
+        CameraPosition(
+          target: LatLng(_originLatitude, _originLongitude),
+          // target: LatLng(_destLatitude, _destLongitude),
+          zoom: 14,
+        )
+    ));
+
+    _controller.complete(controller);
+  }
+
+  _addMarker(LatLng position, String id, BitmapDescriptor descriptor) {
+    MarkerId markerId = MarkerId(id);
+    Marker marker = Marker(markerId: markerId, icon: descriptor, position: position);
+    markers[markerId] = marker;
+  }
+
+  _addPolyLine() {
+    PolylineId id = PolylineId("poly");
+    Polyline polyline = Polyline(polylineId: id, color: Colors.red, points: polylineCoordinates);
+    polylines[id] = polyline;
+    setState(() {});
+  }
+
+  _getPolyline() async {
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(googleAPiKey,
+        PointLatLng(_originLatitude, _originLongitude), PointLatLng(_destLatitude, _destLongitude),
+        travelMode: TravelMode.driving,
+        wayPoints: [PolylineWayPoint(location: "Sabo, Yaba Lagos Nigeria")]);
+    if (result.points.isNotEmpty) {
+      result.points.forEach((PointLatLng point) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      });
+    }
+    _addPolyLine();
+  }
+
   getIcons() async {
     var icon = await BitmapDescriptor.fromAssetImage(
         const ImageConfiguration(devicePixelRatio: 4), Assets.iconsMarkerIcon);
@@ -85,19 +146,19 @@ class MapScreenState extends State<MapScreen> {
     });
   }
 
-  void onMapCreated(GoogleMapController controller) {
-    var marker = Marker(
-      markerId: const MarkerId('place_name'),
-      position: const LatLng(37.42796133580664, -122.085749655962),
-      icon: icons,
-      infoWindow: const InfoWindow(
-        title: 'title',
-        snippet: 'address',
-      ),
-    );
-    _controller.complete(controller);
-    setState(() {
-      markers[const MarkerId('place_name')] = marker;
-    });
-  }
+// void onMapCreated(GoogleMapController controller) {
+//   var marker = Marker(
+//     markerId: const MarkerId('place_name'),
+//     position: const LatLng(37.42796133580664, -122.085749655962),
+//     icon: icons,
+//     infoWindow: const InfoWindow(
+//       title: 'title',
+//       snippet: 'address',
+//     ),
+//   );
+//   _controller.complete(controller);
+//   setState(() {
+//     markers[const MarkerId('place_name')] = marker;
+//   });
+// }
 }
