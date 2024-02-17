@@ -32,7 +32,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                       shrinkWrap: true,
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2, childAspectRatio: getSliverGridDelegate(context)),
+                          crossAxisCount: 2, mainAxisExtent: 220),
                       itemBuilder: (context, index) {
                         return Container(
                           decoration: BoxDecoration(
