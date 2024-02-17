@@ -434,10 +434,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               shrinkWrap: true,
                               itemCount: 4,
                               physics: const NeverScrollableScrollPhysics(),
-                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
-                                  childAspectRatio:
-                                      getScreenHeight(context) < 810 ? 2 / 3.02 : 2 / 2.85),
+                                  mainAxisExtent: 250),
                               itemBuilder: (context, index) {
                                 return Container(
                                   margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),

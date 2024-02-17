@@ -168,8 +168,8 @@ class _StoreDetailScreenState extends State<StoreDetailScreen> {
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: 6,
                           shrinkWrap: true,
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 4, childAspectRatio: getSliverGridDelegate(context)),
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4, mainAxisExtent: 120),
                           itemBuilder: (context, index) {
                             return Column(
                               mainAxisAlignment: MainAxisAlignment.center,

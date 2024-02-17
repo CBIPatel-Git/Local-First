@@ -137,13 +137,6 @@ final submittedPinTheme = defaultPinTheme.copyWith(
   ),
 );
 
-double getSliverGridDelegate(BuildContext context) {
-  return getScreenHeight(context) < 810
-      ? 2 / 2.7
-      : getScreenHeight(context) < 850
-          ? 2 / 2.5
-          : 2 / 2.4;
-}
 
 void showToast({required String message, Color? bgColor, Toast? toastLength}) {
   Fluttertoast.showToast(

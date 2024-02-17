@@ -66,6 +66,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                           labelText: 'Mobile Number',
                           hintText: '+91 98765432190',
                           textEditingController: numberController,
+                          keyboardType: TextInputType.number,
                           validationFunction: (val) {
                             return phoneNumberValidation(val);
                           }),
@@ -74,6 +75,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                           labelText: 'Email Address',
                           hintText: 'Albertstevano@gmail.com',
                           textEditingController: emailController,
+                          keyboardType: TextInputType.emailAddress,
                           validationFunction: (val) {
                             return emailValidation(val);
                           }),
