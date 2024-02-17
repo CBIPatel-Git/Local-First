@@ -28,8 +28,8 @@ class _WishlistScreenState extends State<WishlistScreen> {
                 itemCount: kHomeController.todayOfferList.length,
                 shrinkWrap: true,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, childAspectRatio: getSliverGridDelegate(context)),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2, mainAxisExtent: 220),
                 itemBuilder: (context, index) {
                   return Container(
                     decoration: BoxDecoration(

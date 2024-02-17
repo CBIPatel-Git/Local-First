@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:local_first/View/Authentication/login_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../../Utility/utility_export.dart';
@@ -230,12 +231,13 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
                       height20,
                       commonIconTextButton(
-                              icon: Image(
-                                image: iconsLogout,
-                              ),
-                              title: 'Log out',
-                              callBack: () {})
-                          .marginSymmetric(horizontal: 20),
+                          icon: Image(
+                            image: iconsLogout,
+                          ),
+                          title: 'Log out',
+                          callBack: () {
+                            Get.offAll(const LoginScreen());
+                          }).marginSymmetric(horizontal: 20),
                       height14,
                       commonFilledButton(
                               onTap: () {},

@@ -151,9 +151,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemCount: kHomeController.productCategoryList.length,
                                 shrinkWrap: true,
-                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 4,
-                                    childAspectRatio: getSliverGridDelegate(context)),
+                                    mainAxisExtent: 120),
                                 itemBuilder: (context, index) {
                                   return Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -360,9 +360,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: kHomeController.todayOfferList.length,
                             shrinkWrap: true,
-                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
-                                childAspectRatio: getSliverGridDelegate(context)),
+                                mainAxisExtent: 220),
                             itemBuilder: (context, index) {
                               return Container(
                                 decoration: BoxDecoration(
