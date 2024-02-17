@@ -17,6 +17,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController searchController = TextEditingController();
   RxInt currentIndex = 0.obs;
+  RxBool homeData = false.obs;
   final items = [
     Image(image: imagesBanner1),
     Image(image: imagesBanner1),
@@ -106,7 +107,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              Expanded(
+              homeData.value == false
+                  ? Expanded(
                 child: ListView(
                   shrinkWrap: true,
                   children: [
@@ -130,10 +132,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: List.generate(
                               kAuthenticationController.titles.length,
-                              (index) => Obx(() {
-                                    return customIndicator(
-                                        index: index, currentIndex: currentIndex.value);
-                                  })),
+                                  (index) => Obx(() {
+                                return customIndicator(
+                                    index: index, currentIndex: currentIndex.value);
+                              })),
                         ),
                         height05,
                         Padding(
@@ -196,7 +198,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: [
                                   Container(
                                     height: 183,
-                                    margin: const EdgeInsets.only(top: 7, bottom: 7, left: 10),
+                                    margin:
+                                    const EdgeInsets.only(top: 7, bottom: 7, left: 10),
                                     decoration: BoxDecoration(
                                         border: Border.all(color: cardBorder, width: 1),
                                         borderRadius: BorderRadius.circular(12)),
@@ -234,19 +237,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                             Padding(
                                               padding: const EdgeInsets.all(10),
                                               child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                                 children: [
                                                   Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                     children: [
                                                       Text(
                                                         'The Stylish Satchel',
-                                                        style: AppFontStyle.blackOpenSans16W600,
+                                                        style:
+                                                        AppFontStyle.blackOpenSans16W600,
                                                       ),
                                                       Row(
                                                         crossAxisAlignment:
-                                                            CrossAxisAlignment.center,
-                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        CrossAxisAlignment.center,
+                                                        mainAxisAlignment:
+                                                        MainAxisAlignment.center,
                                                         children: [
                                                           const Icon(
                                                             Icons.star,
@@ -256,25 +263,29 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           width05,
                                                           Text(
                                                             '4.0 (2.4K) • Delivery • 2.2Km',
-                                                            style: AppFontStyle.greyOpenSans12W400,
+                                                            style: AppFontStyle
+                                                                .greyOpenSans12W400,
                                                           ),
                                                         ],
                                                       ),
                                                     ],
                                                   ),
                                                   Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                                    crossAxisAlignment:
+                                                    CrossAxisAlignment.end,
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment.spaceEvenly,
+                                                    MainAxisAlignment.spaceEvenly,
                                                     children: [
                                                       Text(
                                                         '\$0 Delivery',
-                                                        style: AppFontStyle.blackOpenSans12W500
+                                                        style: AppFontStyle
+                                                            .blackOpenSans12W500
                                                             .copyWith(color: colorPrimary2),
                                                       ),
                                                       height05,
                                                       Text('Closes 10:30am',
-                                                          style: AppFontStyle.blackOpenSans12W400
+                                                          style: AppFontStyle
+                                                              .blackOpenSans12W400
                                                               .copyWith(color: red)),
                                                     ],
                                                   ),
@@ -316,7 +327,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   width: 73,
                                   margin: const EdgeInsets.symmetric(horizontal: 5),
                                   decoration: BoxDecoration(
-                                      color: whiteF7F7F7, borderRadius: BorderRadius.circular(100)),
+                                      color: whiteF7F7F7,
+                                      borderRadius: BorderRadius.circular(100)),
                                   child: Image(
                                     image: imagesPopularStore1,
                                     height: 52,
@@ -373,7 +385,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       color: Colors.grey.withOpacity(0.2),
                                       spreadRadius: 1,
                                       blurRadius: 12,
-                                      offset: const Offset(0, 0), // changes position of shadow
+                                      offset:
+                                      const Offset(0, 0), // changes position of shadow
                                     ),
                                   ],
                                 ),
@@ -481,8 +494,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         width10,
                                         Text(
                                           '\$190',
-                                          style: AppFontStyle.greyOpenSans12W400
-                                              .copyWith(decoration: TextDecoration.lineThrough),
+                                          style: AppFontStyle.greyOpenSans12W400.copyWith(
+                                              decoration: TextDecoration.lineThrough),
                                         ),
                                         const Spacer(),
                                         InkWell(
@@ -491,7 +504,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             print("Cart click");
                                           },
                                           child: Padding(
-                                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                                            padding:
+                                            const EdgeInsets.symmetric(horizontal: 5),
                                             child: Image(image: iconsCartRound),
                                           ),
                                         ),
@@ -527,7 +541,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     customHeight(75)
                   ],
                 ),
-              ),
+              )
+                  : const Expanded(child: Center(child: CircularProgressIndicator())),
             ],
           ),
         ));
