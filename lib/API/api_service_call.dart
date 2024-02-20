@@ -98,10 +98,8 @@ Future apiServiceCall({
           : Platform.isIOS
               ? "2"
               : "3",
-      ApiConfig.rToken: getPreference.read(PrefConstants.loginToken) == null &&
-              getPreference.read(PrefConstants.loginToken).toString().isEmpty
-          ? ""
-          : getPreference.read(PrefConstants.loginToken)
+      ApiConfig.rToken:
+          ' Bearer ${getLoginAccessToken() == null && getLoginAccessToken().toString().isEmpty ? "" : getLoginAccessToken()}'
     };
 
     // tempParams?[ApiConfig.rDeviceToken] = getFcmToken() ?? "";
@@ -391,7 +389,8 @@ apiAlertDialog(
           // content: Text(message),
           content: Column(
             children: [
-              Lottie.asset('assets/json/no_internet.json', height: 200),
+              // Lottie.asset('assets/json/no_internet.json', height: 200),
+              const CircularProgressIndicator(),
               Text(message),
               const SizedBox(height: 10),
             ],

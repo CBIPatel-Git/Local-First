@@ -34,6 +34,8 @@ ExactAssetImage imagesStoreProfile = const ExactAssetImage(Assets.imagesStorePro
 ExactAssetImage imagesCouponBg = const ExactAssetImage(Assets.imagesCouponBg, scale: 4);
 ExactAssetImage imagesUserAccountProfile =
     const ExactAssetImage(Assets.imagesUserAccountProfile, scale: 4);
+ExactAssetImage imagesItemPlaceholder =
+    const ExactAssetImage(Assets.imagesItemPlaceholder, scale: 4);
 ExactAssetImage imagesNewNotificationProfile =
     const ExactAssetImage(Assets.imagesNewNotificationProfile, scale: 4);
 ExactAssetImage imagesStoreOfferBanner =

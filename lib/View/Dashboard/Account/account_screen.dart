@@ -236,6 +236,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           ),
                           title: 'Log out',
                           callBack: () {
+                            setIsLogin(isLogin: false);
                             Get.offAll(const LoginScreen());
                           }).marginSymmetric(horizontal: 20),
                       height14,
