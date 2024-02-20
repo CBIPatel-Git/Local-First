@@ -17,7 +17,6 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     Future.delayed(const Duration(seconds: 2), () {
@@ -37,22 +36,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    for (int x = 0; x <= 5; x++) {
-      print('For :: $x');
-    }
-
-    int x = 0;
-    while (x <= 5) {
-      print('While :: $x');
-      x++;
-    }
-
-    int y = 0;
-    do {
-      print('Do While :: $y');
-      y++;
-    } while (y == 0);
-
     return commonStructure(
         context: context,
         child: Stack(

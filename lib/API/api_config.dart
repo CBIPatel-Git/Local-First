@@ -12,8 +12,6 @@ class ApiConfig {
   static const String rDeviceType = "device-type";
   static const String rToken = "Authorization";
 
-
-
   /// API
   static const String baseUrl = "https://localfirstapi.testdevteam.xyz/";
 
@@ -23,18 +21,8 @@ class ApiConfig {
   static const String forgotPassApi = '${baseUrl}api/forgot-password';
   static const String createNewPassApi = '${baseUrl}api/create-new-password';
 
-
-
   /// Home & Category
   static const String allCategoryApi = '${baseUrl}api/category/get-products-category';
   static const String getProductByIdApi = '${baseUrl}api/product/get-products';
-
-
-
-
-
-
-
-
-
+  static const String getProductsByCategoryApi = '${baseUrl}api/product/get-products-by-category/';
 }

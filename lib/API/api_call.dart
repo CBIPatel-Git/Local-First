@@ -69,7 +69,6 @@ class Api {
             : Platform.isIOS
                 ? "2"
                 : "3",
-
         ApiConfig.rToken: getPreference.read(PrefConstants.loginToken) == null &&
                 getPreference.read(PrefConstants.loginToken).toString().isEmpty
             ? ""
@@ -418,4 +417,3 @@ apiAlertDialog(
     );
   }
 }
-
