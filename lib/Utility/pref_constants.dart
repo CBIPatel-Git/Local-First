@@ -26,5 +26,6 @@ class PrefConstants {
   static const String loginPref = "loginPref";
   static const String isLoginPref = "isLoginPref";
   static const String loginTokenPref = "loginTokenPref";
+  static const String userDataModelPref = "userDataModelPref";
   static const String fcmTokenPref = "fcmTokenPref";
 }

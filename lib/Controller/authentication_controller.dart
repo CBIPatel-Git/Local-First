@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:local_first/Models/AuthenticationModel/log_in_model.dart';
+import 'package:local_first/Utility/pref_constants.dart';
 
 import '../API/api_config.dart';
 import '../API/api_service_call.dart';
@@ -58,7 +61,48 @@ class AuthenticationController extends GetxController {
           logInModel = LogInModel.fromJson(response.data);
           setIsLogin(isLogin: true);
           setLoginAccessToken(loginToken: logInModel.data?.accessToken ?? '');
+          setResponse(key: PrefConstants.userDataModelPref, loginToken: jsonEncode(response.data));
           isUserLogin = true;
+          callBack();
+        } catch (e) {
+          printLog(e);
+        }
+      },
+      isProgressShow: true,
+      methodType: ApiConfig.methodPOST,
+      params: params,
+      error: (dio.Response<dynamic> response) {
+        showSnackBar(message: response.data["message"], title: ApiConfig.error);
+      },
+    );
+  }
+
+  void forgotPassApiCall(Map<String, dynamic> params, Function() callBack) {
+    apiServiceCall(
+      serviceUrl: ApiConfig.forgotPassApi,
+      success: (dio.Response<dynamic> response) {
+        try {
+          showSnackBar(message: response.data["message"], title: ApiConfig.success);
+          callBack();
+        } catch (e) {
+          printLog(e);
+        }
+      },
+      isProgressShow: true,
+      methodType: ApiConfig.methodPOST,
+      params: params,
+      error: (dio.Response<dynamic> response) {
+        showSnackBar(message: response.data["message"], title: ApiConfig.error);
+      },
+    );
+  }
+
+  void createNewPassApiCall(Map<String, dynamic> params, Function() callBack) {
+    apiServiceCall(
+      serviceUrl: ApiConfig.createNewPassApi,
+      success: (dio.Response<dynamic> response) {
+        try {
+          showSnackBar(message: response.data["message"], title: ApiConfig.success);
           callBack();
         } catch (e) {
           printLog(e);

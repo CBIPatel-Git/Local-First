@@ -4,7 +4,9 @@ import '../../Utility/utility_export.dart';
 import 'login_screen.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
-  const ResetPasswordScreen({super.key});
+  String email;
+
+  ResetPasswordScreen({super.key, required this.email});
 
   @override
   State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
@@ -56,6 +58,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       commonTextField(
                           labelText: 'Password',
                           hintText: '**********',
+                          isPassword: true,
                           textEditingController: passController,
                           validationFunction: (val) {
                             return passwordValidation(val);
@@ -64,6 +67,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       commonTextField(
                           labelText: 'Confirm Password',
                           hintText: '**********',
+                          isPassword: true,
                           textEditingController: confPassController,
                           validationFunction: (val) {
                             return passController.text == confPassController.text
@@ -75,7 +79,14 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         onTap: () {
                           if (globalKey.currentState!.validate()) {
                             // Click here
-                            Get.offAll(() => const LoginScreen());
+                            Map<String, dynamic> params = {
+                              "user_email": widget.email,
+                              "user_pass": passController.text,
+                              "user_pass_confirmation": confPassController.text
+                            };
+                            kAuthenticationController.createNewPassApiCall(params, () {
+                              Get.offAll(() => const LoginScreen());
+                            });
                           }
                         },
                         title: 'Reset Password',
