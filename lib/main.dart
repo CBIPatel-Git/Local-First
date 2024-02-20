@@ -7,6 +7,8 @@ import 'package:responsive_framework/responsive_framework.dart';
 
 import 'package:local_first/Utility/utility_export.dart';
 
+import 'View/Dashboard/Home/product_details_screen.dart';
+
 late final FirebaseApp app;
 late final FirebaseAuth auth;
 

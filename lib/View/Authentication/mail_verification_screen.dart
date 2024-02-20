@@ -56,7 +56,7 @@ class _MailVerificationScreenState extends State<MailVerificationScreen> {
                             TextSpan(
                                 text: " ${widget.email}\n",
                                 style:
-                                AppFontStyle.greyOpenSans16W400.copyWith(color: colorPrimary2),
+                                    AppFontStyle.greyOpenSans16W400.copyWith(color: colorPrimary2),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     // your Sign Up Click here
@@ -74,7 +74,7 @@ class _MailVerificationScreenState extends State<MailVerificationScreen> {
                           //   // Click on Sign In
                           // }
 
-                          Get.off(() => const ResetPasswordScreen());
+                          Get.off(() => ResetPasswordScreen(email: widget.email));
                         },
                         title: 'Reset Password',
                       ),
@@ -89,7 +89,13 @@ class _MailVerificationScreenState extends State<MailVerificationScreen> {
                               style: AppFontStyle.blackOpenSans16W500.copyWith(color: colorPrimary),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  // your Sign Up Click here
+                                  // your Sand Again Click here
+                                  Map<String, dynamic> params = {
+                                    "user_email": widget.email,
+                                  };
+                                  kAuthenticationController.forgotPassApiCall(params, () {
+
+                                  });
                                 }),
                         ]),
                       ),

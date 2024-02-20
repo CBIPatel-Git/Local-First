@@ -57,6 +57,14 @@ getLoginAccessToken() {
   return getPreference.read(PrefConstants.loginTokenPref);
 }
 
+setResponse({required String key, required String loginToken}) {
+  return getPreference.write(key, loginToken);
+}
+
+getResponse({required String key}) {
+  return getPreference.read(key);
+}
+
 isNotEmptyString(String? data) {
   return data != null && data.isNotEmpty;
 }

@@ -369,6 +369,7 @@ apiAlertDialog(
           content: Column(
             children: [
               // Lottie.asset('assets/json/no_internet.json', height: 200),
+              const CircularProgressIndicator(),
               Text(message),
               const SizedBox(height: 10),
             ],

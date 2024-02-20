@@ -99,7 +99,7 @@ Future apiServiceCall({
               ? "2"
               : "3",
       ApiConfig.rToken:
-          'Bearer ${getLoginAccessToken() == null && getLoginAccessToken().toString().isEmpty ? "" : getLoginAccessToken()}',
+          ' Bearer ${getLoginAccessToken() == null && getLoginAccessToken().toString().isEmpty ? "" : getLoginAccessToken()}'
     };
 
     // tempParams?[ApiConfig.rDeviceToken] = getFcmToken() ?? "";
@@ -390,6 +390,7 @@ apiAlertDialog(
           content: Column(
             children: [
               // Lottie.asset('assets/json/no_internet.json', height: 200),
+              const CircularProgressIndicator(),
               Text(message),
               const SizedBox(height: 10),
             ],

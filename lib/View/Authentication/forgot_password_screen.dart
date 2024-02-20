@@ -62,6 +62,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         onTap: () {
                           if (globalKey.currentState!.validate()) {
                             // Click on Sign In
+                            Map<String, dynamic> params = {
+                              "user_email": emailController.text,
+                            };
+                            kAuthenticationController.forgotPassApiCall(params, () {
+                              Get.off(() => MailVerificationScreen(email: emailController.text));
+                            });
                             Get.off(() => MailVerificationScreen(email: emailController.text));
                           }
                         },

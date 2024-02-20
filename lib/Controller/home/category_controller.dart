@@ -1,13 +1,13 @@
-import 'dart:convert';
-
 import 'package:get/get.dart';
 import 'package:local_first/Models/HomeModels/get_products_by_category_model.dart';
+import 'package:local_first/Models/HomeModels/get_products_by_category_model.dart' as categoryModel;
 
 import '../../API/api_config.dart';
 import '../../API/api_service_call.dart';
 import 'package:dio/dio.dart' as dio;
 
 import '../../Models/HomeModels/all_category_model.dart';
+import '../../Models/HomeModels/get_product_byId_model.dart';
 import '../../Utility/common_function.dart';
 
 class CategoryController extends GetxController {
@@ -46,7 +46,7 @@ class CategoryController extends GetxController {
 
   /// GetProductsByCategory
   GetProductsByCategory getProductsByCategory = GetProductsByCategory();
-  RxList<Data> getProductsByCategoryList = <Data>[].obs;
+  RxList<categoryModel.Data> getProductsByCategoryList = <categoryModel.Data>[].obs;
 
   void getProductByCategoryCall(
     Map<String, dynamic> params,
@@ -77,5 +77,29 @@ class CategoryController extends GetxController {
         },
         isProgressShow: true,
         methodType: ApiConfig.methodGET);
+  }
+
+  Rx<GetProductByIdModel> getProductByIdModel = GetProductByIdModel().obs;
+
+  void getProductByIdAPICall(Map<String, dynamic> params, int productId, Function()? callBack) {
+    apiServiceCall(
+      serviceUrl: '${ApiConfig.getProductByIdApi}/$productId',
+      success: (dio.Response<dynamic> response) {
+        try {
+          getProductByIdModel.value = GetProductByIdModel.fromJson(response.data);
+          if (callBack != null) {
+            callBack();
+          }
+        } catch (e) {
+          printLog(e);
+        }
+      },
+      isProgressShow: true,
+      methodType: ApiConfig.methodGET,
+      params: params,
+      error: (dio.Response<dynamic> response) {
+        showSnackBar(message: response.data["message"], title: ApiConfig.error);
+      },
+    );
   }
 }

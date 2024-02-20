@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Hello, Jason',
+                                  'Hello, ${kAuthenticationController.logInModel.data?.user?.displayName}',
                                   style: AppFontStyle.blackOpenSans14W600,
                                 ),
                                 Row(

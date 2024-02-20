@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:local_first/View/OnBoarding/on_boarding_screen.dart';
 
+import '../../Models/AuthenticationModel/log_in_model.dart';
 import '../../Utility/utility_export.dart';
 import '../Dashboard/bottom_navigation_screen.dart';
 
@@ -15,12 +17,17 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     Future.delayed(const Duration(seconds: 2), () {
       if (getIsLogin()) {
-        Get.offAll(() => const BottomNavigationScreen());
+        try {
+          String res = getResponse(key: PrefConstants.userDataModelPref);
+          kAuthenticationController.logInModel = LogInModel.fromJson(jsonDecode(res));
+          Get.offAll(() => const BottomNavigationScreen());
+        } catch (e) {
+          printLog(e);
+        }
       } else {
         Get.off(() => const OnBoardingScreen());
       }
@@ -29,22 +36,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    for (int x = 0; x <= 5; x++) {
-      print('For :: $x');
-    }
-
-    int x = 0;
-    while (x <= 5) {
-      print('While :: $x');
-      x++;
-    }
-
-    int y = 0;
-    do {
-      print('Do While :: $y');
-      y++;
-    } while (y == 0);
-
     return commonStructure(
         context: context,
         child: Stack(
