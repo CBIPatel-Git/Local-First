@@ -69,7 +69,6 @@ class Api {
             : Platform.isIOS
                 ? "2"
                 : "3",
-
         ApiConfig.rToken: getPreference.read(PrefConstants.loginToken) == null &&
                 getPreference.read(PrefConstants.loginToken).toString().isEmpty
             ? ""
@@ -369,7 +368,7 @@ apiAlertDialog(
           title: const Text(appName),
           content: Column(
             children: [
-              Lottie.asset('assets/json/no_internet.json', height: 200),
+              // Lottie.asset('assets/json/no_internet.json', height: 200),
               Text(message),
               const SizedBox(height: 10),
             ],
@@ -417,4 +416,3 @@ apiAlertDialog(
     );
   }
 }
-

@@ -137,7 +137,6 @@ final submittedPinTheme = defaultPinTheme.copyWith(
   ),
 );
 
-
 void showToast({required String message, Color? bgColor, Toast? toastLength}) {
   Fluttertoast.showToast(
       msg: message,
