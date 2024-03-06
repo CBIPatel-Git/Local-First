@@ -1,4 +1,5 @@
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'package:local_first/Utility/utility_export.dart';
 import 'package:pinput/pinput.dart';
 
@@ -161,4 +162,16 @@ disableFocusScopeNode(BuildContext context) {
   if (!currentFocus.hasPrimaryFocus) {
     currentFocus.unfocus();
   }
+}
+
+dateFormat({required DateTime date}) {
+  String formatDate = '';
+  try {
+    DateTime stringDate =
+        DateTime.parse(kHomeController.getAllReviewModel.value.data?[0]?.dateCreated ?? '');
+    formatDate = DateFormat('dd-MMM-yyyy').format(stringDate);
+  } catch (e) {
+    printLog('date format :: $e');
+  }
+  return formatDate;
 }

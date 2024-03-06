@@ -12,29 +12,36 @@ class ApiConfig {
   static const String rDeviceType = "device-type";
   static const String rToken = "Authorization";
 
-
-
   /// API
-  static const String baseUrl = "https://localfirstapi.testdevteam.xyz/";
+  static const String baseUrl = "https://localfirstapi.testdevteam.xyz/api/";
 
   /// Authentication
-  static const String signInApi = '${baseUrl}api/register';
-  static const String logInApi = '${baseUrl}api/login';
-  static const String forgotPassApi = '${baseUrl}api/forgot-password';
-  static const String createNewPassApi = '${baseUrl}api/create-new-password';
-
-
+  static const String signInApi = '${baseUrl}register';
+  static const String logInApi = '${baseUrl}login';
+  static const String forgotPassApi = '${baseUrl}forgot-password';
+  static const String submitOtpApi = '${baseUrl}check-otp';
+  static const String createNewPassApi = '${baseUrl}create-new-password';
+  static const String getLocationApi = '${baseUrl}location/get-location';
 
   /// Home & Category
-  static const String allCategoryApi = '${baseUrl}api/category/get-products-category';
-  static const String getProductByIdApi = '${baseUrl}api/product/get-products';
+  static const String allCategoryApi = '${baseUrl}category/get-products-category';
+  static const String getProductByIdApi = '${baseUrl}product/get-products';
+
+  /// Profile
+  static const String getCouponApi = '${baseUrl}coupon/get-coupon';
 
 
+  /// Cart
+  static const String getAllReviewApi = '${baseUrl}review/get-all-review';
+  static const String addToCartApi = '${baseUrl}cart/add-to-cart';
+  static const String myCartApi = '${baseUrl}cart/my-cart';
+  static const String removeToCartApi = '${baseUrl}cart/remove-to-cart';
+  static const String addCartQuantityApi = '${baseUrl}cart/add-quantity';
 
 
+  /// Profile
 
-
-
+  static const String userProfileApi = '${baseUrl}user/user-profile';
 
 
 }

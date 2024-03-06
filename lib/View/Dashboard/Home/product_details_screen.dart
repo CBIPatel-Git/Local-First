@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:local_first/View/Dashboard/Home/customer_review_screen.dart';
 
 import '../../../Models/HomeModels/get_product_byId_model.dart';
 import '../../../Utility/utility_export.dart';
@@ -316,14 +317,21 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 children: [
                                   Expanded(
                                     child: commonIconTextButton(
-                                            bgColor: colorPrimary2,
-                                            icon: Image(
-                                              image: iconsCart,
-                                              color: white,
-                                            ),
-                                            title: 'Add to Cart',
-                                            callBack: () {})
-                                        .marginOnly(right: 5),
+                                        bgColor: colorPrimary2,
+                                        icon: Image(
+                                          image: iconsCart,
+                                          color: white,
+                                        ),
+                                        title: 'Add to Cart',
+                                        callBack: () {
+                                          Map<String, dynamic> params = {
+                                            "user_id":
+                                                kAuthenticationController.logInModel.data?.user?.ID,
+                                            "product_id": kCategoryController
+                                                .getProductByIdModel.value.data?.id
+                                          };
+                                          kCartController.addToCartApiCall(params, () {});
+                                        }).marginOnly(right: 5),
                                   ),
                                   Expanded(
                                     child: commonIconTextButton(title: 'Buy Now', callBack: () {})

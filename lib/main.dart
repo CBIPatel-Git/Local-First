@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:local_first/View/Dashboard/MyCart/my_cart_screen.dart';
 import 'package:local_first/View/OnBoarding/splash_screen.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
@@ -47,7 +48,7 @@ class MyApp extends StatelessWidget {
           const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
         ],
       ),
-      home: const SplashScreen(),
+      home: const MyCartScreen(),
     );
   }
 }

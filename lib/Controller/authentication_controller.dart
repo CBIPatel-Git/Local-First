@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:local_first/Models/AuthenticationModel/log_in_model.dart';
+import 'package:local_first/Models/AuthenticationModel/select_location_model.dart';
 import 'package:local_first/Utility/pref_constants.dart';
 
 import '../API/api_config.dart';
@@ -97,6 +98,26 @@ class AuthenticationController extends GetxController {
     );
   }
 
+  void submitOtpApiCall(Map<String, dynamic> params, Function() callBack) {
+    apiServiceCall(
+      serviceUrl: ApiConfig.submitOtpApi,
+      success: (dio.Response<dynamic> response) {
+        try {
+          showSnackBar(message: response.data["message"], title: ApiConfig.success);
+          callBack();
+        } catch (e) {
+          printLog(e);
+        }
+      },
+      isProgressShow: true,
+      methodType: ApiConfig.methodPOST,
+      params: params,
+      error: (dio.Response<dynamic> response) {
+        showSnackBar(message: response.data["message"], title: ApiConfig.error);
+      },
+    );
+  }
+
   void createNewPassApiCall(Map<String, dynamic> params, Function() callBack) {
     apiServiceCall(
       serviceUrl: ApiConfig.createNewPassApi,
@@ -110,6 +131,27 @@ class AuthenticationController extends GetxController {
       },
       isProgressShow: true,
       methodType: ApiConfig.methodPOST,
+      params: params,
+      error: (dio.Response<dynamic> response) {
+        showSnackBar(message: response.data["message"], title: ApiConfig.error);
+      },
+    );
+  }
+
+  Rx<SelectLocationModel> selectLocationModel = SelectLocationModel().obs;
+  void getLocationAPICall(Map<String, dynamic> params, Function() callBack) {
+    apiServiceCall(
+      serviceUrl: ApiConfig.getLocationApi,
+      success: (dio.Response<dynamic> response) {
+        try {
+          selectLocationModel.value = SelectLocationModel.fromJson(response.data);
+          callBack();
+        } catch (e) {
+          printLog(e);
+        }
+      },
+      isProgressShow: true,
+      methodType: ApiConfig.methodGET,
       params: params,
       error: (dio.Response<dynamic> response) {
         showSnackBar(message: response.data["message"], title: ApiConfig.error);

@@ -1,6 +1,7 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:local_first/View/Dashboard/MyCart/shipping_address_screen.dart';
 
+import '../../../Models/CartModels/my_cart_model.dart' as datum;
 import '../../../Utility/utility_export.dart';
 
 class MyCartScreen extends StatefulWidget {
@@ -11,8 +12,25 @@ class MyCartScreen extends StatefulWidget {
 }
 
 class _MyCartScreenState extends State<MyCartScreen> {
-  String? selectedValue;
+  RxInt quantity = 1.obs;
   TextEditingController codeController = TextEditingController();
+
+  RxList<datum.Datum> data = <datum.Datum>[].obs;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    // Map<String, dynamic> params = {
+    //   "user_id": kAuthenticationController.logInModel.data?.user?.ID,
+    // };
+    // kCartController.myCartApiCall(params, () {
+    //   if (kCartController.myCartModel.value.data != null) {
+    //     data.value = kCartController.myCartModel.value.data!;
+    //   }
+    // });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +58,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                       ListView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          itemCount: 2,
+                          itemCount: /*data.length ??*/ 2,
                           itemBuilder: (context, index) {
                             return InkWell(
                               onTap: () {
@@ -74,18 +92,17 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                         ClipRRect(
                                             borderRadius:
                                                 const BorderRadius.all(Radius.circular(5)),
-                                            child: Image(
-                                              height: 62,
-                                              width: 62,
-                                              image: imagesShoes,
-                                              fit: BoxFit.fill,
-                                            )),
+                                            child: commonNetworkImageView(
+                                                height: 70, width: 70, imageUrl: '')
+                                            // '${data[index].images.isNotEmpty ? data[index].images[0].src : ''}'),
+                                            ),
                                         width10,
                                         Flexible(
                                           child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                'SAMSUNG Galaxy M34 5G (Prism Silver, 128 GB)',
+                                                '${'data[index].name'}',
                                                 style: AppFontStyle.blackOpenSans14W600,
                                               ),
                                               height05,
@@ -94,30 +111,35 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                                 children: [
                                                   Flexible(
                                                     child: Text(
-                                                      '\$21,999',
+                                                      '\$${'data[index].totalPrice'}',
                                                       overflow: TextOverflow.ellipsis,
                                                       style: AppFontStyle.blackOpenSans12W600
                                                           .copyWith(fontWeight: FontWeight.w700),
                                                     ),
                                                   ),
-                                                  Flexible(
-                                                    child: Text(
-                                                      '\$27,999',
-                                                      overflow: TextOverflow.ellipsis,
-                                                      style: AppFontStyle.greyOpenSans12W500
-                                                          .copyWith(
-                                                              decoration:
-                                                                  TextDecoration.lineThrough),
-                                                    ),
-                                                  ),
-                                                  Flexible(
-                                                    child: Text(
-                                                      '22% off',
-                                                      overflow: TextOverflow.ellipsis,
-                                                      style: AppFontStyle.greyOpenSans12W500
-                                                          .copyWith(color: colorPrimary2),
-                                                    ),
-                                                  ),
+                                                  // if (data[index].regularPrice != null &&
+                                                  //     data[index].regularPrice!.isNotEmpty)
+                                                  //   Flexible(
+                                                  //     child: Text(
+                                                  //       '\$${data[index].regularPrice}',
+                                                  //       overflow: TextOverflow.ellipsis,
+                                                  //       style: AppFontStyle.greyOpenSans12W500
+                                                  //           .copyWith(
+                                                  //               decoration:
+                                                  //                   TextDecoration.lineThrough),
+                                                  //     ),
+                                                  //   ),
+                                                  // data[index].onSale != null &&
+                                                  //         (data[index].onSale ?? false)
+                                                  //     ? Flexible(
+                                                  //         child: Text(
+                                                  //           '22% off',
+                                                  //           overflow: TextOverflow.ellipsis,
+                                                  //           style: AppFontStyle.greyOpenSans12W500
+                                                  //               .copyWith(color: colorPrimary2),
+                                                  //         ),
+                                                  //       )
+                                                  //     : const SizedBox(),
                                                 ],
                                               ),
                                             ],
@@ -132,7 +154,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                         customWidth(6),
                                         appBarButton(
                                             callBack: () {
-                                              removeItemDialog();
+                                              removeItemDialog(productId: 123);
                                             },
                                             image: iconsDelete,
                                             height: 26,
@@ -149,7 +171,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                             'Delivery by 11PM, Tomorrow',
                                             style: AppFontStyle.blackOpenSans12W400
                                                 .copyWith(fontSize: 10),
-                                            textAlign: TextAlign.center,
+                                            textAlign: TextAlign.start,
                                             maxLines: 2,
                                           ),
                                         ),
@@ -182,12 +204,30 @@ class _MyCartScreenState extends State<MyCartScreen> {
                               ),
                             );
                           }),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          commonFilledButton(
+                                  onTap: () {},
+                                  title: 'Update Cart',
+                                  textStyle:
+                                      AppFontStyle.blackOpenSans14W600.copyWith(color: white),
+                                  textPadding: const EdgeInsets.symmetric(horizontal: 14))
+                              .marginSymmetric(horizontal: 5),
+                          commonFilledButtonGrey(
+                                  onTap: () {},
+                                  title: 'Clear Cart',
+                                  textStyle: AppFontStyle.greyOpenSans14W600,
+                                  textPadding: const EdgeInsets.symmetric(horizontal: 14))
+                              .marginSymmetric(horizontal: 5),
+                        ],
+                      ).marginSymmetric(vertical: 20, horizontal: 16),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            height20,
                             commonTextField(
                                 hintText: 'Promo Code',
                                 textEditingController: codeController,
@@ -259,36 +299,51 @@ class _MyCartScreenState extends State<MyCartScreen> {
 
   Widget createRoundedDropDown() {
     return Container(
-      width: 62,
+      width: 70,
       decoration: BoxDecoration(
         border: Border.all(color: colorLightGrey),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 6.0),
-        child: DropdownButtonHideUnderline(
-          child: DropdownButton<String>(
-              borderRadius: BorderRadius.circular(10),
-              style: AppFontStyle.blackOpenSans12W500,
-              hint: Text(
-                "Qty 1",
-                style: AppFontStyle.blackOpenSans12W500,
-              ),
-              value: selectedValue,
-              isDense: true,
-              onChanged: (newValue) {
-                setState(() {
-                  selectedValue = newValue;
-                });
+        padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            InkWell(
+              splashColor: white,
+              highlightColor: white,
+              onTap: () {
+                if (quantity.value > 1) {
+                  quantity.value--;
+                }
               },
-              icon: Image(
-                image: iconsDown,
+              child: const Icon(
+                Icons.remove_circle,
+                color: colorPrimary2,
+                size: 22,
               ),
-              items: const [
-                DropdownMenuItem(value: "Qty 1", child: Text("Qty 1")),
-                DropdownMenuItem(value: "Qty 2", child: Text("Qty 2")),
-                DropdownMenuItem(value: "Qty 3", child: Text("Qty 3")),
-              ]),
+            ),
+            Obx(() {
+              return Text(
+                '$quantity',
+                style: AppFontStyle.blackOpenSans14W500,
+              );
+            }),
+            InkWell(
+              splashColor: white,
+              highlightColor: white,
+              onTap: () {
+                if (quantity.value > 0 && quantity.value < 10) {
+                  quantity.value++;
+                }
+              },
+              child: const Icon(
+                Icons.add_circle,
+                color: colorPrimary2,
+                size: 22,
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -326,7 +381,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
     );
   }
 
-  Future<void> removeItemDialog() async {
+  Future<void> removeItemDialog({required int productId}) async {
     return showDialog<void>(
       context: context,
 
@@ -369,11 +424,10 @@ class _MyCartScreenState extends State<MyCartScreen> {
                         decoration: const BoxDecoration(
                             color: offWhite, borderRadius: BorderRadius.all(Radius.circular(30))),
                         child: Text(
-                          'Confirm',
+                          'Cancel',
                           style: AppFontStyle.greyOpenSans16W600,
                         )),
                     onPressed: () {
-                      print('Confirmed');
                       Navigator.of(context).pop();
                     },
                   ),
@@ -388,6 +442,11 @@ class _MyCartScreenState extends State<MyCartScreen> {
                           style: AppFontStyle.greyOpenSans16W600.copyWith(color: white),
                         )),
                     onPressed: () {
+                      Map<String, dynamic> params = {
+                        "user_id": kAuthenticationController.logInModel.data?.user?.ID,
+                        "product_id": productId
+                      };
+                      kCartController.removeToCartApiCall(params, () {});
                       Navigator.of(context).pop();
                     },
                   ),
