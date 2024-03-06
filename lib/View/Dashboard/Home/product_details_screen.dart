@@ -6,7 +6,9 @@ import '../../../Models/HomeModels/get_product_byId_model.dart';
 import '../../../Utility/utility_export.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
-  const ProductDetailsScreen({super.key});
+  int? productId;
+
+  ProductDetailsScreen({super.key, this.productId});
 
   @override
   State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
@@ -40,12 +42,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     selectedColor.value = colorList.first.value;
     selectedRam.value = ramVariantList.first;
-    kCategoryController.getProductByIdAPICall({}, 6301, () {
-      printLog('>>>>> ${kCategoryController.getProductByIdModel.value.data?.images[0].src}');
+    kCategoryController.getProductByIdAPICall({}, widget.productId ?? 0, () {
+      printLog('>>>>> ${kCategoryController.getProductByIdModel.value.data?.images?[0].src}');
     });
   }
 
@@ -107,9 +108,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   ),
                                   items: kCategoryController.getProductByIdModel.value.data != null
                                       ? kCategoryController.getProductByIdModel.value.data?.images
-                                          .map((e) => CachedNetworkImage(
+                                          ?.map((e) => CachedNetworkImage(
                                                 fit: BoxFit.cover,
-                                                imageUrl: e.src,
+                                                imageUrl: e.src ?? '',
                                                 errorWidget: (context, url, error) => const Icon(
                                                   Icons.error,
                                                   color: Colors.grey,
@@ -150,7 +151,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             children: List.generate(
                                 kCategoryController.getProductByIdModel.value.data != null
                                     ? kCategoryController
-                                        .getProductByIdModel.value.data!.images.length
+                                            .getProductByIdModel.value.data!.images?.length ??
+                                        0
                                     : items.length,
                                 (index) => Obx(() {
                                       return customIndicator(
@@ -184,35 +186,41 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   print(rating);
                                 },
                               ).paddingSymmetric(vertical: 10),
-                              Row(
-                                children: [
-                                  Flexible(
-                                    child: Text(
-                                      '\$${kCategoryController.getProductByIdModel.value.data?.price}',
-                                      overflow: TextOverflow.ellipsis,
-                                      style: AppFontStyle.blackOpenSans20W600.copyWith(
-                                          fontWeight: FontWeight.w700, color: colorPrimary),
-                                    ).paddingOnly(right: 10),
-                                  ),
-                                  Flexible(
-                                    child: Text(
-                                      '\$${kCategoryController.getProductByIdModel.value.data?.regularPrice}',
-                                      overflow: TextOverflow.ellipsis,
-                                      style: AppFontStyle.greyOpenSans20W500.copyWith(
-                                          fontWeight: FontWeight.w400,
-                                          decoration: TextDecoration.lineThrough),
-                                    ).paddingOnly(right: 10),
-                                  ),
-                                  Flexible(
-                                    child: Text(
-                                      '(Extra \$3583 off)',
-                                      overflow: TextOverflow.ellipsis,
-                                      style:
-                                          AppFontStyle.blackOpenSans14W500.copyWith(color: green),
+                              Obx(() {
+                                return Row(
+                                  children: [
+                                    Flexible(
+                                      child: Text(
+                                        '\$${kCategoryController.getProductByIdModel.value.data?.price ?? 0}',
+                                        overflow: TextOverflow.ellipsis,
+                                        style: AppFontStyle.blackOpenSans20W600.copyWith(
+                                            fontWeight: FontWeight.w700, color: colorPrimary),
+                                      ).paddingOnly(right: 10),
                                     ),
-                                  ),
-                                ],
-                              ),
+                                    Flexible(
+                                      child: Text(
+                                        '\$${kCategoryController.getProductByIdModel.value.data?.regularPrice ??'0'}',
+                                        overflow: TextOverflow.ellipsis,
+                                        style: AppFontStyle.greyOpenSans20W500.copyWith(
+                                            fontWeight: FontWeight.w400,
+                                            decoration: TextDecoration.lineThrough),
+                                      ).paddingOnly(right: 10),
+                                    ),
+                                    Flexible(
+                                      child: kCategoryController
+                                                  .getProductByIdModel.value.data!.onSale ==
+                                              true
+                                          ? Text(
+                                              '(Extra \$3583 off)',
+                                              overflow: TextOverflow.ellipsis,
+                                              style: AppFontStyle.blackOpenSans14W500
+                                                  .copyWith(color: green),
+                                            )
+                                          : const SizedBox(),
+                                    ),
+                                  ],
+                                );
+                              }),
                               height20,
                               Text(
                                 'Select Color',
@@ -342,8 +350,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               height18,
                               if (kCategoryController.getProductByIdModel.value.data?.description !=
                                       null &&
-                                  kCategoryController
-                                      .getProductByIdModel.value.data!.description.isNotEmpty)
+                                  kCategoryController.getProductByIdModel.value.data!.description
+                                          ?.isNotEmpty ==
+                                      true)
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [

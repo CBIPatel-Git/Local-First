@@ -96,3 +96,17 @@ Widget commonCheckBoxContainer() {
         const BoxDecoration(color: whiteF7F7F7, borderRadius: BorderRadius.all(Radius.circular(5))),
   );
 }
+
+Widget noDataPlaceHolder() {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      const Icon(
+        Icons.not_interested,
+        color: Colors.grey,
+      ),
+      height05,
+      const Text('No Data Found')
+    ],
+  );
+}

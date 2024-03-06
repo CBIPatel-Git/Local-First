@@ -1,175 +1,183 @@
 class GetProductByIdModel {
-  GetProductByIdModel({
-    this.success,
-    this.message,
-    this.code,
-    this.data,
-  });
+  bool? success;
+  String? message;
+  int? code;
+  Data? data;
 
-  late final bool? success;
-  late final String? message;
-  late final int? code;
-  late final Data? data;
+  GetProductByIdModel({this.success, this.message, this.code, this.data});
 
   GetProductByIdModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     message = json['message'];
     code = json['code'];
-    data = Data.fromJson(json['data']);
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['success'] = success;
-    _data['message'] = message;
-    _data['code'] = code;
-    _data['data'] = data?.toJson();
-    return _data;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['success'] = success;
+    data['message'] = message;
+    data['code'] = code;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    return data;
   }
 }
 
 class Data {
-  Data({
-    required this.id,
-    required this.name,
-    required this.slug,
-    required this.permalink,
-    required this.dateCreated,
-    required this.dateCreatedGmt,
-    required this.dateModified,
-    required this.dateModifiedGmt,
-    required this.type,
-    required this.status,
-    required this.featured,
-    required this.catalogVisibility,
-    required this.description,
-    required this.shortDescription,
-    required this.sku,
-    required this.price,
-    required this.regularPrice,
-    required this.salePrice,
-    this.dateOnSaleFrom,
-    this.dateOnSaleFromGmt,
-    this.dateOnSaleTo,
-    this.dateOnSaleToGmt,
-    required this.onSale,
-    required this.purchasable,
-    required this.totalSales,
-    required this.virtual,
-    required this.downloadable,
-    required this.downloads,
-    required this.downloadLimit,
-    required this.downloadExpiry,
-    required this.externalUrl,
-    required this.buttonText,
-    required this.taxStatus,
-    required this.taxClass,
-    required this.manageStock,
-    this.stockQuantity,
-    required this.backorders,
-    required this.backordersAllowed,
-    required this.backordered,
-    this.lowStockAmount,
-    required this.soldIndividually,
-    required this.weight,
-    required this.dimensions,
-    required this.shippingRequired,
-    required this.shippingTaxable,
-    required this.shippingClass,
-    required this.shippingClassId,
-    required this.reviewsAllowed,
-    required this.averageRating,
-    required this.ratingCount,
-    required this.upsellIds,
-    required this.crossSellIds,
-    required this.parentId,
-    required this.purchaseNote,
-    required this.categories,
-    required this.tags,
-    required this.images,
-    required this.attributes,
-    required this.defaultAttributes,
-    required this.variations,
-    required this.groupedProducts,
-    required this.menuOrder,
-    required this.priceHtml,
-    required this.relatedIds,
-    required this.metaData,
-    required this.stockStatus,
-    required this.hasOptions,
-    required this.postPassword,
-    required this.links,
-  });
+  int? id;
+  String? name;
+  String? slug;
+  String? permalink;
+  String? dateCreated;
+  String? dateCreatedGmt;
+  String? dateModified;
+  String? dateModifiedGmt;
+  String? type;
+  String? status;
+  bool? featured;
+  String? catalogVisibility;
+  String? description;
+  String? shortDescription;
+  String? sku;
+  String? price;
+  String? regularPrice;
+  String? salePrice;
+  dynamic dateOnSaleFrom;
+  dynamic dateOnSaleFromGmt;
+  dynamic dateOnSaleTo;
+  dynamic dateOnSaleToGmt;
+  bool? onSale;
+  bool? purchasable;
+  int? totalSales;
+  bool? virtual;
+  bool? downloadable;
+  List<dynamic>? downloads;
+  int? downloadLimit;
+  int? downloadExpiry;
+  String? externalUrl;
+  String? buttonText;
+  String? taxStatus;
+  String? taxClass;
+  bool? manageStock;
+  dynamic stockQuantity;
+  String? backorders;
+  bool? backordersAllowed;
+  bool? backordered;
+  dynamic lowStockAmount;
+  bool? soldIndividually;
+  String? weight;
+  Dimensions? dimensions;
+  bool? shippingRequired;
+  bool? shippingTaxable;
+  String? shippingClass;
+  int? shippingClassId;
+  bool? reviewsAllowed;
+  String? averageRating;
+  int? ratingCount;
+  List<dynamic>? upsellIds;
+  List<dynamic>? crossSellIds;
+  int? parentId;
+  String? purchaseNote;
+  List<Categories>? categories;
+  List<dynamic>? tags;
+  List<Images>? images;
+  List<dynamic>? attributes;
+  List<dynamic>? defaultAttributes;
+  List<dynamic>? variations;
+  List<dynamic>? groupedProducts;
+  int? menuOrder;
+  String? priceHtml;
+  List<int>? relatedIds;
+  List<MetaData>? metaData;
+  String? stockStatus;
+  bool? hasOptions;
+  String? postPassword;
+  List<dynamic>? aioseoNotices;
+  ProductUnits? productUnits;
+  WcfmProductPolicyData? wcfmProductPolicyData;
+  bool? showAdditionalInfoTab;
+  dynamic store;
+  String? productRestirctionMessage;
+  Links? lLinks;
 
-  late final int id;
-  late final String name;
-  late final String slug;
-  late final String permalink;
-  late final String dateCreated;
-  late final String dateCreatedGmt;
-  late final String dateModified;
-  late final String dateModifiedGmt;
-  late final String type;
-  late final String status;
-  late final bool featured;
-  late final String catalogVisibility;
-  late final String description;
-  late final String shortDescription;
-  late final String sku;
-  late final String price;
-  late final String regularPrice;
-  late final String salePrice;
-  late final Null dateOnSaleFrom;
-  late final Null dateOnSaleFromGmt;
-  late final Null dateOnSaleTo;
-  late final Null dateOnSaleToGmt;
-  late final bool onSale;
-  late final bool purchasable;
-  late final int totalSales;
-  late final bool virtual;
-  late final bool downloadable;
-  late final List<dynamic> downloads;
-  late final int downloadLimit;
-  late final int downloadExpiry;
-  late final String externalUrl;
-  late final String buttonText;
-  late final String taxStatus;
-  late final String taxClass;
-  late final bool manageStock;
-  late final Null stockQuantity;
-  late final String backorders;
-  late final bool backordersAllowed;
-  late final bool backordered;
-  late final Null lowStockAmount;
-  late final bool soldIndividually;
-  late final String weight;
-  late final Dimensions dimensions;
-  late final bool shippingRequired;
-  late final bool shippingTaxable;
-  late final String shippingClass;
-  late final int shippingClassId;
-  late final bool reviewsAllowed;
-  late final String averageRating;
-  late final int ratingCount;
-  late final List<dynamic> upsellIds;
-  late final List<dynamic> crossSellIds;
-  late final int parentId;
-  late final String purchaseNote;
-  late final List<Categories> categories;
-  late final List<dynamic> tags;
-  late final List<Images> images;
-  late final List<Attributes> attributes;
-  late final List<dynamic> defaultAttributes;
-  late final List<dynamic> variations;
-  late final List<dynamic> groupedProducts;
-  late final int menuOrder;
-  late final String priceHtml;
-  late final List<int> relatedIds;
-  late final List<MetaData> metaData;
-  late final String stockStatus;
-  late final bool hasOptions;
-  late final String postPassword;
-  late final Links links;
+  Data(
+      {this.id,
+      this.name,
+      this.slug,
+      this.permalink,
+      this.dateCreated,
+      this.dateCreatedGmt,
+      this.dateModified,
+      this.dateModifiedGmt,
+      this.type,
+      this.status,
+      this.featured,
+      this.catalogVisibility,
+      this.description,
+      this.shortDescription,
+      this.sku,
+      this.price,
+      this.regularPrice,
+      this.salePrice,
+      this.dateOnSaleFrom,
+      this.dateOnSaleFromGmt,
+      this.dateOnSaleTo,
+      this.dateOnSaleToGmt,
+      this.onSale,
+      this.purchasable,
+      this.totalSales,
+      this.virtual,
+      this.downloadable,
+      this.downloads,
+      this.downloadLimit,
+      this.downloadExpiry,
+      this.externalUrl,
+      this.buttonText,
+      this.taxStatus,
+      this.taxClass,
+      this.manageStock,
+      this.stockQuantity,
+      this.backorders,
+      this.backordersAllowed,
+      this.backordered,
+      this.lowStockAmount,
+      this.soldIndividually,
+      this.weight,
+      this.dimensions,
+      this.shippingRequired,
+      this.shippingTaxable,
+      this.shippingClass,
+      this.shippingClassId,
+      this.reviewsAllowed,
+      this.averageRating,
+      this.ratingCount,
+      this.upsellIds,
+      this.crossSellIds,
+      this.parentId,
+      this.purchaseNote,
+      this.categories,
+      this.tags,
+      this.images,
+      this.attributes,
+      this.defaultAttributes,
+      this.variations,
+      this.groupedProducts,
+      this.menuOrder,
+      this.priceHtml,
+      this.relatedIds,
+      this.metaData,
+      this.stockStatus,
+      this.hasOptions,
+      this.postPassword,
+      this.aioseoNotices,
+      this.productUnits,
+      this.wcfmProductPolicyData,
+      this.showAdditionalInfoTab,
+      this.store,
+      this.productRestirctionMessage,
+      this.lLinks});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -190,16 +198,21 @@ class Data {
     price = json['price'];
     regularPrice = json['regular_price'];
     salePrice = json['sale_price'];
-    dateOnSaleFrom = null;
-    dateOnSaleFromGmt = null;
-    dateOnSaleTo = null;
-    dateOnSaleToGmt = null;
+    dateOnSaleFrom = json['date_on_sale_from'];
+    dateOnSaleFromGmt = json['date_on_sale_from_gmt'];
+    dateOnSaleTo = json['date_on_sale_to'];
+    dateOnSaleToGmt = json['date_on_sale_to_gmt'];
     onSale = json['on_sale'];
     purchasable = json['purchasable'];
     totalSales = json['total_sales'];
     virtual = json['virtual'];
     downloadable = json['downloadable'];
-    downloads = List.castFrom<dynamic, dynamic>(json['downloads']);
+    if (json['downloads'] != null) {
+      downloads = <dynamic>[];
+      json['downloads'].forEach((v) {
+        downloads!.add(v);
+      });
+    }
     downloadLimit = json['download_limit'];
     downloadExpiry = json['download_expiry'];
     externalUrl = json['external_url'];
@@ -207,14 +220,14 @@ class Data {
     taxStatus = json['tax_status'];
     taxClass = json['tax_class'];
     manageStock = json['manage_stock'];
-    stockQuantity = null;
+    stockQuantity = json['stock_quantity'];
     backorders = json['backorders'];
     backordersAllowed = json['backorders_allowed'];
     backordered = json['backordered'];
-    lowStockAmount = null;
+    lowStockAmount = json['low_stock_amount'];
     soldIndividually = json['sold_individually'];
     weight = json['weight'];
-    dimensions = Dimensions.fromJson(json['dimensions']);
+    dimensions = json['dimensions'] != null ? Dimensions.fromJson(json['dimensions']) : null;
     shippingRequired = json['shipping_required'];
     shippingTaxable = json['shipping_taxable'];
     shippingClass = json['shipping_class'];
@@ -222,112 +235,217 @@ class Data {
     reviewsAllowed = json['reviews_allowed'];
     averageRating = json['average_rating'];
     ratingCount = json['rating_count'];
-    upsellIds = List.castFrom<dynamic, dynamic>(json['upsell_ids']);
-    crossSellIds = List.castFrom<dynamic, dynamic>(json['cross_sell_ids']);
+    if (json['upsell_ids'] != null) {
+      upsellIds = <dynamic>[];
+      json['upsell_ids'].forEach((v) {
+        upsellIds!.add(v);
+      });
+    }
+    if (json['cross_sell_ids'] != null) {
+      crossSellIds = <dynamic>[];
+      json['cross_sell_ids'].forEach((v) {
+        crossSellIds!.add(v);
+      });
+    }
     parentId = json['parent_id'];
     purchaseNote = json['purchase_note'];
-    categories = List.from(json['categories']).map((e) => Categories.fromJson(e)).toList();
-    tags = List.castFrom<dynamic, dynamic>(json['tags']);
-    images = List.from(json['images']).map((e) => Images.fromJson(e)).toList();
-    attributes = List.from(json['attributes']).map((e) => Attributes.fromJson(e)).toList();
-    defaultAttributes = List.castFrom<dynamic, dynamic>(json['default_attributes']);
-    variations = List.castFrom<dynamic, dynamic>(json['variations']);
-    groupedProducts = List.castFrom<dynamic, dynamic>(json['grouped_products']);
+    if (json['categories'] != null) {
+      categories = <Categories>[];
+      json['categories'].forEach((v) {
+        categories!.add(Categories.fromJson(v));
+      });
+    }
+    if (json['tags'] != null) {
+      tags = <dynamic>[];
+      json['tags'].forEach((v) {
+        tags!.add(v);
+      });
+    }
+    if (json['images'] != null) {
+      images = <Images>[];
+      json['images'].forEach((v) {
+        images!.add(Images.fromJson(v));
+      });
+    }
+    if (json['attributes'] != null) {
+      attributes = <dynamic>[];
+      json['attributes'].forEach((v) {
+        attributes!.add(v);
+      });
+    }
+    if (json['default_attributes'] != null) {
+      defaultAttributes = <dynamic>[];
+      json['default_attributes'].forEach((v) {
+        defaultAttributes!.add(v);
+      });
+    }
+    if (json['variations'] != null) {
+      variations = <dynamic>[];
+      json['variations'].forEach((v) {
+        variations!.add(v);
+      });
+    }
+    if (json['grouped_products'] != null) {
+      groupedProducts = <dynamic>[];
+      json['grouped_products'].forEach((v) {
+        groupedProducts!.add(v);
+      });
+    }
     menuOrder = json['menu_order'];
     priceHtml = json['price_html'];
-    relatedIds = List.castFrom<dynamic, int>(json['related_ids']);
-    metaData = List.from(json['meta_data']).map((e) => MetaData.fromJson(e)).toList();
+    relatedIds = json['related_ids'].cast<int>();
+    if (json['meta_data'] != null) {
+      metaData = <MetaData>[];
+      json['meta_data'].forEach((v) {
+        metaData!.add(MetaData.fromJson(v));
+      });
+    }
     stockStatus = json['stock_status'];
     hasOptions = json['has_options'];
     postPassword = json['post_password'];
-    links = Links.fromJson(json['_links']);
+    if (json['aioseo_notices'] != null) {
+      aioseoNotices = <dynamic>[];
+      json['aioseo_notices'].forEach((v) {
+        aioseoNotices!.add(v);
+      });
+    }
+    productUnits =
+        json['product_units'] != null ? ProductUnits.fromJson(json['product_units']) : null;
+    wcfmProductPolicyData = json['wcfm_product_policy_data'] != null
+        ? WcfmProductPolicyData.fromJson(json['wcfm_product_policy_data'])
+        : null;
+    showAdditionalInfoTab = json['showAdditionalInfoTab'];
+    if (json['store'] != null) {
+      store = <dynamic>[];
+      json['store'].forEach((key,v) {
+        store.add(v);
+      });
+    }
+    productRestirctionMessage = json['product_restirction_message'];
+    lLinks = json['_links'] != null ? Links.fromJson(json['_links']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['id'] = id;
-    _data['name'] = name;
-    _data['slug'] = slug;
-    _data['permalink'] = permalink;
-    _data['date_created'] = dateCreated;
-    _data['date_created_gmt'] = dateCreatedGmt;
-    _data['date_modified'] = dateModified;
-    _data['date_modified_gmt'] = dateModifiedGmt;
-    _data['type'] = type;
-    _data['status'] = status;
-    _data['featured'] = featured;
-    _data['catalog_visibility'] = catalogVisibility;
-    _data['description'] = description;
-    _data['short_description'] = shortDescription;
-    _data['sku'] = sku;
-    _data['price'] = price;
-    _data['regular_price'] = regularPrice;
-    _data['sale_price'] = salePrice;
-    _data['date_on_sale_from'] = dateOnSaleFrom;
-    _data['date_on_sale_from_gmt'] = dateOnSaleFromGmt;
-    _data['date_on_sale_to'] = dateOnSaleTo;
-    _data['date_on_sale_to_gmt'] = dateOnSaleToGmt;
-    _data['on_sale'] = onSale;
-    _data['purchasable'] = purchasable;
-    _data['total_sales'] = totalSales;
-    _data['virtual'] = virtual;
-    _data['downloadable'] = downloadable;
-    _data['downloads'] = downloads;
-    _data['download_limit'] = downloadLimit;
-    _data['download_expiry'] = downloadExpiry;
-    _data['external_url'] = externalUrl;
-    _data['button_text'] = buttonText;
-    _data['tax_status'] = taxStatus;
-    _data['tax_class'] = taxClass;
-    _data['manage_stock'] = manageStock;
-    _data['stock_quantity'] = stockQuantity;
-    _data['backorders'] = backorders;
-    _data['backorders_allowed'] = backordersAllowed;
-    _data['backordered'] = backordered;
-    _data['low_stock_amount'] = lowStockAmount;
-    _data['sold_individually'] = soldIndividually;
-    _data['weight'] = weight;
-    _data['dimensions'] = dimensions.toJson();
-    _data['shipping_required'] = shippingRequired;
-    _data['shipping_taxable'] = shippingTaxable;
-    _data['shipping_class'] = shippingClass;
-    _data['shipping_class_id'] = shippingClassId;
-    _data['reviews_allowed'] = reviewsAllowed;
-    _data['average_rating'] = averageRating;
-    _data['rating_count'] = ratingCount;
-    _data['upsell_ids'] = upsellIds;
-    _data['cross_sell_ids'] = crossSellIds;
-    _data['parent_id'] = parentId;
-    _data['purchase_note'] = purchaseNote;
-    _data['categories'] = categories.map((e) => e.toJson()).toList();
-    _data['tags'] = tags;
-    _data['images'] = images.map((e) => e.toJson()).toList();
-    _data['attributes'] = attributes.map((e) => e.toJson()).toList();
-    _data['default_attributes'] = defaultAttributes;
-    _data['variations'] = variations;
-    _data['grouped_products'] = groupedProducts;
-    _data['menu_order'] = menuOrder;
-    _data['price_html'] = priceHtml;
-    _data['related_ids'] = relatedIds;
-    _data['meta_data'] = metaData.map((e) => e.toJson()).toList();
-    _data['stock_status'] = stockStatus;
-    _data['has_options'] = hasOptions;
-    _data['post_password'] = postPassword;
-    _data['_links'] = links.toJson();
-    return _data;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['slug'] = slug;
+    data['permalink'] = permalink;
+    data['date_created'] = dateCreated;
+    data['date_created_gmt'] = dateCreatedGmt;
+    data['date_modified'] = dateModified;
+    data['date_modified_gmt'] = dateModifiedGmt;
+    data['type'] = type;
+    data['status'] = status;
+    data['featured'] = featured;
+    data['catalog_visibility'] = catalogVisibility;
+    data['description'] = description;
+    data['short_description'] = shortDescription;
+    data['sku'] = sku;
+    data['price'] = price;
+    data['regular_price'] = regularPrice;
+    data['sale_price'] = salePrice;
+    data['date_on_sale_from'] = dateOnSaleFrom;
+    data['date_on_sale_from_gmt'] = dateOnSaleFromGmt;
+    data['date_on_sale_to'] = dateOnSaleTo;
+    data['date_on_sale_to_gmt'] = dateOnSaleToGmt;
+    data['on_sale'] = onSale;
+    data['purchasable'] = purchasable;
+    data['total_sales'] = totalSales;
+    data['virtual'] = virtual;
+    data['downloadable'] = downloadable;
+    if (downloads != null) {
+      data['downloads'] = downloads!.map((v) => v.toJson()).toList();
+    }
+    data['download_limit'] = downloadLimit;
+    data['download_expiry'] = downloadExpiry;
+    data['external_url'] = externalUrl;
+    data['button_text'] = buttonText;
+    data['tax_status'] = taxStatus;
+    data['tax_class'] = taxClass;
+    data['manage_stock'] = manageStock;
+    data['stock_quantity'] = stockQuantity;
+    data['backorders'] = backorders;
+    data['backorders_allowed'] = backordersAllowed;
+    data['backordered'] = backordered;
+    data['low_stock_amount'] = lowStockAmount;
+    data['sold_individually'] = soldIndividually;
+    data['weight'] = weight;
+    if (dimensions != null) {
+      data['dimensions'] = dimensions!.toJson();
+    }
+    data['shipping_required'] = shippingRequired;
+    data['shipping_taxable'] = shippingTaxable;
+    data['shipping_class'] = shippingClass;
+    data['shipping_class_id'] = shippingClassId;
+    data['reviews_allowed'] = reviewsAllowed;
+    data['average_rating'] = averageRating;
+    data['rating_count'] = ratingCount;
+    if (upsellIds != null) {
+      data['upsell_ids'] = upsellIds!.map((v) => v.toJson()).toList();
+    }
+    if (crossSellIds != null) {
+      data['cross_sell_ids'] = crossSellIds!.map((v) => v.toJson()).toList();
+    }
+    data['parent_id'] = parentId;
+    data['purchase_note'] = purchaseNote;
+    if (categories != null) {
+      data['categories'] = categories!.map((v) => v.toJson()).toList();
+    }
+    if (tags != null) {
+      data['tags'] = tags!.map((v) => v.toJson()).toList();
+    }
+    if (images != null) {
+      data['images'] = images!.map((v) => v.toJson()).toList();
+    }
+    if (attributes != null) {
+      data['attributes'] = attributes!.map((v) => v.toJson()).toList();
+    }
+    if (defaultAttributes != null) {
+      data['default_attributes'] = defaultAttributes!.map((v) => v.toJson()).toList();
+    }
+    if (variations != null) {
+      data['variations'] = variations!.map((v) => v.toJson()).toList();
+    }
+    if (groupedProducts != null) {
+      data['grouped_products'] = groupedProducts!.map((v) => v.toJson()).toList();
+    }
+    data['menu_order'] = menuOrder;
+    data['price_html'] = priceHtml;
+    data['related_ids'] = relatedIds;
+    if (metaData != null) {
+      data['meta_data'] = metaData!.map((v) => v.toJson()).toList();
+    }
+    data['stock_status'] = stockStatus;
+    data['has_options'] = hasOptions;
+    data['post_password'] = postPassword;
+    if (aioseoNotices != null) {
+      data['aioseo_notices'] = aioseoNotices!.map((v) => v.toJson()).toList();
+    }
+    if (productUnits != null) {
+      data['product_units'] = productUnits!.toJson();
+    }
+    if (wcfmProductPolicyData != null) {
+      data['wcfm_product_policy_data'] = wcfmProductPolicyData!.toJson();
+    }
+    data['showAdditionalInfoTab'] = showAdditionalInfoTab;
+    if (store != null) {
+      data['store'] = store?.map((v) => v.toJson()).toList();
+    }
+    data['product_restirction_message'] = productRestirctionMessage;
+    if (lLinks != null) {
+      data['_links'] = lLinks!.toJson();
+    }
+    return data;
   }
 }
 
 class Dimensions {
-  Dimensions({
-    required this.length,
-    required this.width,
-    required this.height,
-  });
+  String? length;
+  String? width;
+  String? height;
 
-  late final String length;
-  late final String width;
-  late final String height;
+  Dimensions({this.length, this.width, this.height});
 
   Dimensions.fromJson(Map<String, dynamic> json) {
     length = json['length'];
@@ -336,24 +454,20 @@ class Dimensions {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['length'] = length;
-    _data['width'] = width;
-    _data['height'] = height;
-    return _data;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['length'] = length;
+    data['width'] = width;
+    data['height'] = height;
+    return data;
   }
 }
 
 class Categories {
-  Categories({
-    required this.id,
-    required this.name,
-    required this.slug,
-  });
+  int? id;
+  String? name;
+  String? slug;
 
-  late final int id;
-  late final String name;
-  late final String slug;
+  Categories({this.id, this.name, this.slug});
 
   Categories.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -362,34 +476,51 @@ class Categories {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['id'] = id;
-    _data['name'] = name;
-    _data['slug'] = slug;
-    return _data;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['slug'] = slug;
+    return data;
   }
 }
 
 class Images {
-  Images({
-    required this.id,
-    required this.dateCreated,
-    required this.dateCreatedGmt,
-    required this.dateModified,
-    required this.dateModifiedGmt,
-    required this.src,
-    required this.name,
-    required this.alt,
-  });
+  int? id;
+  String? dateCreated;
+  String? dateCreatedGmt;
+  String? dateModified;
+  String? dateModifiedGmt;
+  String? src;
+  String? name;
+  String? alt;
+  String? s1536x1536;
+  String? s2048x2048;
+  String? wolmartPostMedium;
+  String? wolmartPostSmall;
+  String? wolmartProductThumbnail;
+  String? wolmartCustom;
+  String? woocommerceThumbnail;
+  String? woocommerceSingle;
+  String? woocommerceGalleryThumbnail;
 
-  late final int id;
-  late final String dateCreated;
-  late final String dateCreatedGmt;
-  late final String dateModified;
-  late final String dateModifiedGmt;
-  late final String src;
-  late final String name;
-  late final String alt;
+  Images(
+      {this.id,
+      this.dateCreated,
+      this.dateCreatedGmt,
+      this.dateModified,
+      this.dateModifiedGmt,
+      this.src,
+      this.name,
+      this.alt,
+      this.s1536x1536,
+      this.s2048x2048,
+      this.wolmartPostMedium,
+      this.wolmartPostSmall,
+      this.wolmartProductThumbnail,
+      this.wolmartCustom,
+      this.woocommerceThumbnail,
+      this.woocommerceSingle,
+      this.woocommerceGalleryThumbnail});
 
   Images.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -400,70 +531,46 @@ class Images {
     src = json['src'];
     name = json['name'];
     alt = json['alt'];
+    s1536x1536 = json['1536x1536'];
+    s2048x2048 = json['2048x2048'];
+    wolmartPostMedium = json['wolmart-post-medium'];
+    wolmartPostSmall = json['wolmart-post-small'];
+    wolmartProductThumbnail = json['wolmart-product-thumbnail'];
+    wolmartCustom = json['Wolmart Custom'];
+    woocommerceThumbnail = json['woocommerce_thumbnail'];
+    woocommerceSingle = json['woocommerce_single'];
+    woocommerceGalleryThumbnail = json['woocommerce_gallery_thumbnail'];
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['id'] = id;
-    _data['date_created'] = dateCreated;
-    _data['date_created_gmt'] = dateCreatedGmt;
-    _data['date_modified'] = dateModified;
-    _data['date_modified_gmt'] = dateModifiedGmt;
-    _data['src'] = src;
-    _data['name'] = name;
-    _data['alt'] = alt;
-    return _data;
-  }
-}
-
-class Attributes {
-  Attributes({
-    required this.id,
-    required this.name,
-    required this.position,
-    required this.visible,
-    required this.variation,
-    required this.options,
-  });
-
-  late final int id;
-  late final String name;
-  late final int position;
-  late final bool visible;
-  late final bool variation;
-  late final List<String> options;
-
-  Attributes.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    position = json['position'];
-    visible = json['visible'];
-    variation = json['variation'];
-    options = List.castFrom<dynamic, String>(json['options']);
-  }
-
-  Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['id'] = id;
-    _data['name'] = name;
-    _data['position'] = position;
-    _data['visible'] = visible;
-    _data['variation'] = variation;
-    _data['options'] = options;
-    return _data;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['date_created'] = dateCreated;
+    data['date_created_gmt'] = dateCreatedGmt;
+    data['date_modified'] = dateModified;
+    data['date_modified_gmt'] = dateModifiedGmt;
+    data['src'] = src;
+    data['name'] = name;
+    data['alt'] = alt;
+    data['1536x1536'] = s1536x1536;
+    data['2048x2048'] = s2048x2048;
+    data['wolmart-post-medium'] = wolmartPostMedium;
+    data['wolmart-post-small'] = wolmartPostSmall;
+    data['wolmart-product-thumbnail'] = wolmartProductThumbnail;
+    data['Wolmart Custom'] = wolmartCustom;
+    data['woocommerce_thumbnail'] = woocommerceThumbnail;
+    data['woocommerce_single'] = woocommerceSingle;
+    data['woocommerce_gallery_thumbnail'] = woocommerceGalleryThumbnail;
+    return data;
   }
 }
 
 class MetaData {
-  MetaData({
-    required this.id,
-    required this.key,
-    required this.value,
-  });
+  int? id;
+  String? key;
+  dynamic value;
 
-  late final int id;
-  late final String key;
-  late final String value;
+  MetaData({this.id, this.key, this.value});
 
   MetaData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -472,68 +579,123 @@ class MetaData {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['id'] = id;
-    _data['key'] = key;
-    _data['value'] = value;
-    return _data;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['key'] = key;
+    data['value'] = value;
+    return data;
+  }
+}
+
+class ProductUnits {
+  String? weightUnit;
+  String? dimensionUnit;
+
+  ProductUnits({this.weightUnit, this.dimensionUnit});
+
+  ProductUnits.fromJson(Map<String, dynamic> json) {
+    weightUnit = json['weight_unit'];
+    dimensionUnit = json['dimension_unit'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['weight_unit'] = this.weightUnit;
+    data['dimension_unit'] = this.dimensionUnit;
+    return data;
+  }
+}
+
+class WcfmProductPolicyData {
+  bool? visible;
+  String? shippingPolicy;
+  String? shippingPolicyHeading;
+  String? refundPolicy;
+  String? refundPolicyHeading;
+  String? cancellationPolicy;
+  String? cancellationPolicyHeading;
+  String? tabTitle;
+
+  WcfmProductPolicyData(
+      {this.visible,
+      this.shippingPolicy,
+      this.shippingPolicyHeading,
+      this.refundPolicy,
+      this.refundPolicyHeading,
+      this.cancellationPolicy,
+      this.cancellationPolicyHeading,
+      this.tabTitle});
+
+  WcfmProductPolicyData.fromJson(Map<String, dynamic> json) {
+    visible = json['visible'];
+    shippingPolicy = json['shipping_policy'];
+    shippingPolicyHeading = json['shipping_policy_heading'];
+    refundPolicy = json['refund_policy'];
+    refundPolicyHeading = json['refund_policy_heading'];
+    cancellationPolicy = json['cancellation_policy'];
+    cancellationPolicyHeading = json['cancellation_policy_heading'];
+    tabTitle = json['tab_title'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['visible'] = visible;
+    data['shipping_policy'] = shippingPolicy;
+    data['shipping_policy_heading'] = shippingPolicyHeading;
+    data['refund_policy'] = refundPolicy;
+    data['refund_policy_heading'] = refundPolicyHeading;
+    data['cancellation_policy'] = cancellationPolicy;
+    data['cancellation_policy_heading'] = cancellationPolicyHeading;
+    data['tab_title'] = tabTitle;
+    return data;
   }
 }
 
 class Links {
-  Links({
-    required this.self,
-    required this.collection,
-  });
+  List<Self>? self;
+  List<dynamic>? collection;
 
-  late final List<Self> self;
-  late final List<Collection> collection;
+  Links({this.self, this.collection});
 
   Links.fromJson(Map<String, dynamic> json) {
-    self = List.from(json['self']).map((e) => Self.fromJson(e)).toList();
-    collection = List.from(json['collection']).map((e) => Collection.fromJson(e)).toList();
+    if (json['self'] != null) {
+      self = <Self>[];
+      json['self'].forEach((v) {
+        self!.add(Self.fromJson(v));
+      });
+    }
+    if (json['collection'] != null) {
+      collection = <dynamic>[];
+      json['collection'].forEach((v) {
+        collection!.add(v);
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['self'] = self.map((e) => e.toJson()).toList();
-    _data['collection'] = collection.map((e) => e.toJson()).toList();
-    return _data;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (self != null) {
+      data['self'] = self!.map((v) => v.toJson()).toList();
+    }
+    if (collection != null) {
+      data['collection'] = collection!.map((v) => v.toJson()).toList();
+    }
+    return data;
   }
 }
 
 class Self {
-  Self({
-    required this.href,
-  });
+  String? href;
 
-  late final String href;
+  Self({this.href});
 
   Self.fromJson(Map<String, dynamic> json) {
     href = json['href'];
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['href'] = href;
-    return _data;
-  }
-}
-
-class Collection {
-  Collection({
-    required this.href,
-  });
-
-  late final String href;
-
-  Collection.fromJson(Map<String, dynamic> json) {
-    href = json['href'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['href'] = href;
-    return _data;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['href'] = href;
+    return data;
   }
 }

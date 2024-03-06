@@ -1,4 +1,5 @@
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'package:local_first/Utility/utility_export.dart';
 import 'package:pinput/pinput.dart';
 
@@ -162,3 +163,66 @@ disableFocusScopeNode(BuildContext context) {
     currentFocus.unfocus();
   }
 }
+
+dateFormatter(String? dateTime, {String? myFormat, String? inputFormat}) {
+  final DateTime now = DateTime.now();
+
+  if (dateTime == null || dateTime == 'null' || dateTime == '-') {
+    return '-';
+  } else {
+    /// Your date format
+    final DateFormat formatter = DateFormat(myFormat ?? 'MM/dd/yyyy');
+    final String formatted;
+    if (isNotEmptyString(dateTime)) {
+      // 'yyyy-MM-dd'
+      formatted = formatter.format(DateFormat(inputFormat ?? 'yyyy-MM-dd').parse(dateTime));
+    } else {
+      formatted = 'Date';
+      // formatted = formatter.format(now);
+    }
+    return formatted;
+  }
+}
+
+// Future userDatePicker({required BuildContext context, required RxBool userDobSelected}) {
+//   return showDialog(
+//     context: context,
+//     builder: (BuildContext contextTwo) {
+//       return Dialog(
+//         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+//         elevation: 15,
+//         child: SizedBox(
+//           height: 325,
+//           width: 300,
+//           child: Column(
+//             children: [
+//               SizedBox(
+//                 height: 250,
+//                 width: 250,
+//                 child: SfDateRangePicker(
+//                   maxDate: maxDate,
+//                   // initialDisplayDate: DateTime(1998,12,09),
+//                   // initialSelectedDate: DateTime(1998,12,09),
+//                   onSelectionChanged: _onSelectionChanged,
+//                   selectionMode: DateRangePickerSelectionMode.single,
+//                   initialSelectedRange: PickerDateRange(
+//                       DateTime.now().subtract(const Duration(days: 4)),
+//                       DateTime.now().add(const Duration(days: 3))),
+//                 ),
+//               ),
+//               Padding(
+//                 padding: const EdgeInsets.symmetric(horizontal: 10),
+//                 child: commonFillButtonView(
+//                     title: 'Select',
+//                     tapOnButton: () {
+//                       userDobSelected.value = true;
+//                       Get.back(result: userBobSelectedDate.value);
+//                     }),
+//               )
+//             ],
+//           ),
+//         ),
+//       );
+//     },
+//   );
+// }

@@ -5,6 +5,7 @@ import 'package:local_first/View/OnBoarding/on_boarding_screen.dart';
 
 import '../../Models/AuthenticationModel/log_in_model.dart';
 import '../../Utility/utility_export.dart';
+import '../../VendorFlow/Dashboard/vdashboard_screen.dart';
 import '../Dashboard/bottom_navigation_screen.dart';
 
 class SplashScreen extends StatefulWidget {

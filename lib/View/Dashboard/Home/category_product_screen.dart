@@ -1,10 +1,14 @@
+import 'dart:ffi';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:local_first/View/Dashboard/Home/product_details_screen.dart';
-
 import '../../../Utility/utility_export.dart';
 
 class CategoryProductScreen extends StatefulWidget {
-  const CategoryProductScreen({super.key});
+  int? productId;
+
+  CategoryProductScreen({super.key, this.productId});
 
   @override
   State<CategoryProductScreen> createState() => _CategoryProductScreenState();
@@ -12,7 +16,7 @@ class CategoryProductScreen extends StatefulWidget {
 
 class _CategoryProductScreenState extends State<CategoryProductScreen> {
   TextEditingController searchController = TextEditingController();
-
+  RxBool? isLoading = false.obs;
   String? selectedValue;
   List<String> storeByList = [
     'Sort By',
@@ -29,10 +33,8 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    kCategoryController.getProductByCategoryCall({}, () {}, isLoading!, widget.productId);
     super.initState();
-
-    // selectedValue = resultsFilterList.first;
   }
 
   @override
@@ -106,48 +108,82 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
                   },
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      '145 Result',
-                      style: AppFontStyle.greyOpenSans12W600.copyWith(fontWeight: FontWeight.w700),
-                    ),
-                    createRoundedDropDown(),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      productList(length: 3),
-                      SizedBox(
-                        height: 160,
-                        child: ListView.builder(
-                          itemCount: 4,
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              height: 160,
-                              width: getScreenWidth(context) * 0.83,
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
-                              child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(12),
-                                  child: Image(image: imagesCategoryProductBanner)),
-                            );
-                          },
-                        ),
-                      ).marginSymmetric(vertical: 10),
-                      productList(length: 3),
-                    ],
-                  ),
-                ),
-              ),
+              Obx(() {
+                return isLoading?.value == false
+                    ? kCategoryController.getProductsByCategoryList.isNotEmpty
+                        ? Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      StreamBuilder<Object>(
+                                          stream:
+                                              kCategoryController.getProductsByCategoryList.stream,
+                                          builder: (context, snapshot) {
+                                            return Text(
+                                              kCategoryController
+                                                      .getProductsByCategoryList.isNotEmpty
+                                                  ? '${kCategoryController.getProductsByCategoryList.length} Result'
+                                                  : '',
+                                              style: AppFontStyle.greyOpenSans12W600
+                                                  .copyWith(fontWeight: FontWeight.w700),
+                                            );
+                                          }),
+                                      createRoundedDropDown(),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  child: SingleChildScrollView(
+                                    child: StreamBuilder<Object>(
+                                        stream:
+                                            kCategoryController.getProductsByCategoryList.stream,
+                                        builder: (context, snapshot) {
+                                          return Column(
+                                            children: [
+                                              kCategoryController
+                                                      .getProductsByCategoryList.isNotEmpty
+                                                  ? productList(
+                                                      length: kCategoryController
+                                                          .getProductsByCategoryList.length.obs)
+                                                  : const Expanded(
+                                                      child: Center(
+                                                          child: CircularProgressIndicator())),
+                                              // SizedBox(
+                                              //   height: 160,
+                                              //   child: ListView.builder(
+                                              //     itemCount: 4,
+                                              //     padding: const EdgeInsets.symmetric(horizontal: 10),
+                                              //     shrinkWrap: true,
+                                              //     scrollDirection: Axis.horizontal,
+                                              //     itemBuilder: (context, index) {
+                                              //       return Container(
+                                              //         height: 160,
+                                              //         width: getScreenWidth(context) * 0.83,
+                                              //         padding: const EdgeInsets.symmetric(horizontal: 10),
+                                              //         child: ClipRRect(
+                                              //             borderRadius: BorderRadius.circular(12),
+                                              //             child: Image(image: imagesCategoryProductBanner)),
+                                              //       );
+                                              //     },
+                                              //   ),
+                                              // ).marginSymmetric(vertical: 10),
+                                              // productList(length: 3),
+                                            ],
+                                          );
+                                        }),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        : noDataPlaceHolder()
+                    : const Center(child: CircularProgressIndicator());
+              }),
             ],
           ),
         ));
@@ -185,133 +221,162 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
     });
   }
 
-  Widget productList({required int length}) {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: length,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: InkWell(
-            highlightColor: white,
-            splashColor: white,
-            onTap: () {
-              Get.to(() => const ProductDetailsScreen());
-            },
-            child: Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              padding: const EdgeInsets.all(8),
-              decoration: const BoxDecoration(
-                color: white,
-                borderRadius: BorderRadius.all(Radius.circular(12)),
-                boxShadow: [
-                  BoxShadow(
-                    color: offWhite,
-                    blurRadius: 10.0, // soften the shadow
-                    spreadRadius: 3.0, //extend the shadow
-                    offset: Offset(
-                      1.0, // Move to right 5  horizontally
-                      1.0, // Move to bottom 5 Vertically
-                    ),
-                  )
-                ],
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ClipRRect(
-                      borderRadius: const BorderRadius.all(Radius.circular(5)),
-                      child: Image(
-                        width: 70,
-                        image: imagesCategoryProduct1,
-                        fit: BoxFit.fill,
-                      )),
-                  width10,
-                  Flexible(
-                    child: Column(
-                      children: [
-                        Text(
-                          'SAMSUNG Galaxy M34 5G (Prism Silver, 128 GB)',
-                          style: AppFontStyle.blackOpenSans14W600,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 7),
-                          child: Row(
-                            children: [
-                              RatingBar.builder(
-                                initialRating: 4.5,
-                                minRating: 1,
-                                itemSize: 15,
-                                direction: Axis.horizontal,
-                                allowHalfRating: true,
-                                itemCount: 5,
-                                itemBuilder: (context, _) => const Icon(
-                                  Icons.star,
-                                  color: Colors.amber,
+  Widget productList({RxInt? length}) {
+    return Obx(() {
+      return ListView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: length?.value,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: InkWell(
+              highlightColor: white,
+              splashColor: white,
+              onTap: () {
+                Get.to(() => ProductDetailsScreen(
+                    productId: kCategoryController.getProductsByCategoryList[index].id));
+              },
+              child: Container(
+                margin: const EdgeInsets.symmetric(vertical: 8),
+                padding: const EdgeInsets.all(8),
+                decoration: const BoxDecoration(
+                  color: white,
+                  borderRadius: BorderRadius.all(Radius.circular(12)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: offWhite,
+                      blurRadius: 10.0, // soften the shadow
+                      spreadRadius: 3.0, //extend the shadow
+                      offset: Offset(
+                        1.0, // Move to right 5  horizontally
+                        1.0, // Move to bottom 5 Vertically
+                      ),
+                    )
+                  ],
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ClipRRect(
+                        borderRadius: const BorderRadius.all(Radius.circular(5)),
+                        child: kCategoryController
+                                        .getProductsByCategoryList[index].images?.isNotEmpty ==
+                                    true &&
+                                kCategoryController.getProductsByCategoryList[index].images?[0].src
+                                        ?.isNotEmpty ==
+                                    true
+                            ? CachedNetworkImage(
+                                fit: BoxFit.cover,
+                                height: 95,
+                                width: 73,
+                                imageUrl: kCategoryController
+                                        .getProductsByCategoryList[index].images?[0].src ??
+                                    '',
+                                errorWidget: (context, url, error) => const Icon(
+                                  Icons.error,
+                                  color: Colors.grey,
                                 ),
-                                onRatingUpdate: (rating) {
-                                  print(rating);
-                                },
+                              )
+                            : Image(
+                                width: 70,
+                                image: imagesCategoryProduct1,
+                                fit: BoxFit.fill,
+                              )),
+                    width10,
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            kCategoryController.getProductsByCategoryList[index].name ?? '',
+                            style: AppFontStyle.blackOpenSans14W600,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 7),
+                            child: Row(
+                              children: [
+                                RatingBar.builder(
+                                  initialRating: double.parse(kCategoryController
+                                          .getProductsByCategoryList[index].averageRating ??
+                                      ''),
+                                  minRating: 1,
+                                  itemSize: 15,
+                                  direction: Axis.horizontal,
+                                  allowHalfRating: true,
+                                  itemCount: 5,
+                                  ignoreGestures: true,
+                                  itemBuilder: (context, _) => const Icon(
+                                    Icons.star,
+                                    color: Colors.amber,
+                                  ),
+                                  onRatingUpdate: (rating) {
+                                    print(rating);
+                                  },
+                                ),
+                                width10,
+                                Text(
+                                  '(${kCategoryController.getProductsByCategoryList[index].ratingCount})',
+                                  style: AppFontStyle.greyOpenSans12W400,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Flexible(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 7),
+                                  child: Text(
+                                    '\$${kCategoryController.getProductsByCategoryList[index].price}',
+                                    overflow: TextOverflow.ellipsis,
+                                    style: AppFontStyle.blackOpenSans12W600
+                                        .copyWith(fontWeight: FontWeight.w700),
+                                  ),
+                                ),
                               ),
-                              width10,
-                              Text(
-                                '(52,288)',
-                                style: AppFontStyle.greyOpenSans12W400,
+                              Flexible(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 7),
+                                  child: Text(
+                                    kCategoryController
+                                        .getProductsByCategoryList[index].regularPrice
+                                        .toString(),
+                                    overflow: TextOverflow.ellipsis,
+                                    style: AppFontStyle.greyOpenSans12W500
+                                        .copyWith(decoration: TextDecoration.lineThrough),
+                                  ),
+                                ),
                               ),
+                              kCategoryController.getProductsByCategoryList[index].onSale == true
+                                  ? Flexible(
+                                      child: Text(
+                                        '22% off',
+                                        overflow: TextOverflow.ellipsis,
+                                        style: AppFontStyle.greyOpenSans12W500
+                                            .copyWith(color: colorPrimary2),
+                                      ),
+                                    )
+                                  : const SizedBox(),
                             ],
                           ),
-                        ),
-                        Row(
-                          children: [
-                            Flexible(
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 7),
-                                child: Text(
-                                  '\$21,999',
-                                  overflow: TextOverflow.ellipsis,
-                                  style: AppFontStyle.blackOpenSans12W600
-                                      .copyWith(fontWeight: FontWeight.w700),
-                                ),
-                              ),
-                            ),
-                            Flexible(
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 7),
-                                child: Text(
-                                  '\$27,999',
-                                  overflow: TextOverflow.ellipsis,
-                                  style: AppFontStyle.greyOpenSans12W500
-                                      .copyWith(decoration: TextDecoration.lineThrough),
-                                ),
-                              ),
-                            ),
-                            Flexible(
-                              child: Text(
-                                '22% off',
-                                overflow: TextOverflow.ellipsis,
-                                style:
-                                    AppFontStyle.greyOpenSans12W500.copyWith(color: colorPrimary2),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  width12,
-                  appBarButton(
-                      callBack: () {}, image: iconsLike, height: 26, width: 26, iconPadding: 4),
-                  customWidth(6),
-                  appBarButton(
-                      callBack: () {}, image: iconsCart, height: 26, width: 26, iconPadding: 4),
-                ],
+                    width12,
+                    appBarButton(
+                        callBack: () {}, image: iconsLike, height: 26, width: 26, iconPadding: 4),
+                    customWidth(6),
+                    appBarButton(
+                        callBack: () {}, image: iconsCart, height: 26, width: 26, iconPadding: 4),
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      },
-    );
+          );
+        },
+      );
+    });
   }
 
   Widget commonTextDropdown({required String title, required Color color, TextStyle? textStyle}) {
