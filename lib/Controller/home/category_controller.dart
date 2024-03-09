@@ -29,12 +29,11 @@ class CategoryController extends GetxController {
         if (allCategoryModel.data != null && allCategoryModel.data?.isNotEmpty == true) {
           allCategoryList.addAll(allCategoryModel.data as Iterable<AllCategoryModelData>);
         }
-
         if (callBack != null) {
           callBack();
         }
       },
-      isProgressShow: true,
+      isProgressShow: false,
       methodType: ApiConfig.methodGET,
       params: params,
       error: (dio.Response<dynamic> response) {
@@ -76,7 +75,7 @@ class CategoryController extends GetxController {
           isMainLoading.value = false;
           showSnackBar(message: response.data["message"], title: ApiConfig.error);
         },
-        isProgressShow: true,
+        isProgressShow: false,
         methodType: ApiConfig.methodGET);
   }
 
@@ -88,16 +87,13 @@ class CategoryController extends GetxController {
     apiServiceCall(
       serviceUrl: '${ApiConfig.getProductByIdApi}/$productId',
       success: (dio.Response<dynamic> response) {
-        try {
-          getProductByIdModel.value = GetProductByIdModel.fromJson(response.data);
-          if (callBack != null) {
-            callBack();
-          }
-        } catch (e) {
-          printLog(e);
+        getProductByIdModel.value = GetProductByIdModel.fromJson(response.data);
+
+        if (callBack != null) {
+          callBack();
         }
       },
-      isProgressShow: true,
+      isProgressShow: false,
       methodType: ApiConfig.methodGET,
       params: params,
       error: (dio.Response<dynamic> response) {

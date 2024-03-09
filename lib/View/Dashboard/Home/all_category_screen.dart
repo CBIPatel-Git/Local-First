@@ -220,95 +220,90 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
                                                 .child?.isNotEmpty ==
                                             true
                                         ? GridView.builder(
-                                          shrinkWrap: true,
-                                          itemCount: kCategoryController
-                                              .allCategoryList[selectedCategory.value]
-                                              .child
-                                              ?.length,
-                                          gridDelegate:
-                                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 3, mainAxisExtent: 115),
-                                          itemBuilder: (context, index) {
-                                            return Column(
-                                              children: [
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    Get.to(() => CategoryProductScreen(
-                                                        productId: kCategoryController
+                                            shrinkWrap: true,
+                                            itemCount: kCategoryController
+                                                .allCategoryList[selectedCategory.value]
+                                                .child
+                                                ?.length,
+                                            gridDelegate:
+                                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                                    crossAxisCount: 3, mainAxisExtent: 115),
+                                            itemBuilder: (context, index) {
+                                              return Column(
+                                                children: [
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      Get.to(() => CategoryProductScreen(
+                                                          productId: kCategoryController
+                                                                  .allCategoryList[
+                                                                      selectedCategory.value]
+                                                                  .child?[index]
+                                                                  ?.id ??
+                                                              0));
+                                                    },
+                                                    child: Container(
+                                                      height: 75,
+                                                      width: 75,
+                                                      decoration: BoxDecoration(
+                                                          color: whiteF7F7F7,
+                                                          borderRadius: BorderRadius.circular(10)),
+                                                      child: kCategoryController
+                                                                      .allCategoryList[
+                                                                          selectedCategory.value]
+                                                                      .child?[index]
+                                                                      ?.image !=
+                                                                  null &&
+                                                              kCategoryController
+                                                                      .allCategoryList[
+                                                                          selectedCategory.value]
+                                                                      .child?[index]
+                                                                      ?.image
+                                                                      ?.src
+                                                                      ?.isNotEmpty ==
+                                                                  true
+                                                          ? CachedNetworkImage(
+                                                              fit: BoxFit.cover,
+                                                              height: 30,
+                                                              width: 47,
+                                                              imageUrl: kCategoryController
+                                                                      .allCategoryList[
+                                                                          selectedCategory.value]
+                                                                      .child?[index]
+                                                                      ?.image
+                                                                      ?.src ??
+                                                                  '',
+                                                              errorWidget: (context, url, error) =>
+                                                                  const Icon(
+                                                                Icons.error,
+                                                                color: Colors.grey,
+                                                              ),
+                                                            )
+                                                          : const Icon(
+                                                              Icons.not_interested,
+                                                              color: Colors.grey,
+                                                            ),
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.symmetric(vertical: 8.0),
+                                                      child: Text(
+                                                        kCategoryController
                                                                 .allCategoryList[
                                                                     selectedCategory.value]
                                                                 .child?[index]
-                                                                ?.id ??
-                                                            0));
-                                                  },
-                                                  child: Container(
-                                                    height: 75,
-                                                    width: 75,
-                                                    decoration: BoxDecoration(
-                                                        color: whiteF7F7F7,
-                                                        borderRadius:
-                                                            BorderRadius.circular(10)),
-                                                    child: kCategoryController
-                                                                    .allCategoryList[
-                                                                        selectedCategory
-                                                                            .value]
-                                                                    .child?[index]
-                                                                    ?.image !=
-                                                                null &&
-                                                            kCategoryController
-                                                                    .allCategoryList[
-                                                                        selectedCategory
-                                                                            .value]
-                                                                    .child?[index]
-                                                                    ?.image
-                                                                    ?.src
-                                                                    ?.isNotEmpty ==
-                                                                true
-                                                        ? CachedNetworkImage(
-                                                            fit: BoxFit.cover,
-                                                            height: 30,
-                                                            width: 47,
-                                                            imageUrl: kCategoryController
-                                                                    .allCategoryList[
-                                                                        selectedCategory
-                                                                            .value]
-                                                                    .child?[index]
-                                                                    ?.image
-                                                                    ?.src ??
-                                                                '',
-                                                            errorWidget:
-                                                                (context, url, error) =>
-                                                                    const Icon(
-                                                              Icons.error,
-                                                              color: Colors.grey,
-                                                            ),
-                                                          )
-                                                        : const Icon(
-                                                            Icons.not_interested,
-                                                            color: Colors.grey,
-                                                          ),
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.symmetric(
-                                                        vertical: 8.0),
-                                                    child: Text(
-                                                      kCategoryController
-                                                              .allCategoryList[
-                                                                  selectedCategory.value]
-                                                              .child?[index]
-                                                              ?.name ??
-                                                          '',
-                                                      style: AppFontStyle.blackOpenSans12W600,
-                                                      overflow: TextOverflow.ellipsis,
+                                                                ?.name ??
+                                                            '',
+                                                        style: AppFontStyle.blackOpenSans12W600,
+                                                        overflow: TextOverflow.ellipsis,
+                                                      ),
                                                     ),
-                                                  ),
-                                                )
-                                              ],
-                                            );
-                                          },
-                                        )
+                                                  )
+                                                ],
+                                              );
+                                            },
+                                          )
                                         : Expanded(child: noDataPlaceHolder())
                                     : const Center(child: CircularProgressIndicator());
                               }),

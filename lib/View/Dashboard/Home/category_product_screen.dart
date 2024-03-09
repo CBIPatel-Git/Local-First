@@ -16,7 +16,7 @@ class CategoryProductScreen extends StatefulWidget {
 
 class _CategoryProductScreenState extends State<CategoryProductScreen> {
   TextEditingController searchController = TextEditingController();
-  RxBool? isLoading = false.obs;
+  RxBool? isLoading = true.obs;
   String? selectedValue;
   List<String> storeByList = [
     'Sort By',
@@ -109,80 +109,79 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
                 ),
               ),
               Obx(() {
-                return isLoading?.value == false
-                    ? kCategoryController.getProductsByCategoryList.isNotEmpty
-                        ? Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      StreamBuilder<Object>(
-                                          stream:
-                                              kCategoryController.getProductsByCategoryList.stream,
-                                          builder: (context, snapshot) {
-                                            return Text(
-                                              kCategoryController
-                                                      .getProductsByCategoryList.isNotEmpty
-                                                  ? '${kCategoryController.getProductsByCategoryList.length} Result'
-                                                  : '',
-                                              style: AppFontStyle.greyOpenSans12W600
-                                                  .copyWith(fontWeight: FontWeight.w700),
-                                            );
-                                          }),
-                                      createRoundedDropDown(),
-                                    ],
-                                  ),
-                                ),
-                                Expanded(
-                                  child: SingleChildScrollView(
-                                    child: StreamBuilder<Object>(
+                if (isLoading?.value == false) {
+                  return kCategoryController.getProductsByCategoryList.isNotEmpty
+                      ? Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    StreamBuilder<Object>(
                                         stream:
                                             kCategoryController.getProductsByCategoryList.stream,
                                         builder: (context, snapshot) {
-                                          return Column(
-                                            children: [
-                                              kCategoryController
-                                                      .getProductsByCategoryList.isNotEmpty
-                                                  ? productList(
-                                                      length: kCategoryController
-                                                          .getProductsByCategoryList.length.obs)
-                                                  : const Expanded(
-                                                      child: Center(
-                                                          child: CircularProgressIndicator())),
-                                              // SizedBox(
-                                              //   height: 160,
-                                              //   child: ListView.builder(
-                                              //     itemCount: 4,
-                                              //     padding: const EdgeInsets.symmetric(horizontal: 10),
-                                              //     shrinkWrap: true,
-                                              //     scrollDirection: Axis.horizontal,
-                                              //     itemBuilder: (context, index) {
-                                              //       return Container(
-                                              //         height: 160,
-                                              //         width: getScreenWidth(context) * 0.83,
-                                              //         padding: const EdgeInsets.symmetric(horizontal: 10),
-                                              //         child: ClipRRect(
-                                              //             borderRadius: BorderRadius.circular(12),
-                                              //             child: Image(image: imagesCategoryProductBanner)),
-                                              //       );
-                                              //     },
-                                              //   ),
-                                              // ).marginSymmetric(vertical: 10),
-                                              // productList(length: 3),
-                                            ],
+                                          return Text(
+                                            kCategoryController.getProductsByCategoryList.isNotEmpty
+                                                ? '${kCategoryController.getProductsByCategoryList.length} Result'
+                                                : '',
+                                            style: AppFontStyle.greyOpenSans12W600
+                                                .copyWith(fontWeight: FontWeight.w700),
                                           );
                                         }),
-                                  ),
+                                    createRoundedDropDown(),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          )
-                        : noDataPlaceHolder()
-                    : const Center(child: CircularProgressIndicator());
+                              ),
+                              Expanded(
+                                child: SingleChildScrollView(
+                                  child: StreamBuilder<Object>(
+                                      stream: kCategoryController.getProductsByCategoryList.stream,
+                                      builder: (context, snapshot) {
+                                        return Column(
+                                          children: [
+                                            kCategoryController.getProductsByCategoryList.isNotEmpty
+                                                ? productList(
+                                                    length: kCategoryController
+                                                        .getProductsByCategoryList.length.obs)
+                                                : const Expanded(
+                                                    child:
+                                                        Center(child: CircularProgressIndicator())),
+                                            // SizedBox(
+                                            //   height: 160,
+                                            //   child: ListView.builder(
+                                            //     itemCount: 4,
+                                            //     padding: const EdgeInsets.symmetric(horizontal: 10),
+                                            //     shrinkWrap: true,
+                                            //     scrollDirection: Axis.horizontal,
+                                            //     itemBuilder: (context, index) {
+                                            //       return Container(
+                                            //         height: 160,
+                                            //         width: getScreenWidth(context) * 0.83,
+                                            //         padding: const EdgeInsets.symmetric(horizontal: 10),
+                                            //         child: ClipRRect(
+                                            //             borderRadius: BorderRadius.circular(12),
+                                            //             child: Image(image: imagesCategoryProductBanner)),
+                                            //       );
+                                            //     },
+                                            //   ),
+                                            // ).marginSymmetric(vertical: 10),
+                                            // productList(length: 3),
+                                          ],
+                                        );
+                                      }),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Expanded(child: Center(child: noDataPlaceHolder()));
+                } else {
+                  return const Expanded(child: Center(child: CircularProgressIndicator()));
+                }
               }),
             ],
           ),

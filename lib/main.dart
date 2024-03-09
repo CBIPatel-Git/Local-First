@@ -11,6 +11,7 @@ import 'VendorFlow/Dashboard/vadd_products.dart';
 import 'VendorFlow/Dashboard/vadd_sub_category.dart';
 import 'VendorFlow/Dashboard/vdashboard_screen.dart';
 import 'VendorFlow/Dashboard/vmanger_order.dart';
+import 'View/Authentication/location_access_screen.dart';
 import 'View/Dashboard/Home/product_details_screen.dart';
 
 late final FirebaseApp app;

@@ -13,7 +13,8 @@ class ApiConfig {
   static const String rToken = "Authorization";
 
   /// API
-  static const String baseUrl = "https://localfirstapi.testdevteam.xyz/";
+  // static const String baseUrl = "https://localfirstapi.testdevteam.xyz/";
+  static const String baseUrl = "https://localfirstapi.devteamandro.co.in/";
 
   /// Authentication
   static const String signInApi = '${baseUrl}api/register';
@@ -25,4 +26,7 @@ class ApiConfig {
   static const String allCategoryApi = '${baseUrl}api/category/get-products-category';
   static const String getProductByIdApi = '${baseUrl}api/product/get-products';
   static const String getProductsByCategoryApi = '${baseUrl}api/product/get-products-by-category/';
+
+  /// Account
+  static const String accountApi = '${baseUrl}api/user/user-profile';
 }

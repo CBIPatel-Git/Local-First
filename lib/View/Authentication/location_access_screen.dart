@@ -1,6 +1,8 @@
 import 'package:local_first/View/Authentication/select_location_screen.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../Utility/utility_export.dart';
+import 'map_screen.dart';
 
 class LocationAccessScreen extends StatefulWidget {
   const LocationAccessScreen({super.key});
@@ -39,8 +41,7 @@ class _LocationAccessScreenState extends State<LocationAccessScreen> {
                     customHeight(51),
                     Text(
                       'Grant Current location',
-                      style: AppFontStyle.blackOpenSans22W600
-                          .copyWith(fontSize: 24),
+                      style: AppFontStyle.blackOpenSans22W600.copyWith(fontSize: 24),
                     ),
                     customHeight(8),
                     Text(
@@ -57,7 +58,13 @@ class _LocationAccessScreenState extends State<LocationAccessScreen> {
                     ),
                     customHeight(30),
                     commonFilledButtonGrey(
-                      onTap: () {},
+                      onTap: () async {
+                        if (await Permission.location.request().isGranted) {
+                          Get.to(() => MapScreen());
+                        } else {
+                          openAppSettings();
+                        }
+                      },
                       title: 'Enter manually',
                     ),
                   ],
