@@ -10,8 +10,9 @@ import '../Dashboard/bottom_navigation_screen.dart';
 class MapScreen extends StatefulWidget {
   double? lat;
   double? long;
+  String? address;
 
-  MapScreen({super.key, this.lat, this.long});
+  MapScreen({super.key, this.lat, this.long, this.address});
 
   @override
   State<MapScreen> createState() => MapScreenState();
@@ -21,9 +22,9 @@ class MapScreenState extends State<MapScreen> {
   TextEditingController searchController = TextEditingController();
   final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
-  late BitmapDescriptor icons;
+  BitmapDescriptor? icons;
 
-  late GoogleMapController mapController;
+  GoogleMapController? mapController;
   double _originLatitude = 21.2346472, _originLongitude = 72.8770518;
   double _destLatitude = 21.7362, _destLongitude = 72.135925;
 
@@ -32,18 +33,25 @@ class MapScreenState extends State<MapScreen> {
   PolylinePoints polylinePoints = PolylinePoints();
   String googleAPiKey = "AIzaSyAHKno9ZmWWbMM8tBpQ27p6JHCmoSF62BA";
 
+  double initLat = 21.170240;
+  double initLng = 72.831062;
+
   @override
   void initState() {
     getIcons();
     super.initState();
 
-    _addMarker(LatLng(_originLatitude, _originLongitude), "origin", BitmapDescriptor.defaultMarker);
+    // _addMarker(LatLng(_originLatitude, _originLongitude), "origin", BitmapDescriptor.defaultMarker);
+    //
+    // /// destination marker
+    // _addMarker(LatLng(_destLatitude, _destLongitude), "destination",
+    //     BitmapDescriptor.defaultMarkerWithHue(90));
 
-    /// destination marker
-    _addMarker(LatLng(_destLatitude, _destLongitude), "destination",
-        BitmapDescriptor.defaultMarkerWithHue(90));
+    initLat = widget.lat ?? 21.170240;
+    initLng = widget.long ?? 72.831062;
+    _addMarker(LatLng(initLat, initLng), "1", BitmapDescriptor.defaultMarker);
 
-    _getPolyline();
+    // _getPolyline();
   }
 
   static const CameraPosition _kGooglePlex = CameraPosition(
@@ -64,7 +72,10 @@ class MapScreenState extends State<MapScreen> {
         children: [
           GoogleMap(
             mapType: MapType.normal,
-            initialCameraPosition: _kGooglePlex,
+            initialCameraPosition: CameraPosition(
+              target: LatLng(initLat, initLng),
+              zoom: 10,
+            ),
             zoomControlsEnabled: false,
             myLocationButtonEnabled: false,
             markers: markers.values.toSet(),
@@ -74,7 +85,7 @@ class MapScreenState extends State<MapScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 60),
             child: commonTextField(
-                hintText: '1901 Thornridge Cir. Shiloh, Hawaii 81063',
+                hintText: '${widget.address}',
                 textEditingController: searchController,
                 preFixIcon: iconsSearchBackIcon,
                 prefixIconTap: () {
@@ -97,17 +108,16 @@ class MapScreenState extends State<MapScreen> {
     );
   }
 
-  void _onMapCreated(GoogleMapController controller) async {
+  _onMapCreated(GoogleMapController controller) async {
     mapController = controller;
 
-    mapController.animateCamera(CameraUpdate.newCameraPosition(
-      // on below line we have given positions of Location 5
+    mapController?.animateCamera(CameraUpdate.newCameraPosition(
+        // on below line we have given positions of Location 5
         CameraPosition(
-          target: LatLng(_originLatitude, _originLongitude),
-          // target: LatLng(_destLatitude, _destLongitude),
-          zoom: 14,
-        )
-    ));
+      target: LatLng(initLat, initLng),
+      // target: LatLng(_destLatitude, _destLongitude),
+      zoom: 14,
+    )));
 
     _controller.complete(controller);
   }
@@ -119,7 +129,7 @@ class MapScreenState extends State<MapScreen> {
   }
 
   _addPolyLine() {
-    PolylineId id = PolylineId("poly");
+    PolylineId id = const PolylineId("poly");
     Polyline polyline = Polyline(polylineId: id, color: Colors.red, points: polylineCoordinates);
     polylines[id] = polyline;
     setState(() {});

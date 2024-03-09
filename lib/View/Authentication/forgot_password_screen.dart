@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:local_first/View/Authentication/login_screen.dart';
-import 'package:local_first/View/Authentication/mail_verification_screen.dart';
+import 'package:local_first/View/Authentication/otp_verification_screen.dart';
 
 import '../../Utility/utility_export.dart';
 
@@ -66,9 +66,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               "user_email": emailController.text,
                             };
                             kAuthenticationController.forgotPassApiCall(params, () {
-                              Get.off(() => MailVerificationScreen(email: emailController.text));
+                              // Get.off(() => MailVerificationScreen(email: emailController.text));
+                              Get.off(() => OtpVerificationScreen(email: emailController.text));
                             });
-                            Get.off(() => MailVerificationScreen(email: emailController.text));
                           }
                         },
                         title: 'Send',

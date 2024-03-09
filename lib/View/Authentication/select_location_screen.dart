@@ -1,10 +1,13 @@
 import 'package:local_first/View/Authentication/map_screen.dart';
 
+import '../../Models/AuthenticationModel/select_location_model.dart';
 import '../../Utility/utility_export.dart';
 import '../../generated/assets.dart';
 
 class SelectLocationScreen extends StatefulWidget {
-  const SelectLocationScreen({super.key});
+  bool isManually;
+
+  SelectLocationScreen({super.key, required this.isManually});
 
   @override
   State<SelectLocationScreen> createState() => _SelectLocationScreenState();
@@ -12,9 +15,12 @@ class SelectLocationScreen extends StatefulWidget {
 
 class _SelectLocationScreenState extends State<SelectLocationScreen> {
   TextEditingController textEditingController = TextEditingController();
+  List<SelectLocationModelDataLocationResults>? results;
 
   @override
   Widget build(BuildContext context) {
+    results = kAuthenticationController.selectLocationModel.value.data?.location?.results
+        ?.cast<SelectLocationModelDataLocationResults>();
     return commonStructure(
         context: context,
         bgColor: white,
@@ -28,7 +34,7 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
                         Get.back();
                       }),
                   title: Text(
-                    'Select Location',
+                    widget.isManually ? 'Enter Location' : 'Select Location',
                     style: AppFontStyle.blackOpenSans16W600,
                   ),
                   sufFix: appBarButton(image: iconsCart, callBack: () {})),
@@ -49,7 +55,7 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
                       customHeight(18),
                       Expanded(
                         child: ListView.separated(
-                            itemCount: 15,
+                            itemCount: results?.length ?? 0,
                             shrinkWrap: true,
                             separatorBuilder: (context, index) {
                               return const Divider(
@@ -59,7 +65,10 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
                             itemBuilder: (context, index) {
                               return ListTile(
                                 onTap: () {
-                                  Get.to(() => MapScreen(lat: 2.30, long: 203.0));
+                                  Get.to(() => MapScreen(
+                                      lat: results?[index].geometry?.location?.lat,
+                                      long: results?[index].geometry?.location?.lng,
+                                      address: results?[index].formattedAddress ?? ''));
                                 },
                                 contentPadding: EdgeInsets.zero,
                                 leading: Container(
@@ -90,8 +99,10 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
                                   ],
                                 ),
                                 subtitle: Text(
-                                  '2118 Thornridge Cir. Syracuse, Connecticut 35624',
+                                  '${results?[index].formattedAddress}',
                                   style: AppFontStyle.greyOpenSans12W500,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               );
                             }),

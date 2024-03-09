@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:local_first/View/Authentication/location_access_screen.dart';
+import 'package:local_first/View/Authentication/select_location_screen.dart';
 import 'package:local_first/View/Dashboard/Home/search_screen.dart';
 
 import '../../../Utility/utility_export.dart';
@@ -146,6 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     commonTitleRow(
                                         title: 'Products Category',
                                         seeAllClick: () {
+                                          // Get.to(() => const LocationAccessScreen());
                                           Get.to(() => const AllCategoryScreen());
                                         }),
                                     height05,

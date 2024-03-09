@@ -3,6 +3,7 @@ import 'package:local_first/Utility/utility_export.dart';
 Widget commonFilledButton(
     {required Function onTap,
     required String title,
+    EdgeInsetsGeometry? textPadding,
     Color? bgColor,
     Color? titleColor,
     TextStyle? textStyle}) {
@@ -26,10 +27,14 @@ Widget commonFilledButton(
             )
           ]),
       child: Center(
-        child: Text(
-          title,
-          textAlign: TextAlign.left,
-          style: textStyle ?? AppFontStyle.blackOpenSans16W600.copyWith(color: titleColor ?? white),
+        child: Padding(
+          padding: textPadding ?? EdgeInsets.zero,
+          child: Text(
+            title,
+            textAlign: TextAlign.left,
+            style:
+                textStyle ?? AppFontStyle.blackOpenSans16W600.copyWith(color: titleColor ?? white),
+          ),
         ),
       ),
     ),
@@ -121,6 +126,8 @@ Widget appBarButton(
     double? height,
     double? width,
     Color? iconColor,
+    Color? backgroundColor,
+    Color? borderColor,
     double? iconPadding}) {
   return InkWell(
     splashColor: white,
@@ -132,9 +139,9 @@ Widget appBarButton(
       height: height ?? 40,
       width: width ?? 40,
       decoration: BoxDecoration(
-          color: white,
+          color: backgroundColor ?? white,
           borderRadius: BorderRadius.circular(100),
-          border: Border.all(color: colorGrey.withOpacity(0.3), width: 1)),
+          border: Border.all(color: borderColor ?? colorGrey.withOpacity(0.3), width: 1)),
       child: Image(
         image: image,
         color: iconColor,
@@ -144,7 +151,11 @@ Widget appBarButton(
 }
 
 Widget commonFilledButtonGrey(
-    {required Function onTap, required String title, TextStyle? textStyle, double? height}) {
+    {required Function onTap,
+    required String title,
+    EdgeInsetsGeometry? textPadding,
+    TextStyle? textStyle,
+    double? height}) {
   return InkWell(
     onTap: () {
       onTap();
@@ -165,10 +176,13 @@ Widget commonFilledButtonGrey(
             )
           ]),
       child: Center(
-        child: Text(
-          title,
-          textAlign: TextAlign.left,
-          style: textStyle ?? AppFontStyle.blackOpenSans16W600.copyWith(color: textColor),
+        child: Padding(
+          padding: textPadding ?? EdgeInsets.zero,
+          child: Text(
+            title,
+            textAlign: TextAlign.left,
+            style: textStyle ?? AppFontStyle.blackOpenSans16W600.copyWith(color: textColor),
+          ),
         ),
       ),
     ),

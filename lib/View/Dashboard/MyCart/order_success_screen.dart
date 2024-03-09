@@ -36,7 +36,7 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
             height12,
             commonFilledButton(
                 onTap: () {
-                  Get.to(() => const CustomerReviewScreen());
+
                 },
                 title: 'View E- Receipt',
                 bgColor: offWhite,

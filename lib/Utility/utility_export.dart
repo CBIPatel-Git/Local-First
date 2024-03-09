@@ -15,3 +15,5 @@ export '../Utility/common_structure.dart';
 export '../Controller/authentication_controller.dart';
 export '../Controller/home/home_controller.dart';
 export '../Controller/social_login_manager.dart';
+export '../API/api_service_call.dart';
+export '../API/api_config.dart';
