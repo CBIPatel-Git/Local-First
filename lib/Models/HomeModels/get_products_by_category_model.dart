@@ -23,7 +23,7 @@ class GetProductsByCategory {
     data['success'] = success;
     data['message'] = message;
     data['code'] = code;
-    if (data != null) {
+    if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     return data;
@@ -49,10 +49,10 @@ class Data {
   String? price;
   String? regularPrice;
   String? salePrice;
-  String? dateOnSaleFrom;
-  String? dateOnSaleFromGmt;
-  String? dateOnSaleTo;
-  String? dateOnSaleToGmt;
+  dynamic dateOnSaleFrom;
+  dynamic dateOnSaleFromGmt;
+  dynamic dateOnSaleTo;
+  dynamic dateOnSaleToGmt;
   bool? onSale;
   bool? purchasable;
   int? totalSales;
@@ -66,11 +66,11 @@ class Data {
   String? taxStatus;
   String? taxClass;
   bool? manageStock;
-  int? stockQuantity;
+  dynamic stockQuantity;
   String? backorders;
   bool? backordersAllowed;
   bool? backordered;
-  int? lowStockAmount;
+  dynamic lowStockAmount;
   bool? soldIndividually;
   String? weight;
   Dimensions? dimensions;
@@ -81,16 +81,16 @@ class Data {
   bool? reviewsAllowed;
   String? averageRating;
   int? ratingCount;
-  List<int>? upsellIds;
-  List<int>? crossSellIds;
+  List<dynamic>? upsellIds;
+  List<dynamic>? crossSellIds;
   int? parentId;
   String? purchaseNote;
   List<Categories>? categories;
   List<dynamic>? tags;
   List<Images>? images;
-  List<Attributes>? attributes;
-  List<DefaultAttributes>? defaultAttributes;
-  List<int>? variations;
+  List<dynamic>? attributes;
+  List<dynamic>? defaultAttributes;
+  List<dynamic>? variations;
   List<dynamic>? groupedProducts;
   int? menuOrder;
   String? priceHtml;
@@ -99,6 +99,12 @@ class Data {
   String? stockStatus;
   bool? hasOptions;
   String? postPassword;
+  List<dynamic>? aioseoNotices;
+  ProductUnits? productUnits;
+  WcfmProductPolicyData? wcfmProductPolicyData;
+  bool? showAdditionalInfoTab;
+  List<dynamic>? store;
+  String? productRestirctionMessage;
   Links? lLinks;
 
   Data(
@@ -170,6 +176,12 @@ class Data {
       this.stockStatus,
       this.hasOptions,
       this.postPassword,
+      this.aioseoNotices,
+      this.productUnits,
+      this.wcfmProductPolicyData,
+      this.showAdditionalInfoTab,
+      this.store,
+      this.productRestirctionMessage,
       this.lLinks});
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -228,8 +240,18 @@ class Data {
     reviewsAllowed = json['reviews_allowed'];
     averageRating = json['average_rating'];
     ratingCount = json['rating_count'];
-    upsellIds = json['upsell_ids'].cast<int>();
-    crossSellIds = json['cross_sell_ids'].cast<int>();
+    if (json['upsell_ids'] != null) {
+      upsellIds = <dynamic>[];
+      json['upsell_ids'].forEach((v) {
+        upsellIds!.add(v);
+      });
+    }
+    if (json['cross_sell_ids'] != null) {
+      crossSellIds = <dynamic>[];
+      json['cross_sell_ids'].forEach((v) {
+        crossSellIds!.add(v);
+      });
+    }
     parentId = json['parent_id'];
     purchaseNote = json['purchase_note'];
     if (json['categories'] != null) {
@@ -251,18 +273,23 @@ class Data {
       });
     }
     if (json['attributes'] != null) {
-      attributes = <Attributes>[];
+      attributes = <dynamic>[];
       json['attributes'].forEach((v) {
-        attributes!.add(Attributes.fromJson(v));
+        attributes!.add(v);
       });
     }
     if (json['default_attributes'] != null) {
-      defaultAttributes = <DefaultAttributes>[];
+      defaultAttributes = <dynamic>[];
       json['default_attributes'].forEach((v) {
-        defaultAttributes!.add(DefaultAttributes.fromJson(v));
+        defaultAttributes!.add(v);
       });
     }
-    variations = json['variations'].cast<int>();
+    if (json['variations'] != null) {
+      variations = <dynamic>[];
+      json['variations'].forEach((v) {
+        variations!.add(v);
+      });
+    }
     if (json['grouped_products'] != null) {
       groupedProducts = <dynamic>[];
       json['grouped_products'].forEach((v) {
@@ -340,8 +367,12 @@ class Data {
     data['reviews_allowed'] = reviewsAllowed;
     data['average_rating'] = averageRating;
     data['rating_count'] = ratingCount;
-    data['upsell_ids'] = upsellIds;
-    data['cross_sell_ids'] = crossSellIds;
+    if (upsellIds != null) {
+      data['upsell_ids'] = upsellIds!.map((v) => v.toJson()).toList();
+    }
+    if (crossSellIds != null) {
+      data['cross_sell_ids'] = crossSellIds!.map((v) => v.toJson()).toList();
+    }
     data['parent_id'] = parentId;
     data['purchase_note'] = purchaseNote;
     if (categories != null) {
@@ -359,7 +390,9 @@ class Data {
     if (defaultAttributes != null) {
       data['default_attributes'] = defaultAttributes!.map((v) => v.toJson()).toList();
     }
-    data['variations'] = variations;
+    if (variations != null) {
+      data['variations'] = variations!.map((v) => v.toJson()).toList();
+    }
     if (groupedProducts != null) {
       data['grouped_products'] = groupedProducts!.map((v) => v.toJson()).toList();
     }
@@ -372,6 +405,20 @@ class Data {
     data['stock_status'] = stockStatus;
     data['has_options'] = hasOptions;
     data['post_password'] = postPassword;
+    if (aioseoNotices != null) {
+      data['aioseo_notices'] = aioseoNotices!.map((v) => v.toJson()).toList();
+    }
+    if (productUnits != null) {
+      data['product_units'] = productUnits!.toJson();
+    }
+    if (wcfmProductPolicyData != null) {
+      data['wcfm_product_policy_data'] = wcfmProductPolicyData!.toJson();
+    }
+    data['showAdditionalInfoTab'] = showAdditionalInfoTab;
+    if (store != null) {
+      data['store'] = store!.map((v) => v.toJson()).toList();
+    }
+    data['product_restirction_message'] = productRestirctionMessage;
     if (lLinks != null) {
       data['_links'] = lLinks!.toJson();
     }
@@ -432,6 +479,15 @@ class Images {
   String? src;
   String? name;
   String? alt;
+  String? s1536x1536;
+  String? s2048x2048;
+  String? wolmartPostMedium;
+  String? wolmartPostSmall;
+  String? wolmartProductThumbnail;
+  String? wolmartCustom;
+  String? woocommerceThumbnail;
+  String? woocommerceSingle;
+  String? woocommerceGalleryThumbnail;
 
   Images(
       {this.id,
@@ -441,7 +497,16 @@ class Images {
       this.dateModifiedGmt,
       this.src,
       this.name,
-      this.alt});
+      this.alt,
+      this.s1536x1536,
+      this.s2048x2048,
+      this.wolmartPostMedium,
+      this.wolmartPostSmall,
+      this.wolmartProductThumbnail,
+      this.wolmartCustom,
+      this.woocommerceThumbnail,
+      this.woocommerceSingle,
+      this.woocommerceGalleryThumbnail});
 
   Images.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -452,6 +517,15 @@ class Images {
     src = json['src'];
     name = json['name'];
     alt = json['alt'];
+    s1536x1536 = json['1536x1536'];
+    s2048x2048 = json['2048x2048'];
+    wolmartPostMedium = json['wolmart-post-medium'];
+    wolmartPostSmall = json['wolmart-post-small'];
+    wolmartProductThumbnail = json['wolmart-product-thumbnail'];
+    wolmartCustom = json['Wolmart Custom'];
+    woocommerceThumbnail = json['woocommerce_thumbnail'];
+    woocommerceSingle = json['woocommerce_single'];
+    woocommerceGalleryThumbnail = json['woocommerce_gallery_thumbnail'];
   }
 
   Map<String, dynamic> toJson() {
@@ -464,59 +538,15 @@ class Images {
     data['src'] = src;
     data['name'] = name;
     data['alt'] = alt;
-    return data;
-  }
-}
-
-class Attributes {
-  int? id;
-  String? name;
-  int? position;
-  bool? visible;
-  bool? variation;
-  List<String>? options;
-
-  Attributes({this.id, this.name, this.position, this.visible, this.variation, this.options});
-
-  Attributes.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    position = json['position'];
-    visible = json['visible'];
-    variation = json['variation'];
-    options = json['options'].cast<String>();
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['name'] = name;
-    data['position'] = position;
-    data['visible'] = visible;
-    data['variation'] = variation;
-    data['options'] = options;
-    return data;
-  }
-}
-
-class DefaultAttributes {
-  int? id;
-  String? name;
-  String? option;
-
-  DefaultAttributes({this.id, this.name, this.option});
-
-  DefaultAttributes.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    option = json['option'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['name'] = name;
-    data['option'] = option;
+    data['1536x1536'] = s1536x1536;
+    data['2048x2048'] = s2048x2048;
+    data['wolmart-post-medium'] = wolmartPostMedium;
+    data['wolmart-post-small'] = wolmartPostSmall;
+    data['wolmart-product-thumbnail'] = wolmartProductThumbnail;
+    data['Wolmart Custom'] = wolmartCustom;
+    data['woocommerce_thumbnail'] = woocommerceThumbnail;
+    data['woocommerce_single'] = woocommerceSingle;
+    data['woocommerce_gallery_thumbnail'] = woocommerceGalleryThumbnail;
     return data;
   }
 }
@@ -543,12 +573,75 @@ class MetaData {
   }
 }
 
+class ProductUnits {
+  String? weightUnit;
+  String? dimensionUnit;
+
+  ProductUnits({this.weightUnit, this.dimensionUnit});
+
+  ProductUnits.fromJson(Map<String, dynamic> json) {
+    weightUnit = json['weight_unit'];
+    dimensionUnit = json['dimension_unit'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['weight_unit'] = weightUnit;
+    data['dimension_unit'] = dimensionUnit;
+    return data;
+  }
+}
+
+class WcfmProductPolicyData {
+  bool? visible;
+  String? shippingPolicy;
+  String? shippingPolicyHeading;
+  String? refundPolicy;
+  String? refundPolicyHeading;
+  String? cancellationPolicy;
+  String? cancellationPolicyHeading;
+  String? tabTitle;
+
+  WcfmProductPolicyData(
+      {this.visible,
+      this.shippingPolicy,
+      this.shippingPolicyHeading,
+      this.refundPolicy,
+      this.refundPolicyHeading,
+      this.cancellationPolicy,
+      this.cancellationPolicyHeading,
+      this.tabTitle});
+
+  WcfmProductPolicyData.fromJson(Map<String, dynamic> json) {
+    visible = json['visible'];
+    shippingPolicy = json['shipping_policy'];
+    shippingPolicyHeading = json['shipping_policy_heading'];
+    refundPolicy = json['refund_policy'];
+    refundPolicyHeading = json['refund_policy_heading'];
+    cancellationPolicy = json['cancellation_policy'];
+    cancellationPolicyHeading = json['cancellation_policy_heading'];
+    tabTitle = json['tab_title'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['visible'] = visible;
+    data['shipping_policy'] = shippingPolicy;
+    data['shipping_policy_heading'] = shippingPolicyHeading;
+    data['refund_policy'] = refundPolicy;
+    data['refund_policy_heading'] = refundPolicyHeading;
+    data['cancellation_policy'] = cancellationPolicy;
+    data['cancellation_policy_heading'] = cancellationPolicyHeading;
+    data['tab_title'] = tabTitle;
+    return data;
+  }
+}
+
 class Links {
   List<Self>? self;
   List<dynamic>? collection;
-  List<dynamic>? up;
 
-  Links({this.self, this.collection, this.up});
+  Links({this.self, this.collection});
 
   Links.fromJson(Map<String, dynamic> json) {
     if (json['self'] != null) {
@@ -563,12 +656,6 @@ class Links {
         collection!.add(v);
       });
     }
-    if (json['up'] != null) {
-      up = <dynamic>[];
-      json['up'].forEach((v) {
-        up!.add(v);
-      });
-    }
   }
 
   Map<String, dynamic> toJson() {
@@ -578,9 +665,6 @@ class Links {
     }
     if (collection != null) {
       data['collection'] = collection!.map((v) => v.toJson()).toList();
-    }
-    if (up != null) {
-      data['up'] = up!.map((v) => v.toJson()).toList();
     }
     return data;
   }

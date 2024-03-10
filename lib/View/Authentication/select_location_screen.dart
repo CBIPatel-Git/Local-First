@@ -5,9 +5,9 @@ import '../../Utility/utility_export.dart';
 import '../../generated/assets.dart';
 
 class SelectLocationScreen extends StatefulWidget {
-  bool isManually;
 
-  SelectLocationScreen({super.key, required this.isManually});
+
+  const SelectLocationScreen({super.key});
 
   @override
   State<SelectLocationScreen> createState() => _SelectLocationScreenState();
@@ -34,7 +34,7 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
                         Get.back();
                       }),
                   title: Text(
-                    widget.isManually ? 'Enter Location' : 'Select Location',
+                    'Select Location',
                     style: AppFontStyle.blackOpenSans16W600,
                   ),
                   sufFix: appBarButton(image: iconsCart, callBack: () {})),
@@ -66,6 +66,7 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
                               return ListTile(
                                 onTap: () {
                                   Get.to(() => MapScreen(
+                                      isManually : true,
                                       lat: results?[index].geometry?.location?.lat,
                                       long: results?[index].geometry?.location?.lng,
                                       address: results?[index].formattedAddress ?? ''));

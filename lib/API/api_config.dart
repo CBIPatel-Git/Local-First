@@ -27,11 +27,10 @@ class ApiConfig {
   /// Home & Category
   static const String allCategoryApi = '${baseUrl}category/get-products-category';
   static const String getProductByIdApi = '${baseUrl}product/get-products';
-  static const String getProductsByCategoryApi = '${baseUrl}api/product/get-products-by-category/';
+  static const String getProductsByCategoryApi = '${baseUrl}product/get-products-by-category/';
 
   /// Profile
   static const String getCouponApi = '${baseUrl}coupon/get-coupon';
-
 
   /// Cart
   static const String getAllReviewApi = '${baseUrl}review/get-all-review';
@@ -40,10 +39,10 @@ class ApiConfig {
   static const String removeToCartApi = '${baseUrl}cart/remove-to-cart';
   static const String addCartQuantityApi = '${baseUrl}cart/add-quantity';
 
-
   /// Profile
 
   static const String userProfileApi = '${baseUrl}user/user-profile';
 
-
+  /// Account
+  static const String accountApi = '${baseUrl}user/user-profile';
 }

@@ -26,6 +26,7 @@ const Color green = Color(0xFF398F3D);
 const Color onlineGreen = Color(0xFF10CB18);
 const Color skyBlue = Color(0xFFEEFAF8);
 const Color redLight = Color(0xFFF15F3F);
+const Color orange = Color(0xffFC7900);
 const Color transparent = Color(0x00ff0000);
 const Color liteGreen = Color(0xFF65B348);
 
@@ -33,6 +34,9 @@ const Color liteGreen = Color(0xFF65B348);
 const Color amber = Colors.amber;
 const Color blue = Color(0xFF40BFFF);
 const Color ping = Color(0xFFFB7181);
+const Color litePink = Color(0xFFFF82AC);
 const Color teal = Color(0xFF53D1B6);
 const Color purple = Color(0xFF5C61F4);
+const Color darkPurple = Color(0xFF4542E1);
 const Color darkBlue = Color(0xFF223263);
+const Color litePurple = Color(0xFFC5D9FF);

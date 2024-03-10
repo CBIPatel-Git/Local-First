@@ -1,8 +1,10 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:local_first/View/Authentication/select_location_screen.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../Utility/utility_export.dart';
+import 'map_screen.dart';
 
 class LocationAccessScreen extends StatefulWidget {
   const LocationAccessScreen({super.key});
@@ -80,17 +82,19 @@ class _LocationAccessScreenState extends State<LocationAccessScreen> {
                           "longitude": position.longitude
                         };
                         kAuthenticationController.getLocationAPICall(params, () {
-                          Get.to(() => SelectLocationScreen(
-                                isManually: false,
-                              ));
+                          Get.to(() => const SelectLocationScreen());
                         });
                       },
                       title: 'Use current location',
                     ),
                     customHeight(30),
                     commonFilledButtonGrey(
-                      onTap: () {
-                        Get.to(() => SelectLocationScreen(isManually: true));
+                      onTap: () async {
+                        if (await Permission.location.request().isGranted) {
+                          Get.to(() => MapScreen(isManually: false,));
+                        } else {
+                          openAppSettings();
+                        }
                       },
                       title: 'Enter manually',
                     ),

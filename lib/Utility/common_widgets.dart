@@ -116,3 +116,17 @@ Widget commonNetworkImageView(
     ),
   );
 }
+
+Widget noDataPlaceHolder() {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      const Icon(
+        Icons.not_interested,
+        color: Colors.grey,
+      ),
+      height05,
+      const Text('No Data Found')
+    ],
+  );
+}

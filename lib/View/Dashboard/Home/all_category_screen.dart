@@ -10,19 +10,18 @@ class AllCategoryScreen extends StatefulWidget {
   State<AllCategoryScreen> createState() => _AllCategoryScreenState();
 }
 
+RxBool isLoading = true.obs;
+RxBool isMainLoading = true.obs;
+
 class _AllCategoryScreenState extends State<AllCategoryScreen> {
   RxInt selectedCategory = 0.obs;
-  RxBool isLoading = true.obs;
-  RxBool isMainLoading = true.obs;
   RxBool isButtonDisabled = true.obs;
 
   @override
   void initState() {
     kCategoryController.allCategoryAPICall({}, () {
-      kCategoryController.getProductByCategoryCall({}, () {
-        kCategoryController.getProductsByCategoryList.refresh();
-      }, isMainLoading, kCategoryController.allCategoryList[selectedCategory.value].id);
-    }, isLoading);
+      isMainLoading.value = false;
+    }, selectedCategory);
 
     super.initState();
   }
@@ -45,239 +44,278 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
                   style: AppFontStyle.blackOpenSans16W600,
                 ),
                 sufFix: appBarButton(image: iconsLike, callBack: () {})),
-            Expanded(
-              child: Row(
-                children: [
-                  Obx(() {
-                    return Flexible(
-                      flex: 1,
-                      child: isLoading.isFalse
-                          ? StreamBuilder<Object>(
-                              stream: selectedCategory.stream,
-                              builder: (context, snapshot) {
-                                return ListView.builder(
-                                  itemCount: kCategoryController.allCategoryList.length,
-                                  shrinkWrap: true,
-                                  itemBuilder: (context, index) {
-                                    return AbsorbPointer(
-                                      absorbing: selectedCategory.value == index ? true : false,
-                                      child: InkWell(
-                                        onTap: () {
-                                          selectedCategory.value = index;
+            Obx(() {
+              return Expanded(
+                child: Row(
+                  children: [
+                    Flexible(
+                        flex: 1,
+                        child: isLoading.isFalse
+                            ? kCategoryController.allCategoryList.isNotEmpty == true &&
+                                    kCategoryController.allCategoryList != null
+                                ? StreamBuilder<Object>(
+                                    stream: selectedCategory.stream,
+                                    builder: (context, snapshot) {
+                                      return ListView.builder(
+                                        itemCount: kCategoryController.allCategoryList.length,
+                                        shrinkWrap: true,
+                                        itemBuilder: (context, index) {
+                                          return AbsorbPointer(
+                                            absorbing:
+                                                selectedCategory.value == index ? true : false,
+                                            child: InkWell(
+                                              onTap: () {
+                                                selectedCategory.value = index;
 
-                                          // if (selectedCategory.value == index) {
-                                          //   isButtonDisabled.value = false;
-                                          // }
+                                                // if (selectedCategory.value == index) {
+                                                //   isButtonDisabled.value = false;
+                                                // }
 
-                                          kCategoryController.getProductByCategoryCall(
-                                              {},
-                                              () {},
-                                              isLoading,
-                                              kCategoryController
-                                                  .allCategoryList[selectedCategory.value].id);
-                                        },
-                                        child: Obx(() {
-                                          return Container(
-                                            height: 70,
-                                            decoration: BoxDecoration(
-                                                color: selectedCategory.value == index
-                                                    ? white
-                                                    : orangeFFE5C1,
-                                                border: const Border(
-                                                    bottom:
-                                                        BorderSide(width: 1, color: colorPrimary))),
-                                            child: Stack(
-                                              children: [
-                                                Center(
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.spaceEvenly,
+                                                // kCategoryController.allCategoryAPICall(
+                                                //     {}, () {}, isLoading, selectedCategory);
+
+                                                kCategoryController
+                                                    .allCategoryList[selectedCategory.value].child;
+                                              },
+                                              child: Obx(() {
+                                                return Container(
+                                                  height: 85,
+                                                  decoration: BoxDecoration(
+                                                      color: selectedCategory.value == index
+                                                          ? white
+                                                          : orangeFFE5C1,
+                                                      border: const Border(
+                                                          bottom: BorderSide(
+                                                              width: 1, color: colorPrimary))),
+                                                  child: Stack(
                                                     children: [
-                                                      CachedNetworkImage(
-                                                        fit: BoxFit.cover,
-                                                        height: 30,
-                                                        width: 47,
-                                                        imageUrl: kCategoryController
-                                                                .allCategoryList[index]
-                                                                .image
-                                                                ?.src ??
-                                                            '',
-                                                        errorWidget: (context, url, error) =>
-                                                            const Icon(
-                                                          Icons.error,
-                                                          color: Colors.grey,
+                                                      Positioned(
+                                                        top: 0,
+                                                        bottom: 0,
+                                                        left: 0,
+                                                        right: 0,
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment.center,
+                                                          children: [
+                                                            CachedNetworkImage(
+                                                              fit: BoxFit.cover,
+                                                              height: 30,
+                                                              width: 47,
+                                                              imageUrl: kCategoryController
+                                                                      .allCategoryList[index]
+                                                                      .parent
+                                                                      ?.image
+                                                                      ?.src ??
+                                                                  '',
+                                                              errorWidget: (context, url, error) =>
+                                                                  const Icon(
+                                                                Icons.error,
+                                                                color: Colors.grey,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              kCategoryController
+                                                                      .allCategoryList[index]
+                                                                      .parent
+                                                                      ?.name ??
+                                                                  '',
+                                                              style:
+                                                                  AppFontStyle.blackOpenSans12W400,
+                                                              textAlign: TextAlign.center,
+                                                              overflow: TextOverflow.ellipsis,
+                                                              maxLines: 2,
+                                                            ),
+                                                          ],
                                                         ),
                                                       ),
-                                                      Text(
-                                                        kCategoryController
-                                                                .allCategoryList[index].name ??
-                                                            '',
-                                                        style: AppFontStyle.blackOpenSans12W400,
-                                                        textAlign: TextAlign.center,
-                                                      ),
+                                                      if (selectedCategory.value == index)
+                                                        Align(
+                                                          alignment: Alignment.centerLeft,
+                                                          child: Container(
+                                                              height: 50,
+                                                              width: 5,
+                                                              decoration: const BoxDecoration(
+                                                                  color: colorPrimary,
+                                                                  borderRadius: BorderRadius.only(
+                                                                      topRight: Radius.circular(10),
+                                                                      bottomRight:
+                                                                          Radius.circular(10)))),
+                                                        ),
                                                     ],
                                                   ),
-                                                ),
-                                                if (selectedCategory.value == index)
-                                                  Align(
-                                                    alignment: Alignment.centerLeft,
-                                                    child: Container(
-                                                        height: 50,
-                                                        width: 5,
-                                                        decoration: const BoxDecoration(
-                                                            color: colorPrimary,
-                                                            borderRadius: BorderRadius.only(
-                                                                topRight: Radius.circular(10),
-                                                                bottomRight: Radius.circular(10)))),
-                                                  ),
-                                              ],
+                                                );
+                                              }),
                                             ),
                                           );
-                                        }),
-                                      ),
-                                    );
-                                  },
-                                );
-                              })
-                          : const Center(child: CircularProgressIndicator()),
-                    );
-                  }),
-                  Flexible(
-                    flex: 3,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Column(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(5),
-                            child: Image(
-                              image: imagesMobileBanner,
-                              height: 74,
-                              width: getScreenWidth(context),
-                              fit: BoxFit.cover,
+                                        },
+                                      );
+                                    })
+                                : const Center(child: CircularProgressIndicator())
+                            : const Center(child: CircularProgressIndicator())),
+                    Flexible(
+                      flex: 3,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Column(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(5),
+                              child: Image(
+                                image: imagesMobileBanner,
+                                height: 74,
+                                width: getScreenWidth(context),
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 16),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Mobiles',
-                                  style: AppFontStyle.blackOpenSans14W600,
-                                ),
-                                InkWell(
-                                  splashColor: white,
-                                  highlightColor: white,
-                                  onTap: () {
-                                    Get.to(() => const CategoryProductScreen());
-                                  },
-                                  child: Container(
-                                    height: 26,
-                                    width: 26,
-                                    decoration: BoxDecoration(
-                                        color: lightOrange,
-                                        borderRadius: BorderRadius.circular(100)),
-                                    child: const Icon(
-                                      Icons.arrow_forward_ios_rounded,
-                                      color: white,
-                                      size: 16,
-                                    ),
-                                  ),
-                                ).marginOnly(right: 10)
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Obx(() {
-                              if (isMainLoading.isFalse) {
-                                return kCategoryController.getProductsByCategoryList.isNotEmpty
-                                    ? GridView.builder(
-                                        shrinkWrap: true,
-                                        itemCount:
-                                            kCategoryController.getProductsByCategoryList.length,
-                                        gridDelegate:
-                                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount: 3, mainAxisExtent: 115),
-                                        itemBuilder: (context, index) {
-                                          return Column(
+                            kCategoryController.allCategoryList.isNotEmpty &&
+                                    kCategoryController.allCategoryList != null
+                                ? Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 16),
+                                    child: StreamBuilder<Object>(
+                                        stream: selectedCategory.stream,
+                                        builder: (context, snapshot) {
+                                          return Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Container(
-                                                height: 75,
-                                                width: 75,
-                                                decoration: BoxDecoration(
-                                                    color: whiteF7F7F7,
-                                                    borderRadius: BorderRadius.circular(10)),
-                                                child: kCategoryController
-                                                                .getProductsByCategoryList[index]
-                                                                .images !=
-                                                            null &&
-                                                        kCategoryController
-                                                                .getProductsByCategoryList[index]
-                                                                .images
-                                                                ?.isNotEmpty ==
-                                                            true
-                                                    ? CachedNetworkImage(
-                                                        fit: BoxFit.cover,
-                                                        height: 30,
-                                                        width: 47,
-                                                        imageUrl: kCategoryController
-                                                                .getProductsByCategoryList[index]
-                                                                .images?[0]
-                                                                .src ??
-                                                            '',
-                                                        errorWidget: (context, url, error) =>
-                                                            const Icon(
-                                                          Icons.error,
-                                                          color: Colors.grey,
-                                                        ),
-                                                      )
-                                                    : const Icon(
-                                                        Icons.not_interested,
-                                                        color: Colors.grey,
-                                                      ),
+                                              Text(
+                                                (kCategoryController
+                                                            .allCategoryList[selectedCategory.value]
+                                                            .parent
+                                                            ?.name)
+                                                        .toString()
+                                                        .split(" ")
+                                                        .elementAt(0) ??
+                                                    '',
+                                                style: AppFontStyle.blackOpenSans14W600,
                                               ),
-                                              Expanded(
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.symmetric(vertical: 8.0),
-                                                  child: Text(
-                                                    kCategoryController
-                                                            .getProductsByCategoryList[index]
-                                                            .name ??
-                                                        '',
-                                                    style: AppFontStyle.blackOpenSans12W600,
-                                                    overflow: TextOverflow.ellipsis,
+                                              InkWell(
+                                                splashColor: white,
+                                                highlightColor: white,
+                                                onTap: () {
+                                                  Get.to(() => CategoryProductScreen());
+                                                },
+                                                child: Container(
+                                                  height: 26,
+                                                  width: 26,
+                                                  decoration: BoxDecoration(
+                                                      color: lightOrange,
+                                                      borderRadius: BorderRadius.circular(100)),
+                                                  child: const Icon(
+                                                    Icons.arrow_forward_ios_rounded,
+                                                    color: white,
+                                                    size: 16,
                                                   ),
                                                 ),
-                                              )
+                                              ).marginOnly(right: 10)
                                             ],
                                           );
-                                        },
-                                      )
-                                    : Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          const Icon(
-                                            Icons.not_interested,
-                                            color: Colors.grey,
-                                          ),
-                                          height05,
-                                          const Text('No Data Found')
-                                        ],
-                                      );
-                              } else {
-                                return const Center(child: CircularProgressIndicator());
-                              }
-                            }),
-                          ),
-                        ],
+                                        }),
+                                  )
+                                : const SizedBox(),
+                            Expanded(
+                              child: Obx(() {
+                                return isMainLoading.isFalse
+                                    ? kCategoryController.allCategoryList[selectedCategory.value]
+                                                .child?.isNotEmpty ==
+                                            true
+                                        ? GridView.builder(
+                                            shrinkWrap: true,
+                                            itemCount: kCategoryController
+                                                .allCategoryList[selectedCategory.value]
+                                                .child
+                                                ?.length,
+                                            gridDelegate:
+                                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                                    crossAxisCount: 3, mainAxisExtent: 115),
+                                            itemBuilder: (context, index) {
+                                              return Column(
+                                                children: [
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      Get.to(() => CategoryProductScreen(
+                                                          productId: kCategoryController
+                                                                  .allCategoryList[
+                                                                      selectedCategory.value]
+                                                                  .child?[index]
+                                                                  ?.id ??
+                                                              0));
+                                                    },
+                                                    child: Container(
+                                                      height: 75,
+                                                      width: 75,
+                                                      decoration: BoxDecoration(
+                                                          color: whiteF7F7F7,
+                                                          borderRadius: BorderRadius.circular(10)),
+                                                      child: kCategoryController
+                                                                      .allCategoryList[
+                                                                          selectedCategory.value]
+                                                                      .child?[index]
+                                                                      ?.image !=
+                                                                  null &&
+                                                              kCategoryController
+                                                                      .allCategoryList[
+                                                                          selectedCategory.value]
+                                                                      .child?[index]
+                                                                      ?.image
+                                                                      ?.src
+                                                                      ?.isNotEmpty ==
+                                                                  true
+                                                          ? CachedNetworkImage(
+                                                              fit: BoxFit.cover,
+                                                              height: 30,
+                                                              width: 47,
+                                                              imageUrl: kCategoryController
+                                                                      .allCategoryList[
+                                                                          selectedCategory.value]
+                                                                      .child?[index]
+                                                                      ?.image
+                                                                      ?.src ??
+                                                                  '',
+                                                              errorWidget: (context, url, error) =>
+                                                                  const Icon(
+                                                                Icons.error,
+                                                                color: Colors.grey,
+                                                              ),
+                                                            )
+                                                          : const Icon(
+                                                              Icons.not_interested,
+                                                              color: Colors.grey,
+                                                            ),
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.symmetric(vertical: 8.0),
+                                                      child: Text(
+                                                        kCategoryController
+                                                                .allCategoryList[
+                                                                    selectedCategory.value]
+                                                                .child?[index]
+                                                                ?.name ??
+                                                            '',
+                                                        style: AppFontStyle.blackOpenSans12W600,
+                                                        overflow: TextOverflow.ellipsis,
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
+                                              );
+                                            },
+                                          )
+                                        : Expanded(child: noDataPlaceHolder())
+                                    : const Center(child: CircularProgressIndicator());
+                              }),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            )
+                  ],
+                ),
+              );
+            })
           ],
         )));
   }
