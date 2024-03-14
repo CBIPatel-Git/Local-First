@@ -13,8 +13,16 @@ import '../Dashboard/bottom_navigation_screen.dart';
 class MapScreen extends StatefulWidget {
   double? lat;
   double? long;
+  String? address;
+  bool isManually;
 
-  MapScreen({super.key, this.lat, this.long});
+  MapScreen({
+    super.key,
+    this.lat,
+    this.long,
+    this.address,
+    required this.isManually,
+  });
 
   @override
   State<MapScreen> createState() => MapScreenState();
@@ -24,50 +32,47 @@ class MapScreenState extends State<MapScreen> {
   TextEditingController? searchController;
   final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
-  MarkerId markerId = const MarkerId("markerId");
-  late BitmapDescriptor icons;
+  late BitmapDescriptor? icons;
+  String? currentAddress = '';
+  Position? currentPosition;
 
-  late GoogleMapController mapController;
-  double destLatitude = 21.7362, destLongitude = 72.135925;
+  late GoogleMapController? mapController;
+  MarkerId markerId = const MarkerId("markerId");
 
   Map<PolylineId, Polyline> polylines = {};
   List<LatLng> polylineCoordinates = [];
   PolylinePoints polylinePoints = PolylinePoints();
   String googleAPiKey = "AIzaSyAHKno9ZmWWbMM8tBpQ27p6JHCmoSF62BA";
-  Position? currentPosition;
   LatLng? markerPosition;
   Marker? marker;
-  String? currentAddress;
+
+  double initLat = 21.7645;
+  double initLng = 72.1519;
 
   @override
   void initState() {
-    getIcons();
+    getIcons().then((value) {
+      if (widget.isManually) {
+        if (widget.isManually) {
+          initLat = widget.lat ?? 21.7645;
+          initLng = widget.long ?? 72.1519;
+          _addMarker(LatLng(initLat, initLng), "origin", icons!);
+        }
+      } else {
+        getCurrentLocation().then((value) => setState(() {
+              _addMarker(
+                  LatLng(
+                      currentPosition?.latitude ?? initLat, currentPosition?.latitude ?? initLng),
+                  "origin",
+                  icons!);
+            }));
 
-    getCurrentLocation().then((value) => {
-          setState(() {
-            _addMarker(
-                LatLng(currentPosition?.latitude ?? destLatitude,
-                    currentPosition?.longitude ?? destLongitude),
-                "origin",
-                icons);
-          }),
-        });
+        searchController = TextEditingController(text: currentAddress ?? '');
+      }
+    });
 
-    searchController = TextEditingController(text: currentAddress ?? '');
-
-    // /// destination marker
-    // _addMarker(LatLng(_destLatitude, _destLongitude), "destination",
-    //     BitmapDescriptor.defaultMarkerWithHue(90));
-
-    // _getPolyline();
     super.initState();
   }
-
-  static const CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
 
   @override
   Widget build(BuildContext context) {
@@ -77,25 +82,31 @@ class MapScreenState extends State<MapScreen> {
           GoogleMap(
             mapType: MapType.normal,
             initialCameraPosition: CameraPosition(
-              target: LatLng(currentPosition?.latitude ?? destLatitude,
-                  currentPosition?.longitude ?? destLongitude),
-              zoom: 16,
+              target: widget.isManually
+                  ? LatLng(initLat, initLng)
+                  : LatLng(
+                      currentPosition?.latitude ?? initLat, currentPosition?.longitude ?? initLng),
+              zoom: widget.isManually ? 10 : 16,
             ),
             zoomControlsEnabled: false,
             myLocationButtonEnabled: false,
             markers: marker != null ? {marker!} : Set<Marker>.of(markers.values),
             onMapCreated: _onMapCreated,
-            onTap: handleTap,
-            // onMapCreated: onMapCreated,
+            onTap: widget.isManually ? (e) {} : handleTap,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 60),
             child: commonTextField(
-                hintText: '1901 Thornridge Cir. Shiloh, Hawaii 81063',
+                hintText: widget.isManually ? '${widget.address}' : "Search",
                 textEditingController: searchController,
                 preFixIcon: iconsSearchBackIcon,
-                initialText: currentAddress,
+                initialText: widget.isManually ? widget.address : currentAddress ?? '',
                 inputAction: TextInputAction.go,
+                onTapFunction: widget.isManually
+                    ? () {
+                        Get.back();
+                      }
+                    : () {},
                 onFieldSubmitted: (value) {
                   _searchAddress();
                 },
@@ -120,43 +131,42 @@ class MapScreenState extends State<MapScreen> {
     );
   }
 
-  void _onMapCreated(GoogleMapController controller) async {
+  _onMapCreated(GoogleMapController controller) async {
     mapController = controller;
 
-    mapController.animateCamera(CameraUpdate.newCameraPosition(
-        // on below line we have given positions of Location 5
-        CameraPosition(
-      target: LatLng(
-          currentPosition?.latitude ?? destLatitude, currentPosition?.longitude ?? destLongitude),
-      // target: LatLng(_destLatitude, _destLongitude),
-      zoom: 14,
-    )));
+    if (widget.isManually) {
+      mapController?.animateCamera(CameraUpdate.newCameraPosition(
+          // on below line we have given positions of Location 5
+          CameraPosition(target: LatLng(initLat, initLng), zoom: 14)));
+    } else {
+      mapController?.animateCamera(CameraUpdate.newCameraPosition(
+          // on below line we have given positions of Location 5
+          CameraPosition(
+        target: LatLng(currentPosition?.latitude ?? initLat, currentPosition?.longitude ?? initLng),
+        // target: LatLng(_destLatitude, _destLongitude),
+        zoom: 14,
+      )));
+    }
 
     _controller.complete(controller);
   }
 
-  // void _onMapCreated(GoogleMapController controller) {
-  //   setState(() {
-  //     mapController = controller;
-  //   });
-  // }
-
   Future<void> _searchAddress() async {
-    // Get the address from the text field
     List<Location> locations = await locationFromAddress(currentAddress ?? '');
 
     if (locations.isNotEmpty) {
       Location location = locations.first;
       LatLng newPosition = LatLng(location.latitude, location.longitude);
 
+
+
       if (mapController != null) {
-        mapController.animateCamera(CameraUpdate.newLatLng(newPosition));
+        mapController?.animateCamera(CameraUpdate.newLatLng(newPosition));
         setState(() {
           markerPosition = newPosition;
         });
       }
     } else {
-      // Handle the case where no location is found for the given address
       print('No location found for the address.');
     }
   }
@@ -174,22 +184,23 @@ class MapScreenState extends State<MapScreen> {
     setState(() {});
   }
 
-  _getPolyline() async {
-    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-        googleAPiKey,
-        PointLatLng(currentPosition?.latitude ?? 0.0, currentPosition?.longitude ?? 0.0),
-        PointLatLng(destLatitude, destLongitude),
-        travelMode: TravelMode.driving,
-        wayPoints: [PolylineWayPoint(location: "Sabo, Yaba Lagos Nigeria")]);
-    if (result.points.isNotEmpty) {
-      result.points.forEach((PointLatLng point) {
-        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-      });
-    }
-    _addPolyLine();
-  }
+  // _getPolyline() async {
+  //   double destLatitude = 21.7362, destLongitude = 72.135925;
+  //   PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+  //       googleAPiKey,
+  //       PointLatLng(currentPosition?.latitude ?? 0.0, currentPosition?.longitude ?? 0.0),
+  //       PointLatLng(destLatitude, destLongitude),
+  //       travelMode: TravelMode.driving,
+  //       wayPoints: [PolylineWayPoint(location: "Sabo, Yaba Lagos Nigeria")]);
+  //   if (result.points.isNotEmpty) {
+  //     result.points.forEach((PointLatLng point) {
+  //       polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+  //     });
+  //   }
+  //   _addPolyLine();
+  // }
 
-  getIcons() async {
+  Future getIcons() async {
     var icon = await BitmapDescriptor.fromAssetImage(
         const ImageConfiguration(devicePixelRatio: 4), Assets.iconsMarkerIcon);
     setState(() {
@@ -217,7 +228,7 @@ class MapScreenState extends State<MapScreen> {
       }
 
       if (mapController != null) {
-        mapController.animateCamera(
+        mapController?.animateCamera(
           CameraUpdate.newCameraPosition(
             CameraPosition(
               target: LatLng(position.latitude, position.longitude),
@@ -245,10 +256,6 @@ class MapScreenState extends State<MapScreen> {
 
     if (placemarks.isNotEmpty) {
       final Placemark place = placemarks.first;
-      // final String address = "${placemark.subThoroughfare} ${placemark.thoroughfare}, "
-      //     "${placemark.locality}, ${placemark.administrativeArea} ${placemark.postalCode}, "
-      //     "${placemark.country}";
-
       setAddress(place);
 
       setState(() {
@@ -258,11 +265,11 @@ class MapScreenState extends State<MapScreen> {
           position: position,
           infoWindow: InfoWindow(title: 'Marker Location', snippet: currentAddress),
           draggable: true,
-          icon: icons,
-          onDragEnd: (newPosition) => _onMarkerDragEnd(newPosition),
+          icon: icons!,
         );
       });
 
+      final mapController = this.mapController;
       if (mapController != null) {
         mapController.animateCamera(
           CameraUpdate.newCameraPosition(
@@ -273,22 +280,6 @@ class MapScreenState extends State<MapScreen> {
           ),
         );
       }
-    }
-  }
-
-  void _onMarkerDragEnd(LatLng newPosition) async {
-    final List<Placemark> placemarks = await placemarkFromCoordinates(
-      newPosition.latitude,
-      newPosition.longitude,
-    );
-
-    if (placemarks.isNotEmpty) {
-      final Placemark placemark = placemarks.first;
-      final String address = "${placemark.subThoroughfare} ${placemark.thoroughfare}, "
-          "${placemark.locality}, ${placemark.administrativeArea} ${placemark.postalCode}, "
-          "${placemark.country}";
-
-      print("Dragged address: $address");
     }
   }
 
@@ -320,20 +311,4 @@ class MapScreenState extends State<MapScreen> {
       print("Clicked address: $currentAddress");
     });
   }
-
-// void onMapCreated(GoogleMapController controller) {
-//   var marker = Marker(
-//     markerId: const MarkerId('place_name'),
-//     position: const LatLng(37.42796133580664, -122.085749655962),
-//     icon: icons,
-//     infoWindow: const InfoWindow(
-//       title: 'title',
-//       snippet: 'address',
-//     ),
-//   );
-//   _controller.complete(controller);
-//   setState(() {
-//     markers[const MarkerId('place_name')] = marker;
-//   });
-// }
 }

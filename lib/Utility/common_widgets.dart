@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:local_first/Utility/utility_export.dart';
 
 Widget commonClickableText(
@@ -94,6 +95,25 @@ Widget commonCheckBoxContainer() {
     width: 20,
     decoration:
         const BoxDecoration(color: whiteF7F7F7, borderRadius: BorderRadius.all(Radius.circular(5))),
+  );
+}
+
+Widget commonNetworkImageView(
+    {required String imageUrl, ExactAssetImage? placeHolder, double? height, double? width}) {
+  return CachedNetworkImage(
+    fit: BoxFit.cover,
+    height: height ?? 48,
+    width: width ?? 48,
+    imageUrl: imageUrl,
+    errorWidget: (context, url, error) => SizedBox(
+      height: height ?? 48,
+      width: width ?? 48,
+      child: Image(
+        image: placeHolder ?? imagesProfilePicture,
+        height: height ?? 48,
+        width: width ?? 48,
+      ),
+    ),
   );
 }
 

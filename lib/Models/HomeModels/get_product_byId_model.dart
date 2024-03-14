@@ -491,14 +491,14 @@ class Collection {
 
 class DataMetaDatum {
   DataMetaDatum({
-    required this.id,
-    required this.key,
-    required this.value,
+    this.id,
+    this.key,
+    this.value,
   });
 
   final int? id;
   final String? key;
-  final String? value;
+  final dynamic value;
 
   factory DataMetaDatum.fromJson(Map<String, dynamic> json) {
     return DataMetaDatum(

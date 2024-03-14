@@ -411,27 +411,32 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                   );
                                                 }).toList());
                                           }),
-                                        height20,
-                                        Text(
-                                          'Specification',
-                                          style: AppFontStyle.blackOpenSans14W700,
-                                        ),
-                                        height20,
                                         if (kCategoryController.getProductByIdModel.value.data !=
                                                 null &&
                                             kCategoryController.getProductByIdModel.value.data!
                                                 .attributes.isNotEmpty)
                                           Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: kCategoryController
-                                                  .getProductByIdModel.value.data!.attributes
-                                                  .map(
-                                                    (e) => commonProductDetailsRow(
-                                                        title: e['name'],
-                                                        subTitle: e['options'][0],
-                                                        index: e['name'].length),
-                                                  )
-                                                  .toList()),
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              height20,
+                                              Text(
+                                                'Specification',
+                                                style: AppFontStyle.blackOpenSans14W700,
+                                              ),
+                                              height20,
+                                              Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: kCategoryController
+                                                      .getProductByIdModel.value.data!.attributes
+                                                      .map(
+                                                        (e) => commonProductDetailsRow(
+                                                            title: e['name'],
+                                                            subTitle: e['options'][0],
+                                                            index: e['name'].length),
+                                                      )
+                                                      .toList()),
+                                            ],
+                                          ),
                                         height18,
                                         if (kCategoryController
                                                     .getProductByIdModel.value.data?.description !=
@@ -774,7 +779,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               bottom: BorderSide(
                   color: index !=
                           kCategoryController.getProductByIdModel.value.data!.attributes.length - 1
-                      ? red
+                      ? Colors.transparent
                       : colorLightGrey,
                   width: 1))),
       padding: const EdgeInsets.symmetric(vertical: 10),

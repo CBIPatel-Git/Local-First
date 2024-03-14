@@ -12,6 +12,7 @@ class Assets {
   static const String iconsAccount = 'assets/icons/account.png';
   static const String iconsAddItem = 'assets/icons/add_item.png';
   static const String iconsAddress = 'assets/icons/address.png';
+  static const String iconsAttachment = 'assets/icons/attachment.png';
   static const String iconsBackIcon = 'assets/icons/backIcon.png';
   static const String iconsBank = 'assets/icons/bank.png';
   static const String iconsBell = 'assets/icons/bell.png';
@@ -21,6 +22,8 @@ class Assets {
   static const String iconsCart = 'assets/icons/cart.png';
   static const String iconsCartFavorite = 'assets/icons/cart_favorite.png';
   static const String iconsCartRound = 'assets/icons/cart_round.png';
+  static const String iconsChatCall = 'assets/icons/chat_call.png';
+  static const String iconsChatCamera = 'assets/icons/chat_camera.png';
   static const String iconsClose = 'assets/icons/close.png';
   static const String iconsCoupon = 'assets/icons/coupon.png';
   static const String iconsCouponSymbol = 'assets/icons/coupon-symbol.png';
@@ -34,6 +37,7 @@ class Assets {
   static const String iconsGoogle = 'assets/icons/google.png';
   static const String iconsGpsIcon = 'assets/icons/gps_icon.png';
   static const String iconsHome = 'assets/icons/home.png';
+  static const String iconsIconInfoCircle = 'assets/icons/icon_info_circle.png';
   static const String iconsInfo = 'assets/icons/info.png';
   static const String iconsInstagram = 'assets/icons/Instagram.png';
   static const String iconsLike = 'assets/icons/like.png';
@@ -43,6 +47,7 @@ class Assets {
   static const String iconsMainCategories = 'assets/icons/main_categories.png';
   static const String iconsMarkerIcon = 'assets/icons/marker_icon.png';
   static const String iconsMessage = 'assets/icons/message.png';
+  static const String iconsMicrophone = 'assets/icons/microphone.png';
   static const String iconsMoneys = 'assets/icons/moneys.png';
   static const String iconsMore = 'assets/icons/more.png';
   static const String iconsMyCart = 'assets/icons/my_cart.png';
@@ -56,12 +61,14 @@ class Assets {
   static const String iconsSearch = 'assets/icons/search.png';
   static const String iconsSearchBackIcon = 'assets/icons/search_back_icon.png';
   static const String iconsSearchIcon = 'assets/icons/search_icon.png';
+  static const String iconsSend = 'assets/icons/send.png';
   static const String iconsShare = 'assets/icons/share.png';
   static const String iconsSore = 'assets/icons/sore.png';
   static const String iconsSubCategories = 'assets/icons/sub_categories.png';
   static const String iconsTakeAway = 'assets/icons/take_away.png';
   static const String iconsTimer = 'assets/icons/timer.png';
   static const String iconsTwitter = 'assets/icons/Twitter.png';
+  static const String iconsVideo = 'assets/icons/video.png';
   static const String iconsUpload = 'assets/icons/upload.png';
   static const String iconsWallet = 'assets/icons/wallet.png';
   static const String iconsWishlist = 'assets/icons/wishlist.png';
@@ -105,5 +112,7 @@ class Assets {
   static const String imagesTodayOffer1 = 'assets/images/todayOffer1.png';
   static const String imagesUserAccountProfile = 'assets/images/user-account-profile.jpg';
   static const String imagesUserProfile = 'assets/images/user_profile.png';
+  static const String imagesVendorCardBg = 'assets/images/vendor_card_bg.png';
+  static const String imagesVerify = 'assets/images/verify.png';
 
 }

@@ -61,15 +61,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       customHeight(38),
-                      commonTextField(
-                          labelText: 'Mobile Number',
-                          hintText: '+91 98765432190',
-                          textEditingController: numberController,
-                          keyboardType: TextInputType.number,
-                          validationFunction: (val) {
-                            return phoneNumberValidation(val);
-                          }),
-                      height14,
+                      // commonTextField(
+                      //     labelText: 'Mobile Number',
+                      //     hintText: '+91 98765432190',
+                      //     textEditingController: numberController,
+                      //     keyboardType: TextInputType.number,
+                      //     validationFunction: (val) {
+                      //       return phoneNumberValidation(val);
+                      //     }),
+                      // height14,
                       commonTextField(
                           labelText: 'Email Address',
                           hintText: 'Albertstevano@gmail.com',

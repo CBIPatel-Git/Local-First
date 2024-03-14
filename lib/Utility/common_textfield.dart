@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:local_first/Utility/utility_export.dart';
 
-
-
 OutlineInputBorder textFieldBorderStyle = OutlineInputBorder(
   borderSide: const BorderSide(color: colorLightGrey, width: 1),
   borderRadius: BorderRadius.circular(8),

@@ -1,3 +1,7 @@
+import 'package:flutter/foundation.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:local_first/View/Authentication/select_location_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -12,6 +16,22 @@ class LocationAccessScreen extends StatefulWidget {
 }
 
 class _LocationAccessScreenState extends State<LocationAccessScreen> {
+  LocationPermission? permission;
+  String? currentAddress = '';
+  Position? currentPosition;
+  late GoogleMapController? mapController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    grandPermission();
+  }
+
+  Future<void> grandPermission() async {
+    permission = await Geolocator.requestPermission();
+  }
+
   @override
   Widget build(BuildContext context) {
     return commonStructure(
@@ -51,8 +71,23 @@ class _LocationAccessScreenState extends State<LocationAccessScreen> {
                     ),
                     customHeight(30),
                     commonFilledButton(
-                      onTap: () {
-                        Get.to(() => const SelectLocationScreen());
+                      onTap: () async {
+                        if (permission == LocationPermission.denied) {
+                          permission = await Geolocator.requestPermission();
+                        }
+
+                        Position position = await Geolocator.getCurrentPosition(
+                            desiredAccuracy: LocationAccuracy.low);
+                        print(position.latitude);
+                        print(position.longitude);
+
+                        Map<String, dynamic> params = {
+                          "latitude": position.latitude,
+                          "longitude": position.longitude
+                        };
+                        kAuthenticationController.getLocationAPICall(params, () {
+                          Get.to(() => const SelectLocationScreen());
+                        });
                       },
                       title: 'Use current location',
                     ),
@@ -60,7 +95,9 @@ class _LocationAccessScreenState extends State<LocationAccessScreen> {
                     commonFilledButtonGrey(
                       onTap: () async {
                         if (await Permission.location.request().isGranted) {
-                          Get.to(() => MapScreen());
+                          Get.to(() => MapScreen(
+                                isManually: false,
+                              ));
                         } else {
                           openAppSettings();
                         }

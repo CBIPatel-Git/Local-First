@@ -164,6 +164,17 @@ disableFocusScopeNode(BuildContext context) {
   }
 }
 
+dateFormat({required DateTime date}) {
+  String formatDate = '';
+  try {
+    DateTime stringDate =
+        DateTime.parse(kHomeController.getAllReviewModel.value.data?[0]?.dateCreated ?? '');
+    formatDate = DateFormat('dd-MMM-yyyy').format(stringDate);
+  } catch (e) {
+    printLog('date format :: $e');
+  }
+  return formatDate;
+}
 dateFormatter(String? dateTime, {String? myFormat, String? inputFormat}) {
   final DateTime now = DateTime.now();
 
