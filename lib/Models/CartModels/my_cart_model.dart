@@ -1,40 +1,67 @@
 class MyCartModel {
   MyCartModel({
-    this.success,
-    this.message,
-    this.code,
-    this.totalAmt,
-    this.data,
+   this.success,
+   this.message,
+   this.code,
+   this.data,
   });
 
-  late final bool? success;
-  late final String? message;
-  late final num? code;
-  late final num? totalAmt;
-  late final List<Datum>? data;
+  final bool? success;
+  final String? message;
+  final num? code;
+  final Data? data;
 
-  factory MyCartModel.fromJson(Map<String, dynamic> json) {
+  factory MyCartModel.fromJson(Map<String, dynamic> json){
     return MyCartModel(
       success: json["success"],
       message: json["message"],
       code: json["code"],
-      totalAmt: json["totalAmt"],
-      data:
-          json["data"] == null ? [] : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+      data: json["data"] == null ? null : Data.fromJson(json["data"]),
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "success": success,
-        "message": message,
-        "code": code,
-        "totalAmt": totalAmt,
-        "data": data?.map((x) => x.toJson()).toList(),
-      };
+    "success": success,
+    "message": message,
+    "code": code,
+    "data": data?.toJson(),
+  };
+
 }
 
-class Datum {
-  Datum({
+class Data {
+  Data({
+    required this.totalAmt,
+    required this.totalQty,
+    required this.totalDiscount,
+    required this.finalCartData,
+  });
+
+  final num? totalAmt;
+  final num? totalQty;
+  final num? totalDiscount;
+  final List<FinalCartDatum> finalCartData;
+
+  factory Data.fromJson(Map<String, dynamic> json){
+    return Data(
+      totalAmt: json["totalAmt"],
+      totalQty: json["totalQty"],
+      totalDiscount: json["totalDiscount"],
+      finalCartData: json["finalCartData"] == null ? [] : List<FinalCartDatum>.from(json["finalCartData"]!.map((x) => FinalCartDatum.fromJson(x))),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    "totalAmt": totalAmt,
+    "totalQty": totalQty,
+    "totalDiscount": totalDiscount,
+    "finalCartData": finalCartData.map((x) => x.toJson()).toList(),
+  };
+
+}
+
+class FinalCartDatum {
+  FinalCartDatum({
     required this.id,
     required this.name,
     required this.slug,
@@ -103,14 +130,15 @@ class Datum {
     required this.stockStatus,
     required this.hasOptions,
     required this.postPassword,
-    required this.aioseoNotices,
     required this.productUnits,
     required this.wcfmProductPolicyData,
     required this.showAdditionalInfoTab,
     required this.store,
     required this.productRestirctionMessage,
     required this.links,
+    required this.like,
     required this.totalPrice,
+    required this.quantity,
   });
 
   final int? id;
@@ -148,7 +176,7 @@ class Datum {
   final String? taxStatus;
   final String? taxClass;
   final bool? manageStock;
-  final dynamic stockQuantity;
+  final num? stockQuantity;
   final String? backorders;
   final bool? backordersAllowed;
   final bool? backordered;
@@ -171,8 +199,8 @@ class Datum {
   final List<dynamic> tags;
   final List<Image> images;
   final List<Attribute> attributes;
-  final List<DefaultAttribute> defaultAttributes;
-  final List<num> variations;
+  final List<dynamic> defaultAttributes;
+  final List<dynamic> variations;
   final List<dynamic> groupedProducts;
   final num? menuOrder;
   final String? priceHtml;
@@ -181,17 +209,18 @@ class Datum {
   final String? stockStatus;
   final bool? hasOptions;
   final String? postPassword;
-  final List<dynamic> aioseoNotices;
   final ProductUnits? productUnits;
   final WcfmProductPolicyData? wcfmProductPolicyData;
   final bool? showAdditionalInfoTab;
   final Store? store;
   final String? productRestirctionMessage;
   final Links? links;
+  num? like;
   final num? totalPrice;
+  num? quantity;
 
-  factory Datum.fromJson(Map<String, dynamic> json) {
-    return Datum(
+  factory FinalCartDatum.fromJson(Map<String, dynamic> json){
+    return FinalCartDatum(
       id: json["id"],
       name: json["name"],
       slug: json["slug"],
@@ -219,8 +248,7 @@ class Datum {
       totalSales: json["total_sales"],
       virtual: json["virtual"],
       downloadable: json["downloadable"],
-      downloads:
-          json["downloads"] == null ? [] : List<dynamic>.from(json["downloads"]!.map((x) => x)),
+      downloads: json["downloads"] == null ? [] : List<dynamic>.from(json["downloads"]!.map((x) => x)),
       downloadLimit: json["download_limit"],
       downloadExpiry: json["download_expiry"],
       externalUrl: json["external_url"],
@@ -243,136 +271,116 @@ class Datum {
       reviewsAllowed: json["reviews_allowed"],
       averageRating: json["average_rating"],
       ratingCount: json["rating_count"],
-      upsellIds:
-          json["upsell_ids"] == null ? [] : List<dynamic>.from(json["upsell_ids"]!.map((x) => x)),
-      crossSellIds: json["cross_sell_ids"] == null
-          ? []
-          : List<dynamic>.from(json["cross_sell_ids"]!.map((x) => x)),
+      upsellIds: json["upsell_ids"] == null ? [] : List<dynamic>.from(json["upsell_ids"]!.map((x) => x)),
+      crossSellIds: json["cross_sell_ids"] == null ? [] : List<dynamic>.from(json["cross_sell_ids"]!.map((x) => x)),
       parentId: json["parent_id"],
       purchaseNote: json["purchase_note"],
-      categories: json["categories"] == null
-          ? []
-          : List<Category>.from(json["categories"]!.map((x) => Category.fromJson(x))),
+      categories: json["categories"] == null ? [] : List<Category>.from(json["categories"]!.map((x) => Category.fromJson(x))),
       tags: json["tags"] == null ? [] : List<dynamic>.from(json["tags"]!.map((x) => x)),
-      images: json["images"] == null
-          ? []
-          : List<Image>.from(json["images"]!.map((x) => Image.fromJson(x))),
-      attributes: json["attributes"] == null
-          ? []
-          : List<Attribute>.from(json["attributes"]!.map((x) => Attribute.fromJson(x))),
-      defaultAttributes: json["default_attributes"] == null
-          ? []
-          : List<DefaultAttribute>.from(
-              json["default_attributes"]!.map((x) => DefaultAttribute.fromJson(x))),
-      variations:
-          json["variations"] == null ? [] : List<num>.from(json["variations"]!.map((x) => x)),
-      groupedProducts: json["grouped_products"] == null
-          ? []
-          : List<dynamic>.from(json["grouped_products"]!.map((x) => x)),
+      images: json["images"] == null ? [] : List<Image>.from(json["images"]!.map((x) => Image.fromJson(x))),
+      attributes: json["attributes"] == null ? [] : List<Attribute>.from(json["attributes"]!.map((x) => Attribute.fromJson(x))),
+      defaultAttributes: json["default_attributes"] == null ? [] : List<dynamic>.from(json["default_attributes"]!.map((x) => x)),
+      variations: json["variations"] == null ? [] : List<dynamic>.from(json["variations"]!.map((x) => x)),
+      groupedProducts: json["grouped_products"] == null ? [] : List<dynamic>.from(json["grouped_products"]!.map((x) => x)),
       menuOrder: json["menu_order"],
       priceHtml: json["price_html"],
-      relatedIds:
-          json["related_ids"] == null ? [] : List<num>.from(json["related_ids"]!.map((x) => x)),
-      metaData: json["meta_data"] == null
-          ? []
-          : List<MetaDatum>.from(json["meta_data"]!.map((x) => MetaDatum.fromJson(x))),
+      relatedIds: json["related_ids"] == null ? [] : List<num>.from(json["related_ids"]!.map((x) => x)),
+      metaData: json["meta_data"] == null ? [] : List<MetaDatum>.from(json["meta_data"]!.map((x) => MetaDatum.fromJson(x))),
       stockStatus: json["stock_status"],
       hasOptions: json["has_options"],
       postPassword: json["post_password"],
-      aioseoNotices: json["aioseo_notices"] == null
-          ? []
-          : List<dynamic>.from(json["aioseo_notices"]!.map((x) => x)),
-      productUnits:
-          json["product_units"] == null ? null : ProductUnits.fromJson(json["product_units"]),
-      wcfmProductPolicyData: json["wcfm_product_policy_data"] == null
-          ? null
-          : WcfmProductPolicyData.fromJson(json["wcfm_product_policy_data"]),
+      productUnits: json["product_units"] == null ? null : ProductUnits.fromJson(json["product_units"]),
+      wcfmProductPolicyData: json["wcfm_product_policy_data"] == null ? null : WcfmProductPolicyData.fromJson(json["wcfm_product_policy_data"]),
       showAdditionalInfoTab: json["showAdditionalInfoTab"],
       store: json["store"] == null ? null : Store.fromJson(json["store"]),
       productRestirctionMessage: json["product_restirction_message"],
       links: json["_links"] == null ? null : Links.fromJson(json["_links"]),
+      like: json["like"],
       totalPrice: json["totalPrice"],
+      quantity: json["quantity"],
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "slug": slug,
-        "permalink": permalink,
-        "date_created": dateCreated?.toIso8601String(),
-        "date_created_gmt": dateCreatedGmt?.toIso8601String(),
-        "date_modified": dateModified?.toIso8601String(),
-        "date_modified_gmt": dateModifiedGmt?.toIso8601String(),
-        "type": type,
-        "status": status,
-        "featured": featured,
-        "catalog_visibility": catalogVisibility,
-        "description": description,
-        "short_description": shortDescription,
-        "sku": sku,
-        "price": price,
-        "regular_price": regularPrice,
-        "sale_price": salePrice,
-        "date_on_sale_from": dateOnSaleFrom,
-        "date_on_sale_from_gmt": dateOnSaleFromGmt,
-        "date_on_sale_to": dateOnSaleTo,
-        "date_on_sale_to_gmt": dateOnSaleToGmt,
-        "on_sale": onSale,
-        "purchasable": purchasable,
-        "total_sales": totalSales,
-        "virtual": virtual,
-        "downloadable": downloadable,
-        "downloads": downloads.map((x) => x).toList(),
-        "download_limit": downloadLimit,
-        "download_expiry": downloadExpiry,
-        "external_url": externalUrl,
-        "button_text": buttonText,
-        "tax_status": taxStatus,
-        "tax_class": taxClass,
-        "manage_stock": manageStock,
-        "stock_quantity": stockQuantity,
-        "backorders": backorders,
-        "backorders_allowed": backordersAllowed,
-        "backordered": backordered,
-        "low_stock_amount": lowStockAmount,
-        "sold_individually": soldIndividually,
-        "weight": weight,
-        "dimensions": dimensions?.toJson(),
-        "shipping_required": shippingRequired,
-        "shipping_taxable": shippingTaxable,
-        "shipping_class": shippingClass,
-        "shipping_class_id": shippingClassId,
-        "reviews_allowed": reviewsAllowed,
-        "average_rating": averageRating,
-        "rating_count": ratingCount,
-        "upsell_ids": upsellIds.map((x) => x).toList(),
-        "cross_sell_ids": crossSellIds.map((x) => x).toList(),
-        "parent_id": parentId,
-        "purchase_note": purchaseNote,
-        "categories": categories.map((x) => x?.toJson()).toList(),
-        "tags": tags.map((x) => x).toList(),
-        "images": images.map((x) => x?.toJson()).toList(),
-        "attributes": attributes.map((x) => x?.toJson()).toList(),
-        "default_attributes": defaultAttributes.map((x) => x?.toJson()).toList(),
-        "variations": variations.map((x) => x).toList(),
-        "grouped_products": groupedProducts.map((x) => x).toList(),
-        "menu_order": menuOrder,
-        "price_html": priceHtml,
-        "related_ids": relatedIds.map((x) => x).toList(),
-        "meta_data": metaData.map((x) => x?.toJson()).toList(),
-        "stock_status": stockStatus,
-        "has_options": hasOptions,
-        "post_password": postPassword,
-        "aioseo_notices": aioseoNotices.map((x) => x).toList(),
-        "product_units": productUnits?.toJson(),
-        "wcfm_product_policy_data": wcfmProductPolicyData?.toJson(),
-        "showAdditionalInfoTab": showAdditionalInfoTab,
-        "store": store?.toJson(),
-        "product_restirction_message": productRestirctionMessage,
-        "_links": links?.toJson(),
-        "totalPrice": totalPrice,
-      };
+    "id": id,
+    "name": name,
+    "slug": slug,
+    "permalink": permalink,
+    "date_created": dateCreated?.toIso8601String(),
+    "date_created_gmt": dateCreatedGmt?.toIso8601String(),
+    "date_modified": dateModified?.toIso8601String(),
+    "date_modified_gmt": dateModifiedGmt?.toIso8601String(),
+    "type": type,
+    "status": status,
+    "featured": featured,
+    "catalog_visibility": catalogVisibility,
+    "description": description,
+    "short_description": shortDescription,
+    "sku": sku,
+    "price": price,
+    "regular_price": regularPrice,
+    "sale_price": salePrice,
+    "date_on_sale_from": dateOnSaleFrom,
+    "date_on_sale_from_gmt": dateOnSaleFromGmt,
+    "date_on_sale_to": dateOnSaleTo,
+    "date_on_sale_to_gmt": dateOnSaleToGmt,
+    "on_sale": onSale,
+    "purchasable": purchasable,
+    "total_sales": totalSales,
+    "virtual": virtual,
+    "downloadable": downloadable,
+    "downloads": downloads.map((x) => x).toList(),
+    "download_limit": downloadLimit,
+    "download_expiry": downloadExpiry,
+    "external_url": externalUrl,
+    "button_text": buttonText,
+    "tax_status": taxStatus,
+    "tax_class": taxClass,
+    "manage_stock": manageStock,
+    "stock_quantity": stockQuantity,
+    "backorders": backorders,
+    "backorders_allowed": backordersAllowed,
+    "backordered": backordered,
+    "low_stock_amount": lowStockAmount,
+    "sold_individually": soldIndividually,
+    "weight": weight,
+    "dimensions": dimensions?.toJson(),
+    "shipping_required": shippingRequired,
+    "shipping_taxable": shippingTaxable,
+    "shipping_class": shippingClass,
+    "shipping_class_id": shippingClassId,
+    "reviews_allowed": reviewsAllowed,
+    "average_rating": averageRating,
+    "rating_count": ratingCount,
+    "upsell_ids": upsellIds.map((x) => x).toList(),
+    "cross_sell_ids": crossSellIds.map((x) => x).toList(),
+    "parent_id": parentId,
+    "purchase_note": purchaseNote,
+    "categories": categories.map((x) => x.toJson()).toList(),
+    "tags": tags.map((x) => x).toList(),
+    "images": images.map((x) => x.toJson()).toList(),
+    "attributes": attributes.map((x) => x.toJson()).toList(),
+    "default_attributes": defaultAttributes.map((x) => x).toList(),
+    "variations": variations.map((x) => x).toList(),
+    "grouped_products": groupedProducts.map((x) => x).toList(),
+    "menu_order": menuOrder,
+    "price_html": priceHtml,
+    "related_ids": relatedIds.map((x) => x).toList(),
+    "meta_data": metaData.map((x) => x.toJson()).toList(),
+    "stock_status": stockStatus,
+    "has_options": hasOptions,
+    "post_password": postPassword,
+    "product_units": productUnits?.toJson(),
+    "wcfm_product_policy_data": wcfmProductPolicyData?.toJson(),
+    "showAdditionalInfoTab": showAdditionalInfoTab,
+    "store": store?.toJson(),
+    "product_restirction_message": productRestirctionMessage,
+    "_links": links?.toJson(),
+    "like": like,
+    "totalPrice": totalPrice,
+    "quantity": quantity,
+  };
+
 }
 
 class Attribute {
@@ -392,7 +400,7 @@ class Attribute {
   final bool? variation;
   final List<String> options;
 
-  factory Attribute.fromJson(Map<String, dynamic> json) {
+  factory Attribute.fromJson(Map<String, dynamic> json){
     return Attribute(
       id: json["id"],
       name: json["name"],
@@ -404,13 +412,14 @@ class Attribute {
   }
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "position": position,
-        "visible": visible,
-        "variation": variation,
-        "options": options.map((x) => x).toList(),
-      };
+    "id": id,
+    "name": name,
+    "position": position,
+    "visible": visible,
+    "variation": variation,
+    "options": options.map((x) => x).toList(),
+  };
+
 }
 
 class Category {
@@ -424,7 +433,7 @@ class Category {
   final String? name;
   final String? slug;
 
-  factory Category.fromJson(Map<String, dynamic> json) {
+  factory Category.fromJson(Map<String, dynamic> json){
     return Category(
       id: json["id"],
       name: json["name"],
@@ -433,36 +442,11 @@ class Category {
   }
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "slug": slug,
-      };
-}
+    "id": id,
+    "name": name,
+    "slug": slug,
+  };
 
-class DefaultAttribute {
-  DefaultAttribute({
-    required this.id,
-    required this.name,
-    required this.option,
-  });
-
-  final int? id;
-  final String? name;
-  final String? option;
-
-  factory DefaultAttribute.fromJson(Map<String, dynamic> json) {
-    return DefaultAttribute(
-      id: json["id"],
-      name: json["name"],
-      option: json["option"],
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "option": option,
-      };
 }
 
 class Dimensions {
@@ -476,7 +460,7 @@ class Dimensions {
   final String? width;
   final String? height;
 
-  factory Dimensions.fromJson(Map<String, dynamic> json) {
+  factory Dimensions.fromJson(Map<String, dynamic> json){
     return Dimensions(
       length: json["length"],
       width: json["width"],
@@ -485,10 +469,11 @@ class Dimensions {
   }
 
   Map<String, dynamic> toJson() => {
-        "length": length,
-        "width": width,
-        "height": height,
-      };
+    "length": length,
+    "width": width,
+    "height": height,
+  };
+
 }
 
 class Image {
@@ -530,7 +515,7 @@ class Image {
   final String? woocommerceSingle;
   final String? woocommerceGalleryThumbnail;
 
-  factory Image.fromJson(Map<String, dynamic> json) {
+  factory Image.fromJson(Map<String, dynamic> json){
     return Image(
       id: json["id"],
       dateCreated: DateTime.tryParse(json["date_created"] ?? ""),
@@ -553,24 +538,25 @@ class Image {
   }
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "date_created": dateCreated?.toIso8601String(),
-        "date_created_gmt": dateCreatedGmt?.toIso8601String(),
-        "date_modified": dateModified?.toIso8601String(),
-        "date_modified_gmt": dateModifiedGmt?.toIso8601String(),
-        "src": src,
-        "name": name,
-        "alt": alt,
-        "1536x1536": the1536X1536,
-        "2048x2048": the2048X2048,
-        "wolmart-post-medium": wolmartPostMedium,
-        "wolmart-post-small": wolmartPostSmall,
-        "wolmart-product-thumbnail": wolmartProductThumbnail,
-        "Wolmart Custom": wolmartCustom,
-        "woocommerce_thumbnail": woocommerceThumbnail,
-        "woocommerce_single": woocommerceSingle,
-        "woocommerce_gallery_thumbnail": woocommerceGalleryThumbnail,
-      };
+    "id": id,
+    "date_created": dateCreated?.toIso8601String(),
+    "date_created_gmt": dateCreatedGmt?.toIso8601String(),
+    "date_modified": dateModified?.toIso8601String(),
+    "date_modified_gmt": dateModifiedGmt?.toIso8601String(),
+    "src": src,
+    "name": name,
+    "alt": alt,
+    "1536x1536": the1536X1536,
+    "2048x2048": the2048X2048,
+    "wolmart-post-medium": wolmartPostMedium,
+    "wolmart-post-small": wolmartPostSmall,
+    "wolmart-product-thumbnail": wolmartProductThumbnail,
+    "Wolmart Custom": wolmartCustom,
+    "woocommerce_thumbnail": woocommerceThumbnail,
+    "woocommerce_single": woocommerceSingle,
+    "woocommerce_gallery_thumbnail": woocommerceGalleryThumbnail,
+  };
+
 }
 
 class Links {
@@ -582,21 +568,18 @@ class Links {
   final List<Collection> self;
   final List<Collection> collection;
 
-  factory Links.fromJson(Map<String, dynamic> json) {
+  factory Links.fromJson(Map<String, dynamic> json){
     return Links(
-      self: json["self"] == null
-          ? []
-          : List<Collection>.from(json["self"]!.map((x) => Collection.fromJson(x))),
-      collection: json["collection"] == null
-          ? []
-          : List<Collection>.from(json["collection"]!.map((x) => Collection.fromJson(x))),
+      self: json["self"] == null ? [] : List<Collection>.from(json["self"]!.map((x) => Collection.fromJson(x))),
+      collection: json["collection"] == null ? [] : List<Collection>.from(json["collection"]!.map((x) => Collection.fromJson(x))),
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "self": self.map((x) => x?.toJson()).toList(),
-        "collection": collection.map((x) => x?.toJson()).toList(),
-      };
+    "self": self.map((x) => x.toJson()).toList(),
+    "collection": collection.map((x) => x.toJson()).toList(),
+  };
+
 }
 
 class Collection {
@@ -606,15 +589,16 @@ class Collection {
 
   final String? href;
 
-  factory Collection.fromJson(Map<String, dynamic> json) {
+  factory Collection.fromJson(Map<String, dynamic> json){
     return Collection(
       href: json["href"],
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "href": href,
-      };
+    "href": href,
+  };
+
 }
 
 class MetaDatum {
@@ -628,7 +612,7 @@ class MetaDatum {
   final String? key;
   final String? value;
 
-  factory MetaDatum.fromJson(Map<String, dynamic> json) {
+  factory MetaDatum.fromJson(Map<String, dynamic> json){
     return MetaDatum(
       id: json["id"],
       key: json["key"],
@@ -637,10 +621,11 @@ class MetaDatum {
   }
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "key": key,
-        "value": value,
-      };
+    "id": id,
+    "key": key,
+    "value": value,
+  };
+
 }
 
 class ProductUnits {
@@ -652,7 +637,7 @@ class ProductUnits {
   final String? weightUnit;
   final String? dimensionUnit;
 
-  factory ProductUnits.fromJson(Map<String, dynamic> json) {
+  factory ProductUnits.fromJson(Map<String, dynamic> json){
     return ProductUnits(
       weightUnit: json["weight_unit"],
       dimensionUnit: json["dimension_unit"],
@@ -660,9 +645,10 @@ class ProductUnits {
   }
 
   Map<String, dynamic> toJson() => {
-        "weight_unit": weightUnit,
-        "dimension_unit": dimensionUnit,
-      };
+    "weight_unit": weightUnit,
+    "dimension_unit": dimensionUnit,
+  };
+
 }
 
 class Store {
@@ -678,6 +664,7 @@ class Store {
     required this.storeHidePolicy,
     required this.storeProductsPerPage,
     required this.vendorEmail,
+    required this.vendorPhone,
     required this.vendorAddress,
     required this.disableVendor,
     required this.isStoreOffline,
@@ -707,6 +694,7 @@ class Store {
   final String? storeHidePolicy;
   final num? storeProductsPerPage;
   final String? vendorEmail;
+  final String? vendorPhone;
   final String? vendorAddress;
   final String? disableVendor;
   final String? isStoreOffline;
@@ -724,7 +712,7 @@ class Store {
   final WcfmProductPolicyData? vendorPolicies;
   final StoreTabHeadings? storeTabHeadings;
 
-  factory Store.fromJson(Map<String, dynamic> json) {
+  factory Store.fromJson(Map<String, dynamic> json){
     return Store(
       vendorId: json["vendor_id"],
       vendorDisplayName: json["vendor_display_name"],
@@ -737,6 +725,7 @@ class Store {
       storeHidePolicy: json["store_hide_policy"],
       storeProductsPerPage: json["store_products_per_page"],
       vendorEmail: json["vendor_email"],
+      vendorPhone: json["vendor_phone"],
       vendorAddress: json["vendor_address"],
       disableVendor: json["disable_vendor"],
       isStoreOffline: json["is_store_offline"],
@@ -748,82 +737,68 @@ class Store {
       vendorListBanner: json["vendor_list_banner"],
       storeRating: json["store_rating"],
       emailVerified: json["email_verified"],
-      vendorAdditionalInfo: json["vendor_additional_info"] == null
-          ? []
-          : List<VendorAdditionalInfo>.from(
-              json["vendor_additional_info"]!.map((x) => VendorAdditionalInfo.fromJson(x))),
-      membershipDetails: json["membership_details"] == null
-          ? null
-          : MembershipDetails.fromJson(json["membership_details"]),
+      vendorAdditionalInfo: json["vendor_additional_info"] == null ? [] : List<VendorAdditionalInfo>.from(json["vendor_additional_info"]!.map((x) => VendorAdditionalInfo.fromJson(x))),
+      membershipDetails: json["membership_details"] == null ? null : MembershipDetails.fromJson(json["membership_details"]),
       vendorDescription: json["vendor_description"],
-      vendorPolicies: json["vendor_policies"] == null
-          ? null
-          : WcfmProductPolicyData.fromJson(json["vendor_policies"]),
-      storeTabHeadings: json["store_tab_headings"] == null
-          ? null
-          : StoreTabHeadings.fromJson(json["store_tab_headings"]),
+      vendorPolicies: json["vendor_policies"] == null ? null : WcfmProductPolicyData.fromJson(json["vendor_policies"]),
+      storeTabHeadings: json["store_tab_headings"] == null ? null : StoreTabHeadings.fromJson(json["store_tab_headings"]),
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "vendor_id": vendorId,
-        "vendor_display_name": vendorDisplayName,
-        "vendor_shop_name": vendorShopName,
-        "formatted_display_name": formattedDisplayName,
-        "store_hide_email": storeHideEmail,
-        "store_hide_phone": storeHidePhone,
-        "store_hide_address": storeHideAddress,
-        "store_hide_description": storeHideDescription,
-        "store_hide_policy": storeHidePolicy,
-        "store_products_per_page": storeProductsPerPage,
-        "vendor_email": vendorEmail,
-        "vendor_address": vendorAddress,
-        "disable_vendor": disableVendor,
-        "is_store_offline": isStoreOffline,
-        "vendor_shop_logo": vendorShopLogo,
-        "vendor_banner_type": vendorBannerType,
-        "vendor_banner": vendorBanner,
-        "mobile_banner": mobileBanner,
-        "vendor_list_banner_type": vendorListBannerType,
-        "vendor_list_banner": vendorListBanner,
-        "store_rating": storeRating,
-        "email_verified": emailVerified,
-        "vendor_additional_info": vendorAdditionalInfo.map((x) => x?.toJson()).toList(),
-        "membership_details": membershipDetails?.toJson(),
-        "vendor_description": vendorDescription,
-        "vendor_policies": vendorPolicies?.toJson(),
-        "store_tab_headings": storeTabHeadings?.toJson(),
-      };
+    "vendor_id": vendorId,
+    "vendor_display_name": vendorDisplayName,
+    "vendor_shop_name": vendorShopName,
+    "formatted_display_name": formattedDisplayName,
+    "store_hide_email": storeHideEmail,
+    "store_hide_phone": storeHidePhone,
+    "store_hide_address": storeHideAddress,
+    "store_hide_description": storeHideDescription,
+    "store_hide_policy": storeHidePolicy,
+    "store_products_per_page": storeProductsPerPage,
+    "vendor_email": vendorEmail,
+    "vendor_phone": vendorPhone,
+    "vendor_address": vendorAddress,
+    "disable_vendor": disableVendor,
+    "is_store_offline": isStoreOffline,
+    "vendor_shop_logo": vendorShopLogo,
+    "vendor_banner_type": vendorBannerType,
+    "vendor_banner": vendorBanner,
+    "mobile_banner": mobileBanner,
+    "vendor_list_banner_type": vendorListBannerType,
+    "vendor_list_banner": vendorListBanner,
+    "store_rating": storeRating,
+    "email_verified": emailVerified,
+    "vendor_additional_info": vendorAdditionalInfo.map((x) => x.toJson()).toList(),
+    "membership_details": membershipDetails?.toJson(),
+    "vendor_description": vendorDescription,
+    "vendor_policies": vendorPolicies?.toJson(),
+    "store_tab_headings": storeTabHeadings?.toJson(),
+  };
+
 }
 
 class MembershipDetails {
   MembershipDetails({
     required this.membershipTitle,
     required this.membershipId,
-    required this.membershipNextPayment,
-    required this.membershipExpiryOn,
   });
 
   final String? membershipTitle;
   final String? membershipId;
-  final String? membershipNextPayment;
-  final String? membershipExpiryOn;
 
-  factory MembershipDetails.fromJson(Map<String, dynamic> json) {
+  factory MembershipDetails.fromJson(Map<String, dynamic> json){
     return MembershipDetails(
       membershipTitle: json["membership_title"],
       membershipId: json["membership_id"],
-      membershipNextPayment: json["membership_next_payment"],
-      membershipExpiryOn: json["membership_expiry_on"],
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "membership_title": membershipTitle,
-        "membership_id": membershipId,
-        "membership_next_payment": membershipNextPayment,
-        "membership_expiry_on": membershipExpiryOn,
-      };
+    "membership_title": membershipTitle,
+    "membership_id": membershipId,
+  };
+
 }
 
 class StoreTabHeadings {
@@ -832,32 +807,29 @@ class StoreTabHeadings {
     required this.about,
     required this.policies,
     required this.reviews,
-    required this.followers,
   });
 
   final String? products;
   final String? about;
   final String? policies;
   final String? reviews;
-  final String? followers;
 
-  factory StoreTabHeadings.fromJson(Map<String, dynamic> json) {
+  factory StoreTabHeadings.fromJson(Map<String, dynamic> json){
     return StoreTabHeadings(
       products: json["products"],
       about: json["about"],
       policies: json["policies"],
       reviews: json["reviews"],
-      followers: json["followers"],
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "products": products,
-        "about": about,
-        "policies": policies,
-        "reviews": reviews,
-        "followers": followers,
-      };
+    "products": products,
+    "about": about,
+    "policies": policies,
+    "reviews": reviews,
+  };
+
 }
 
 class VendorAdditionalInfo {
@@ -883,7 +855,7 @@ class VendorAdditionalInfo {
   final String? name;
   final String? value;
 
-  factory VendorAdditionalInfo.fromJson(Map<String, dynamic> json) {
+  factory VendorAdditionalInfo.fromJson(Map<String, dynamic> json){
     return VendorAdditionalInfo(
       enable: json["enable"],
       type: json["type"],
@@ -898,16 +870,17 @@ class VendorAdditionalInfo {
   }
 
   Map<String, dynamic> toJson() => {
-        "enable": enable,
-        "type": type,
-        "label": label,
-        "options": options,
-        "content": content,
-        "help_text": helpText,
-        "required": required,
-        "name": name,
-        "value": value,
-      };
+    "enable": enable,
+    "type": type,
+    "label": label,
+    "options": options,
+    "content": content,
+    "help_text": helpText,
+    "required": required,
+    "name": name,
+    "value": value,
+  };
+
 }
 
 class WcfmProductPolicyData {
@@ -931,7 +904,7 @@ class WcfmProductPolicyData {
   final bool? visible;
   final String? tabTitle;
 
-  factory WcfmProductPolicyData.fromJson(Map<String, dynamic> json) {
+  factory WcfmProductPolicyData.fromJson(Map<String, dynamic> json){
     return WcfmProductPolicyData(
       shippingPolicyHeading: json["shipping_policy_heading"],
       shippingPolicy: json["shipping_policy"],
@@ -945,13 +918,14 @@ class WcfmProductPolicyData {
   }
 
   Map<String, dynamic> toJson() => {
-        "shipping_policy_heading": shippingPolicyHeading,
-        "shipping_policy": shippingPolicy,
-        "refund_policy_heading": refundPolicyHeading,
-        "refund_policy": refundPolicy,
-        "cancellation_policy_heading": cancellationPolicyHeading,
-        "cancellation_policy": cancellationPolicy,
-        "visible": visible,
-        "tab_title": tabTitle,
-      };
+    "shipping_policy_heading": shippingPolicyHeading,
+    "shipping_policy": shippingPolicy,
+    "refund_policy_heading": refundPolicyHeading,
+    "refund_policy": refundPolicy,
+    "cancellation_policy_heading": cancellationPolicyHeading,
+    "cancellation_policy": cancellationPolicy,
+    "visible": visible,
+    "tab_title": tabTitle,
+  };
+
 }

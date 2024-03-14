@@ -1,11 +1,13 @@
-import 'package:local_first/View/Dashboard/MyCart/shipping_address_screen.dart';
+import 'package:local_first/Models/CartModels/shipping_address_model.dart';
 
 import '../../../Utility/utility_export.dart';
+import '../Account/notification_screen.dart';
 
 class AddAddressScreen extends StatefulWidget {
   String? screenType;
+  Datum? currentAddress;
 
-  AddAddressScreen({super.key, this.screenType});
+  AddAddressScreen({super.key, this.screenType, this.currentAddress});
 
   @override
   State<AddAddressScreen> createState() => _AddAddressScreenState();
@@ -13,15 +15,40 @@ class AddAddressScreen extends StatefulWidget {
 
 class _AddAddressScreenState extends State<AddAddressScreen> {
   String? selectedValue;
-  RxBool? selectedIndex = true.obs;
+  RxBool homeAddressSelected = true.obs;
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController streetAddressController = TextEditingController();
   TextEditingController streetAddress2Controller = TextEditingController();
-  TextEditingController cityController = TextEditingController();
   TextEditingController zipCodeController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
+  TextEditingController cityController = TextEditingController();
+  TextEditingController stateController = TextEditingController();
+  TextEditingController countryController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.screenType == 'Edit Address') {
+      initField();
+    }
+  }
+
+  void initField() {
+    firstNameController.text = widget.currentAddress?.firstName ?? '';
+    lastNameController.text = widget.currentAddress?.lastName ?? '';
+    streetAddressController.text = widget.currentAddress?.address1 ?? '';
+    streetAddress2Controller.text = widget.currentAddress?.address2 ?? '';
+    zipCodeController.text = widget.currentAddress?.zipCode ?? '';
+    phoneNumberController.text = widget.currentAddress?.number.toString() ?? '';
+    cityController.text = widget.currentAddress?.city ?? '';
+    stateController.text = widget.currentAddress?.state ?? '';
+    countryController.text = widget.currentAddress?.country ?? '';
+    homeAddressSelected.value = widget.currentAddress?.type == 'home' ? true : false;
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +67,11 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     widget.screenType ?? '',
                     style: AppFontStyle.blackOpenSans16W600,
                   ),
-                  sufFix: appBarButton(image: iconsBell, callBack: () {})),
+                  sufFix: appBarButton(
+                      image: iconsBell,
+                      callBack: () {
+                        Get.to(() => const NotificationScreen());
+                      })),
               Expanded(
                 child: Form(
                   key: globalKey,
@@ -48,7 +79,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     children: [
                       height20,
-                      commonDropDown(),
+                      commonDropDown(title: 'Country'),
                       height16,
                       commonTextField(
                           labelText: 'First Name',
@@ -88,7 +119,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                             return isNotEmptyValidation(val);
                           }),
                       height16,
-                      commonDropDown(),
+                      commonDropDown(title: 'State'),
                       height16,
                       commonTextField(
                           labelText: 'Zip Code',
@@ -114,22 +145,22 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       ),
                       customHeight(8),
                       StreamBuilder<Object>(
-                          stream: selectedIndex?.stream,
+                          stream: homeAddressSelected.stream,
                           builder: (context, snapshot) {
                             return Row(
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                    selectedIndex?.value = true;
+                                    homeAddressSelected.value = true;
                                   },
                                   child: Container(
                                     padding: const EdgeInsets.all(12),
                                     decoration: BoxDecoration(
-                                        color: selectedIndex?.value == true
+                                        color: homeAddressSelected.value == true
                                             ? colorPrimary2.withOpacity(0.10)
                                             : white,
                                         border: Border.all(
-                                            color: selectedIndex?.value == true
+                                            color: homeAddressSelected.value == true
                                                 ? colorPrimary2
                                                 : colorE3E3E3),
                                         borderRadius: const BorderRadius.all(Radius.circular(25))),
@@ -137,14 +168,15 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                       children: [
                                         Image(
                                           image: iconsHome,
-                                          color:
-                                              selectedIndex?.value == true ? colorPrimary2 : black,
+                                          color: homeAddressSelected.value == true
+                                              ? colorPrimary2
+                                              : black,
                                         ),
                                         customWidth(8),
                                         Text(
                                           'Home',
                                           style: AppFontStyle.blackOpenSans14W500.copyWith(
-                                              color: selectedIndex?.value == true
+                                              color: homeAddressSelected.value == true
                                                   ? colorPrimary2
                                                   : black),
                                         )
@@ -155,16 +187,16 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                 width20,
                                 GestureDetector(
                                   onTap: () {
-                                    selectedIndex?.value = false;
+                                    homeAddressSelected.value = false;
                                   },
                                   child: Container(
                                     padding: const EdgeInsets.all(12),
                                     decoration: BoxDecoration(
-                                        color: selectedIndex?.value == false
+                                        color: homeAddressSelected.value == false
                                             ? colorPrimary2.withOpacity(0.10)
                                             : white,
                                         border: Border.all(
-                                            color: selectedIndex?.value == false
+                                            color: homeAddressSelected.value == false
                                                 ? colorPrimary2
                                                 : colorE3E3E3),
                                         borderRadius: const BorderRadius.all(Radius.circular(25))),
@@ -172,14 +204,15 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                       children: [
                                         Image(
                                           image: iconsOffice,
-                                          color:
-                                              selectedIndex?.value == false ? colorPrimary2 : black,
+                                          color: homeAddressSelected.value == false
+                                              ? colorPrimary2
+                                              : black,
                                         ),
                                         customWidth(8),
                                         Text(
                                           'Office',
                                           style: AppFontStyle.blackOpenSans14W500.copyWith(
-                                              color: selectedIndex?.value == false
+                                              color: homeAddressSelected.value == false
                                                   ? colorPrimary2
                                                   : black),
                                         )
@@ -194,7 +227,40 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       commonFilledButton(
                           onTap: () {
                             if (globalKey.currentState!.validate()) {
-                              Get.to(() => const ShippingAddressScreen());
+                              Map<String, dynamic> params = {
+                                "user_id": kAuthenticationController.userId,
+                                "first_name": firstNameController.text,
+                                "last_name": lastNameController.text,
+                                "type": homeAddressSelected.value ? "home" : "office",
+                                "address_1": streetAddressController.text,
+                                "address_2": streetAddress2Controller.text,
+                                "city": cityController.text,
+                                "state": "gujarat",
+                                "zip_code": zipCodeController.text,
+                                "country": "india",
+                                "number": phoneNumberController.text
+                              };
+                              if (widget.screenType == 'Edit Address') {
+                                // shippingAddressModel
+                                params.addAllIf(widget.screenType == 'Edit Address',
+                                    {"id": widget.currentAddress?.id});
+                                kCartController.editAddressApiCall(params, () {
+                                  // Get.to(() => const ShippingAddressScreen());
+                                  Map<String, dynamic> data = {
+                                    "user_id": kAuthenticationController.userId
+                                  };
+                                  kCartController.getUserAddressApiCall(data, () {});
+                                  Get.back();
+                                });
+                              } else if (widget.screenType == 'Add Address') {
+                                kCartController.addAddressApiCall(params, () {
+                                  Map<String, dynamic> data = {
+                                    "user_id": kAuthenticationController.userId
+                                  };
+                                  kCartController.getUserAddressApiCall(data, () {});
+                                  Get.back();
+                                });
+                              }
                             }
                           },
                           title: widget.screenType == 'Add Address'
@@ -210,13 +276,13 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
         ));
   }
 
-  commonDropDown() {
+  commonDropDown({required String title}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: [
         Text(
-          'Country',
+          title,
           style: AppFontStyle.blackOpenSans14W500,
         ),
         customHeight(08),

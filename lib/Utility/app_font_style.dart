@@ -1,8 +1,13 @@
+import 'package:flutter_html/flutter_html.dart';
 import 'package:local_first/Utility/utility_export.dart';
 
 class AppFontStyle {
   ///===================================   OpenSans   ===============================
   ///Black text
+
+
+  // static Style blackOpenSans12W4001 = const Style(
+  //     color: textColor, fontSize: 12, fontFamily: 'OpenSans', fontWeight: FontWeight.w400);
 
   static TextStyle blackOpenSans12W400 = const TextStyle(
       color: textColor, fontSize: 12, fontFamily: 'OpenSans', fontWeight: FontWeight.w400);

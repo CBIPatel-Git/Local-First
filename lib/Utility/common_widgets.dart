@@ -116,3 +116,67 @@ Widget commonNetworkImageView(
     ),
   );
 }
+
+Widget noDataPlaceHolder() {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      const Icon(
+        Icons.not_interested,
+        color: Colors.grey,
+      ),
+      height05,
+      const Text('No Data Found')
+    ],
+  );
+}
+
+Widget profilePlaceHolder({required String firstName, required String lastName}) {
+  return Padding(
+    padding: const EdgeInsets.all(10),
+    child: Container(
+      height: 125,
+      width: 125,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100), color: Colors.grey.withOpacity(0.3)),
+      child: Center(
+        child: Text(
+          '${firstName.isNotEmpty ? firstName[0] : ''}${lastName.isNotEmpty ? lastName[0] : ''}',
+          style: AppFontStyle.blackOpenSans22W600.copyWith(color: colorPrimary2, fontSize: 40),
+        ),
+      ),
+    ),
+  );
+}
+
+Widget commonNetworkImage(
+    {required String url,
+    double? height,
+    double? width,
+    double? radios,
+    BoxFit? fit,
+    double? extraPaddingPlaceholder,
+    ImageProvider? placeHolder}) {
+  return ClipRRect(
+    borderRadius: BorderRadius.circular(radios ?? 7),
+    child: CachedNetworkImage(
+      height: height ?? 73,
+      width: width ?? 73,
+      imageUrl: url,
+      fit: fit ?? BoxFit.cover,
+      errorWidget: (context, url, error) => Container(
+        height: height ?? 73,
+        width: width ?? 73,
+        decoration: BoxDecoration(color: colorGrey.withOpacity(0.1)),
+        padding: const EdgeInsets.all(20),
+        child: Image(
+          height: height ?? 73,
+          width: width ?? 73,
+          image: placeHolder ?? imagesItemPlaceholder,
+          fit: fit ?? BoxFit.fitHeight,
+          color: colorGrey,
+        ).paddingAll(extraPaddingPlaceholder ?? 0),
+      ),
+    ),
+  );
+}

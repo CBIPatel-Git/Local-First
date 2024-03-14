@@ -124,8 +124,8 @@ Future apiServiceCall({
     }
 
     if (kDebugMode) {
-      print('-------------------------------------------------------');
-      print('-------------------------------------------------------');
+      logPrint('-------------------------------------------------------');
+      logPrint('-------------------------------------------------------');
       logPrint('??????????${response}');
       logPrint("connect time out ${response.requestOptions.connectTimeout}");
       logPrint("send time out ${response.requestOptions.sendTimeout}");
@@ -134,8 +134,8 @@ Future apiServiceCall({
       logPrint(tempServiceUrl);
       logPrint(tempParams ?? {});
       logPrint(headerParameters);
-      print('-------------------------------------------------------');
-      print('-------------------------------------------------------');
+      logPrint('-------------------------------------------------------');
+      logPrint('-------------------------------------------------------');
     }
     print('responseStusCode${response.statusCode}');
     if (handleResponse(response) && (response.statusCode == 200 || response.statusCode == 201)) {

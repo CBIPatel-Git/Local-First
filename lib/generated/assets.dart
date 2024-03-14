@@ -10,11 +10,13 @@ class Assets {
   static const String fontsOpenSansRegular = 'assets/fonts/OpenSans-Regular.ttf';
   static const String fontsOpenSansSemiBold = 'assets/fonts/OpenSans-SemiBold.ttf';
   static const String iconsAccount = 'assets/icons/account.png';
+  static const String iconsAddItem = 'assets/icons/add_item.png';
   static const String iconsAddress = 'assets/icons/address.png';
   static const String iconsAttachment = 'assets/icons/attachment.png';
   static const String iconsBackIcon = 'assets/icons/backIcon.png';
   static const String iconsBank = 'assets/icons/bank.png';
   static const String iconsBell = 'assets/icons/bell.png';
+  static const String iconsCalendar = 'assets/icons/calendar.png';
   static const String iconsCall = 'assets/icons/call.png';
   static const String iconsCamera = 'assets/icons/camera.png';
   static const String iconsCart = 'assets/icons/cart.png';
@@ -22,6 +24,7 @@ class Assets {
   static const String iconsCartRound = 'assets/icons/cart_round.png';
   static const String iconsChatCall = 'assets/icons/chat_call.png';
   static const String iconsChatCamera = 'assets/icons/chat_camera.png';
+  static const String iconsClose = 'assets/icons/close.png';
   static const String iconsCoupon = 'assets/icons/coupon.png';
   static const String iconsCouponSymbol = 'assets/icons/coupon-symbol.png';
   static const String iconsDelete = 'assets/icons/delete.png';
@@ -66,6 +69,7 @@ class Assets {
   static const String iconsTimer = 'assets/icons/timer.png';
   static const String iconsTwitter = 'assets/icons/Twitter.png';
   static const String iconsVideo = 'assets/icons/video.png';
+  static const String iconsUpload = 'assets/icons/upload.png';
   static const String iconsWallet = 'assets/icons/wallet.png';
   static const String iconsWishlist = 'assets/icons/wishlist.png';
   static const String iconsYourLocation = 'assets/icons/your_location.png';
@@ -78,9 +82,12 @@ class Assets {
   static const String imagesCategoryProductBanner = 'assets/images/category_product_banner.png';
   static const String imagesCouponBg = 'assets/images/coupon_bg.png';
   static const String imagesDeliveryUser = 'assets/images/delivery_user.png';
+  static const String imagesIncome = 'assets/images/income.png';
   static const String imagesItemPlaceholder = 'assets/images/item_placeholder.png';
   static const String imagesMailPic = 'assets/images/mailPic.png';
+  static const String imagesMedical = 'assets/images/medical.png';
   static const String imagesMobileBanner = 'assets/images/mobile_banner.png';
+  static const String imagesMoney = 'assets/images/money.png';
   static const String imagesNearbyStore = 'assets/images/nearby_store.png';
   static const String imagesNewNotificationProfile = 'assets/images/new-notification-profile.png';
   static const String imagesOfferBanner = 'assets/images/offer_banner.png';
@@ -96,6 +103,7 @@ class Assets {
   static const String imagesProfilePicture = 'assets/images/profile_picture.png';
   static const String imagesRemoveItem = 'assets/images/remove_item.png';
   static const String imagesReviewImage = 'assets/images/review_image.png';
+  static const String imagesSaving = 'assets/images/saving.png';
   static const String imagesShoes = 'assets/images/shoes.png';
   static const String imagesStoreDetailBanner = 'assets/images/store_detail_banner.png';
   static const String imagesStoreOfferBanner = 'assets/images/store_offer_banner.png';

@@ -5,6 +5,7 @@ import 'package:local_first/View/OnBoarding/on_boarding_screen.dart';
 
 import '../../Models/AuthenticationModel/log_in_model.dart';
 import '../../Utility/utility_export.dart';
+import '../../VendorFlow/Dashboard/vdashboard_screen.dart';
 import '../Dashboard/bottom_navigation_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -17,7 +18,6 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     Future.delayed(const Duration(seconds: 2), () {
@@ -25,6 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
         try {
           String res = getResponse(key: PrefConstants.userDataModelPref);
           kAuthenticationController.logInModel = LogInModel.fromJson(jsonDecode(res));
+          kAuthenticationController.userId = getUserId();
           Get.offAll(() => const BottomNavigationScreen());
         } catch (e) {
           printLog(e);

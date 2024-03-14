@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:local_first/View/Dashboard/MyCart/my_cart_screen.dart';
 
 import '../../../Utility/utility_export.dart';
 
@@ -11,6 +12,12 @@ class StoreDetailScreen extends StatefulWidget {
 
 class _StoreDetailScreenState extends State<StoreDetailScreen> {
   RxList<int> storeLikedOffer = <int>[].obs;
+
+  @override
+  void initState() {
+    super.initState();
+    kStoreDetailController.getStoreDetailsAPICall({}, () {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,12 +88,16 @@ class _StoreDetailScreenState extends State<StoreDetailScreen> {
                       children: [
                         height05,
                         Text(
-                          'Eastern Treasures Grocery',
+                          kStoreDetailController
+                                  .storeDetailModel.value.data?.store?.vendorShopName ??
+                              ' ',
                           style: AppFontStyle.blackOpenSans18W700,
                         ),
                         height05,
                         Text(
-                          '8502 Preston Rd. Inglewood, Maine 98380',
+                          kStoreDetailController
+                                  .storeDetailModel.value.data?.store?.storeHideAddress ??
+                              ' ',
                           style: AppFontStyle.greyOpenSans14W400,
                         ),
                         height05,
@@ -100,7 +111,7 @@ class _StoreDetailScreenState extends State<StoreDetailScreen> {
                             ),
                             width05,
                             Text(
-                              '4.0 (2.4K) • Delivery • 2.2Km',
+                              '${kStoreDetailController.storeDetailModel.value.data?.store?.storeRating ?? "0.0"} (2.4K) • Delivery • 2.2Km',
                               style: AppFontStyle.greyOpenSans12W400,
                             ),
                           ],
@@ -164,181 +175,234 @@ class _StoreDetailScreenState extends State<StoreDetailScreen> {
                         height20,
                         commonTitleRow(title: 'Products Category', seeAllClick: () {}),
                         height05,
-                        GridView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: 6,
-                          shrinkWrap: true,
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 4, mainAxisExtent: 120),
-                          itemBuilder: (context, index) {
-                            return Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                ClipRRect(
-                                    borderRadius: BorderRadius.circular(7),
-                                    child: Image(image: imagesProduct1)),
-                                height05,
-                                Text(
-                                  kHomeController.productCategoryList[index],
-                                  style: AppFontStyle.blackOpenSans12W500,
-                                )
-                              ],
-                            );
-                          },
-                        ),
+                        if (kStoreDetailController.storeDetailModel.value.data?.category != null)
+                          GridView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: kStoreDetailController
+                                        .storeDetailModel.value.data!.category!.length >=
+                                    8
+                                ? 8
+                                : kStoreDetailController
+                                    .storeDetailModel.value.data?.category?.length,
+                            shrinkWrap: true,
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 4, mainAxisExtent: 120),
+                            itemBuilder: (context, index) {
+                              return Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ClipRRect(
+                                      borderRadius: BorderRadius.circular(7),
+                                      child: commonNetworkImage(
+                                          url: kStoreDetailController.storeDetailModel.value.data
+                                                  ?.category?[index].parent?.image?.src ??
+                                              '')),
+                                  height05,
+                                  Text(
+                                    kStoreDetailController.storeDetailModel.value.data
+                                            ?.category?[index].parent?.name ??
+                                        '',
+                                    maxLines: 1,
+                                    style: AppFontStyle.blackOpenSans12W500,
+                                  )
+                                ],
+                              );
+                            },
+                          ),
                         height20,
-                        commonTitleRow(title: 'Eastern Today\'s Specials', seeAllClick: () {}),
+                        commonTitleRow(
+                            title: kStoreDetailController
+                                    .storeDetailModel.value.data?.suggested?.categoryname ??
+                                '',
+                            seeAllClick: () {}),
                         height05,
                       ],
                     ),
                   ),
-                  SizedBox(
-                    height: 230,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 4,
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      itemBuilder: (context, index) {
-                        return Container(
-                          height: 220,
-                          width: 164,
-                          decoration: BoxDecoration(
-                            color: white,
-                            borderRadius: BorderRadius.circular(12),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.2),
-                                spreadRadius: 1,
-                                blurRadius: 12,
-                                offset: const Offset(0, 0), // changes position of shadow
-                              ),
-                            ],
-                          ),
-                          margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                          padding: const EdgeInsets.all(8),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Stack(
-                                children: [
-                                  SizedBox(
-                                    height: 106,
-                                    width: getScreenWidth(context),
-                                    child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
-                                        child: Image(
-                                          image: imagesTodayOffer1,
-                                          fit: BoxFit.cover,
-                                        )),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.topRight,
-                                    child: InkWell(
+                  if (kStoreDetailController.storeDetailModel.value.data != null &&
+                      kStoreDetailController.storeDetailModel.value.data!.suggested != null &&
+                      kStoreDetailController
+                          .storeDetailModel.value.data!.suggested!.diffProduct.isNotEmpty)
+                    SizedBox(
+                      height: 230,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: (kStoreDetailController.storeDetailModel.value.data?.suggested
+                                        ?.diffProduct.length ??
+                                    0) >=
+                                5
+                            ? 5
+                            : kStoreDetailController
+                                .storeDetailModel.value.data?.suggested?.diffProduct.length,
+                        shrinkWrap: true,
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        itemBuilder: (context, index) {
+                          return Container(
+                            height: 220,
+                            width: 164,
+                            decoration: BoxDecoration(
+                              color: white,
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.2),
+                                  spreadRadius: 1,
+                                  blurRadius: 12,
+                                  offset: const Offset(0, 0), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                            padding: const EdgeInsets.all(8),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Stack(
+                                  children: [
+                                    SizedBox(
+                                      height: 106,
+                                      width: getScreenWidth(context),
+                                      child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(10),
+                                          child: commonNetworkImage(
+                                              url: kStoreDetailController
+                                                      .storeDetailModel
+                                                      .value
+                                                      .data
+                                                      ?.suggested
+                                                      ?.diffProduct[index]
+                                                      .images[0]
+                                                      .src ??
+                                                  '')),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.topRight,
+                                      child: InkWell(
+                                        onTap: () {
+                                          Map<String, dynamic> params = {
+                                            "user_id": kAuthenticationController.userId,
+                                            "product_id": kStoreDetailController.storeDetailModel
+                                                .value.data?.suggested?.diffProduct[index].id
+                                          };
+                                          if (kStoreDetailController.storeDetailModel.value.data
+                                                  ?.suggested?.diffProduct[index].like ==
+                                              0) {
+                                            kStoreDetailController.storeDetailModel.value.data
+                                                ?.suggested?.diffProduct[index].like = 1;
+                                            kHomeController.addToWishlistAPICall(params, () {});
+                                          } else {
+                                            kStoreDetailController.storeDetailModel.value.data
+                                                ?.suggested?.diffProduct[index].like = 0;
+                                            kHomeController.removeToWishlistAPICall(params, () {});
+                                          }
+                                        },
+                                        child: Container(
+                                          width: 28,
+                                          height: 28,
+                                          margin: const EdgeInsets.all(10),
+                                          padding: const EdgeInsets.all(3),
+                                          decoration: BoxDecoration(
+                                              color: colorPrimary,
+                                              borderRadius: BorderRadius.circular(100)),
+                                          child: Obx(() {
+                                            return Icon(
+                                                kStoreDetailController.storeDetailModel.value.data
+                                                            ?.suggested?.diffProduct[index].like ==
+                                                        0
+                                                    ? CupertinoIcons.heart
+                                                    : CupertinoIcons.heart_fill,
+                                                color: white);
+                                          }),
+                                          // child: Image(
+                                          //   image: iconsLike,
+                                          // ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                height12,
+                                Text(
+                                  kStoreDetailController.storeDetailModel.value.data?.suggested
+                                          ?.diffProduct[index].name ??
+                                      '',
+                                  style: AppFontStyle.blackOpenSans16W600,
+                                ),
+                                height05,
+                                Row(
+                                  children: [
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(
+                                          Icons.star,
+                                          size: 17,
+                                          color: colorPrimary,
+                                        ),
+                                        width05,
+                                        Text(
+                                          kStoreDetailController.storeDetailModel.value.data
+                                                  ?.suggested?.diffProduct[index].ratingCount
+                                                  .toString() ??
+                                              '4.9',
+                                          style: AppFontStyle.blackOpenSans12W500,
+                                        ),
+                                      ],
+                                    ),
+                                    width14,
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(
+                                          Icons.location_on_outlined,
+                                          size: 17,
+                                          color: colorPrimary,
+                                        ),
+                                        width05,
+                                        Text(
+                                          '190m',
+                                          style: AppFontStyle.blackOpenSans12W500,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                height05,
+                                Row(
+                                  children: [
+                                    Text(
+                                      '\$${kStoreDetailController.storeDetailModel.value.data?.suggested?.diffProduct[index].salePrice}',
+                                      style: AppFontStyle.blackOpenSans16W700
+                                          .copyWith(color: colorPrimary2),
+                                    ),
+                                    width10,
+                                    Text(
+                                      '\$${kStoreDetailController.storeDetailModel.value.data?.suggested?.diffProduct[index].regularPrice}',
+                                      style: AppFontStyle.greyOpenSans12W400
+                                          .copyWith(decoration: TextDecoration.lineThrough),
+                                    ),
+                                    const Spacer(),
+                                    InkWell(
                                       onTap: () {
-                                        kHomeController.likedOffer.contains(index)
-                                            ? kHomeController.likedOffer.remove(index)
-                                            : kHomeController.likedOffer.add(index);
+                                        // Cart click
+                                        Get.to(() => const MyCartScreen());
+                                        print("Cart click");
                                       },
-                                      child: Container(
-                                        width: 28,
-                                        height: 28,
-                                        margin: const EdgeInsets.all(10),
-                                        padding: const EdgeInsets.all(3),
-                                        decoration: BoxDecoration(
-                                            color: colorPrimary,
-                                            borderRadius: BorderRadius.circular(100)),
-                                        child: Obx(() {
-                                          return Icon(
-                                              kHomeController.likedOffer.contains(index)
-                                                  ? CupertinoIcons.heart_fill
-                                                  : CupertinoIcons.heart,
-                                              color: white);
-                                        }),
-                                        // child: Image(
-                                        //   image: iconsLike,
-                                        // ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                                        child: Image(image: iconsCartRound),
                                       ),
                                     ),
-                                  )
-                                ],
-                              ),
-                              height12,
-                              Text(
-                                kHomeController.todayOfferList[index],
-                                style: AppFontStyle.blackOpenSans16W600,
-                              ),
-                              height05,
-                              Row(
-                                children: [
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Icon(
-                                        Icons.star,
-                                        size: 17,
-                                        color: colorPrimary,
-                                      ),
-                                      width05,
-                                      Text(
-                                        '4.9',
-                                        style: AppFontStyle.blackOpenSans12W500,
-                                      ),
-                                    ],
-                                  ),
-                                  width14,
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Icon(
-                                        Icons.location_on_outlined,
-                                        size: 17,
-                                        color: colorPrimary,
-                                      ),
-                                      width05,
-                                      Text(
-                                        '190m',
-                                        style: AppFontStyle.blackOpenSans12W500,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              height05,
-                              Row(
-                                children: [
-                                  Text(
-                                    '\$170',
-                                    style: AppFontStyle.blackOpenSans16W700
-                                        .copyWith(color: colorPrimary2),
-                                  ),
-                                  width10,
-                                  Text(
-                                    '\$190',
-                                    style: AppFontStyle.greyOpenSans12W400
-                                        .copyWith(decoration: TextDecoration.lineThrough),
-                                  ),
-                                  const Spacer(),
-                                  InkWell(
-                                    onTap: () {
-                                      // Cart click
-                                      print("Cart click");
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                                      child: Image(image: iconsCartRound),
-                                    ),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        );
-                      },
+                                  ],
+                                )
+                              ],
+                            ),
+                          );
+                        },
+                      ),
                     ),
-                  ),
                   commonTitleRow(title: 'Oil Products', seeAllClick: () {})
                       .paddingSymmetric(horizontal: 16),
                   SizedBox(
@@ -473,6 +537,7 @@ class _StoreDetailScreenState extends State<StoreDetailScreen> {
                                   InkWell(
                                     onTap: () {
                                       // Cart click
+                                      Get.to(() => const MyCartScreen());
                                       print("Cart click");
                                     },
                                     child: Padding(

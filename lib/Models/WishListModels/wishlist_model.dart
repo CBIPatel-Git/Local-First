@@ -1,32 +1,22 @@
-
-class GetProductByIdModel {
-  GetProductByIdModel({
-    this.success,
-    this.message,
-    this.code,
-    this.data,
-    this.relatedProducts,
-    this.productReview,
-    this.like,
+class WishlistModel {
+  WishlistModel({
+   this.success,
+   this.message,
+   this.code,
+   this.data,
   });
 
   final bool? success;
   final String? message;
   final num? code;
   final Data? data;
-  final List<Data>? relatedProducts;
-  final ProductReview? productReview;
-  num? like;
 
-  factory GetProductByIdModel.fromJson(Map<String, dynamic> json){
-    return GetProductByIdModel(
+  factory WishlistModel.fromJson(Map<String, dynamic> json){
+    return WishlistModel(
       success: json["success"],
       message: json["message"],
       code: json["code"],
       data: json["data"] == null ? null : Data.fromJson(json["data"]),
-      relatedProducts: json["relatedProducts"] == null ? [] : List<Data>.from(json["relatedProducts"]!.map((x) => Data.fromJson(x))),
-      productReview: json["productReview"] == null ? null : ProductReview.fromJson(json["productReview"]),
-      like: json["like"],
     );
   }
 
@@ -35,15 +25,31 @@ class GetProductByIdModel {
     "message": message,
     "code": code,
     "data": data?.toJson(),
-    "relatedProducts": relatedProducts?.map((x) => x.toJson()).toList(),
-    "productReview": productReview?.toJson(),
-    "like": like,
   };
 
 }
 
 class Data {
   Data({
+    required this.finalwishData,
+  });
+
+  final List<FinalwishDatum> finalwishData;
+
+  factory Data.fromJson(Map<String, dynamic> json){
+    return Data(
+      finalwishData: json["finalwishData"] == null ? [] : List<FinalwishDatum>.from(json["finalwishData"]!.map((x) => FinalwishDatum.fromJson(x))),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    "finalwishData": finalwishData.map((x) => x.toJson()).toList(),
+  };
+
+}
+
+class FinalwishDatum {
+  FinalwishDatum({
     required this.id,
     required this.name,
     required this.slug,
@@ -108,7 +114,7 @@ class Data {
     required this.menuOrder,
     required this.priceHtml,
     required this.relatedIds,
-    required this.metaData,
+    // required this.metaData,
     required this.stockStatus,
     required this.hasOptions,
     required this.postPassword,
@@ -155,7 +161,7 @@ class Data {
   final String? taxStatus;
   final String? taxClass;
   final bool? manageStock;
-  final num? stockQuantity;
+  final dynamic stockQuantity;
   final String? backorders;
   final bool? backordersAllowed;
   final bool? backordered;
@@ -184,7 +190,7 @@ class Data {
   final num? menuOrder;
   final String? priceHtml;
   final List<num> relatedIds;
-  final List<MetaDatum> metaData;
+  // final List<MetaDatum> metaData;
   final String? stockStatus;
   final bool? hasOptions;
   final String? postPassword;
@@ -195,8 +201,8 @@ class Data {
   final String? productRestirctionMessage;
   final Links? links;
 
-  factory Data.fromJson(Map<String, dynamic> json){
-    return Data(
+  factory FinalwishDatum.fromJson(Map<String, dynamic> json){
+    return FinalwishDatum(
       id: json["id"],
       name: json["name"],
       slug: json["slug"],
@@ -261,7 +267,7 @@ class Data {
       menuOrder: json["menu_order"],
       priceHtml: json["price_html"],
       relatedIds: json["related_ids"] == null ? [] : List<num>.from(json["related_ids"]!.map((x) => x)),
-      metaData: json["meta_data"] == null ? [] : List<MetaDatum>.from(json["meta_data"]!.map((x) => MetaDatum.fromJson(x))),
+      // metaData: json["meta_data"] == null ? [] : List<MetaDatum>.from(json["meta_data"]!.map((x) => MetaDatum.fromJson(x))),
       stockStatus: json["stock_status"],
       hasOptions: json["has_options"],
       postPassword: json["post_password"],
@@ -339,7 +345,7 @@ class Data {
     "menu_order": menuOrder,
     "price_html": priceHtml,
     "related_ids": relatedIds.map((x) => x).toList(),
-    "meta_data": metaData.map((x) => x.toJson()).toList(),
+    // "meta_data": metaData.map((x) => x.toJson()).toList(),
     "stock_status": stockStatus,
     "has_options": hasOptions,
     "post_password": postPassword,
@@ -571,32 +577,32 @@ class Collection {
 
 }
 
-class MetaDatum {
-  MetaDatum({
-    required this.id,
-    required this.key,
-    required this.value,
-  });
-
-  final int? id;
-  final String? key;
-  final String? value;
-
-  factory MetaDatum.fromJson(Map<String, dynamic> json){
-    return MetaDatum(
-      id: json["id"],
-      key: json["key"],
-      value: json["value"],
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "key": key,
-    "value": value,
-  };
-
-}
+// class MetaDatum {
+//   MetaDatum({
+//     required this.id,
+//     required this.key,
+//     required this.value,
+//   });
+//
+//   final int? id;
+//   final String? key;
+//   final String? value;
+//
+//   factory MetaDatum.fromJson(Map<String, dynamic> json){
+//     return MetaDatum(
+//       id: json["id"],
+//       key: json["key"],
+//       value: json["value"],
+//     );
+//   }
+//
+//   Map<String, dynamic> toJson() => {
+//     "id": id,
+//     "key": key,
+//     "value": value,
+//   };
+//
+// }
 
 class ProductUnits {
   ProductUnits({
@@ -899,19 +905,3 @@ class WcfmProductPolicyData {
   };
 
 }
-
-class ProductReview {
-  ProductReview({required this.json});
-  final Map<String,dynamic> json;
-
-  factory ProductReview.fromJson(Map<String, dynamic> json){
-    return ProductReview(
-        json: json
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-  };
-
-}
-

@@ -21,11 +21,12 @@ class PrefConstants {
   static const String socialProfileRumble = "socialProfileRumble";
   static const String socialProfileTelegram = "socialProfileTelegram";
 
-
   /// Api config
-  static const String loginPref = "loginPref";
   static const String isLoginPref = "isLoginPref";
   static const String loginTokenPref = "loginTokenPref";
   static const String userDataModelPref = "userDataModelPref";
   static const String fcmTokenPref = "fcmTokenPref";
+  static const String selectedLocationLatPref = "SelectedLocationLatPref";
+  static const String selectedLocationLngPref = "SelectedLocationLngPref";
+  static const String userIdPref = "UserId";
 }

@@ -17,7 +17,7 @@ class _CustomerReviewScreenState extends State<CustomerReviewScreen> {
     // TODO: implement initState
     super.initState();
 
-    Map<String, dynamic> params = {"page": 1, "per_page": 5};
+    Map<String, dynamic> params = {"page": 1, "per_page": 10};
     kHomeController.getAllReviewAPICall(params, () {
       // SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     });
@@ -145,7 +145,7 @@ class _CustomerReviewScreenState extends State<CustomerReviewScreen> {
                             ),
                             height24,
                             Text(
-                              '${25} Review',
+                              '${kHomeController.getAllReviewModel.value.data?.length ?? 0} Review',
                               style: AppFontStyle.greyOpenSans14W400,
                             ).paddingOnly(left: 16),
                             ListView.builder(
@@ -204,7 +204,7 @@ class _CustomerReviewScreenState extends State<CustomerReviewScreen> {
                                                         ),
                                                         Text(
                                                           // '${DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(kHomeController.getAllReviewModel.value.data?[index]?.dateCreated ?? '')}',
-                                                          '${dateFormat(date: DateTime.parse(kHomeController.getAllReviewModel.value.data?[index]?.dateCreated ?? ''))}',
+                                                          '${dateFormat(date: DateTime.parse(kHomeController.getAllReviewModel.value.data?[index]?.dateCreated ?? '2024-04-01T09:07:53'))}',
                                                           style: AppFontStyle.greyOpenSans12W400,
                                                         )
                                                       ],

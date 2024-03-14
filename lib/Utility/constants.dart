@@ -1,5 +1,6 @@
 import 'package:local_first/Controller/account_controller.dart';
 import 'package:local_first/Controller/cart_controller.dart';
+import 'package:local_first/Controller/store_detail_controller.dart';
 import 'package:local_first/Utility/utility_export.dart';
 
 import '../Controller/home/category_controller.dart';
@@ -9,3 +10,4 @@ HomeController kHomeController = Get.put(HomeController());
 CartController kCartController = Get.put(CartController());
 CategoryController kCategoryController = Get.put(CategoryController());
 AccountController kAccountController = Get.put(AccountController());
+StoreDetailController kStoreDetailController = Get.put(StoreDetailController());

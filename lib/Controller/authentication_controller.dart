@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:local_first/Models/AuthenticationModel/log_in_model.dart';
 import 'package:local_first/Models/AuthenticationModel/select_location_model.dart';
+import 'package:local_first/Utility/constants.dart';
 import 'package:local_first/Utility/pref_constants.dart';
+import 'package:local_first/Utility/utility_export.dart';
 
 import '../API/api_config.dart';
 import '../API/api_service_call.dart';
@@ -18,6 +20,7 @@ final getPreference = GetStorage();
 class AuthenticationController extends GetxController {
   bool isUserRegister = false;
   bool isUserLogin = false;
+  int userId = 0;
 
   List<String> titles = [
     'Welcome to \nLocalFirst',
@@ -60,9 +63,11 @@ class AuthenticationController extends GetxController {
       success: (dio.Response<dynamic> response) {
         try {
           logInModel = LogInModel.fromJson(response.data);
-          setIsLogin(isLogin: true);
+          // setIsLogin(isLogin: true);
           setLoginAccessToken(loginToken: logInModel.data?.accessToken ?? '');
           setResponse(key: PrefConstants.userDataModelPref, loginToken: jsonEncode(response.data));
+          setUserId(userId: logInModel.data?.user?.ID ?? 0);
+          kAuthenticationController.userId = logInModel.data?.user?.ID ?? 0;
           isUserLogin = true;
           callBack();
         } catch (e) {
@@ -139,6 +144,7 @@ class AuthenticationController extends GetxController {
   }
 
   Rx<SelectLocationModel> selectLocationModel = SelectLocationModel().obs;
+
   void getLocationAPICall(Map<String, dynamic> params, Function() callBack) {
     apiServiceCall(
       serviceUrl: ApiConfig.getLocationApi,

@@ -48,6 +48,10 @@ ExactAssetImage imagesCategoryProduct1 =
     const ExactAssetImage(Assets.imagesCategoryProduct1, scale: 4);
 ExactAssetImage imagesCategoryProductBanner =
     const ExactAssetImage(Assets.imagesCategoryProductBanner, scale: 4);
+ExactAssetImage imagesIncome = const ExactAssetImage(Assets.imagesIncome, scale: 4);
+ExactAssetImage imagesSaving = const ExactAssetImage(Assets.imagesSaving, scale: 4);
+ExactAssetImage imagesMedical = const ExactAssetImage(Assets.imagesMedical, scale: 4);
+ExactAssetImage imagesMoney = const ExactAssetImage(Assets.imagesMoney, scale: 4);
 
 /// Icons
 
@@ -108,3 +112,7 @@ ExactAssetImage iconsSend = const ExactAssetImage(Assets.iconsSend, scale: 4);
 ExactAssetImage iconsMicrophone = const ExactAssetImage(Assets.iconsMicrophone, scale: 4);
 ExactAssetImage iconsChatCamera = const ExactAssetImage(Assets.iconsChatCamera, scale: 4);
 ExactAssetImage iconsAttachment = const ExactAssetImage(Assets.iconsAttachment, scale: 4);
+ExactAssetImage iconsUpload = const ExactAssetImage(Assets.iconsUpload, scale: 4);
+ExactAssetImage iconsAddItem = const ExactAssetImage(Assets.iconsAddItem, scale: 4);
+ExactAssetImage iconsCalendar = const ExactAssetImage(Assets.iconsCalendar, scale: 4);
+ExactAssetImage iconsClose = const ExactAssetImage(Assets.iconsClose, scale: 4);
