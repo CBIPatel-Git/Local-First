@@ -10,18 +10,20 @@ import '../Utility/common_function.dart';
 class StoreDetailController extends GetxController {
   Rx<StoreDetailModel> storeDetailModel = StoreDetailModel().obs;
 
-  void getStoreDetailsAPICall(Map<String, dynamic> params, Function() callBack) {
+  void getStoreDetailsAPICall(Map<String, dynamic> params, Function() callBack,
+      {required int storeId}) {
     apiServiceCall(
-      serviceUrl: ApiConfig.getStoreDetailApi,
+      serviceUrl: '${ApiConfig.getStoreDetailApi}$storeId',
       success: (dio.Response<dynamic> response) {
         try {
           storeDetailModel.value = StoreDetailModel.fromJson(response.data);
           callBack();
         } catch (e) {
+          callBack();
           printModelLog(e);
         }
       },
-      isProgressShow: true,
+      isProgressShow: false,
       methodType: ApiConfig.methodGET,
       params: params,
       error: (dio.Response<dynamic> response) {

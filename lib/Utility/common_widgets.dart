@@ -180,3 +180,23 @@ Widget commonNetworkImage(
     ),
   );
 }
+
+Widget noDataPlaceholder({double? height, double? width, BoxFit? fit, ImageProvider? placeHolder}) {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Image(
+        height: height ?? 73,
+        width: width ?? 73,
+        image: placeHolder ?? imagesItemPlaceholder,
+        fit: fit ?? BoxFit.fitHeight,
+        color: colorGrey,
+      ),
+      height14,
+      Text(
+        'No data found!',
+        style: AppFontStyle.blackOpenSans16W500,
+      ),
+    ],
+  );
+}

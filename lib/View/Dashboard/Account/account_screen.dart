@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/services.dart';
@@ -9,7 +8,6 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../../Utility/utility_export.dart';
 import '../MyCart/shipping_address_screen.dart';
 import 'coupon_screen.dart';
-import 'edit_profile_screen.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -20,38 +18,50 @@ class AccountScreen extends StatefulWidget {
 
 class _AccountScreenState extends State<AccountScreen> {
   RxString selectedImage = ''.obs;
+  RxBool isLoading = true.obs;
 
   @override
   void initState() {
-    if (kAccountController.accountModel.value.data == null) {
-      Map<String, dynamic> params = {"user_id": kAuthenticationController.userId};
-      kAccountController.accountAPICall(params, () {});
-    }
+    getProfileData();
 
     super.initState();
   }
+
+  void getProfileData({bool? refresh}) {
+    if (kAccountController.accountModel.value.data != null) {
+      isLoading.value = false;
+    }
+
+    if (kAccountController.accountModel.value.data == null || (refresh ?? false)) {
+      Map<String, dynamic> params = {"user_id": kAuthenticationController.userId};
+      kAccountController.accountAPICall(params, () {
+        isLoading.value = false;
+      }, showProgress: refresh);
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return commonStructure(
         context: context,
         child: SafeArea(
-          child: Column(
-            children: <Widget>[
-              commonAppBar(
-                  preFix: const SizedBox(
-                    height: 40,
-                    width: 40,
-                  ),
-                  title: Text(
-                    'Account',
-                    style: AppFontStyle.blackOpenSans18W600,
-                  ),
-                  sufFix: appBarButton(image: iconsInfo, callBack: () {})),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Obx(() {
-                    return Column(
+          child: Obx(() {
+            return Column(
+              children: <Widget>[
+                commonAppBar(
+                    preFix: const SizedBox(
+                      height: 40,
+                      width: 40,
+                    ),
+                    title: Text(
+                      'Account',
+                      style: AppFontStyle.blackOpenSans18W600,
+                    ),
+                    sufFix: appBarButton(image: iconsInfo, callBack: () {})),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
                       children: [
                         height10,
                         Container(
@@ -305,12 +315,12 @@ class _AccountScreenState extends State<AccountScreen> {
                             .marginSymmetric(horizontal: 20),
                         customHeight(100),
                       ],
-                    );
-                  }),
+                    ),
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            );
+          }),
         ));
   }
 

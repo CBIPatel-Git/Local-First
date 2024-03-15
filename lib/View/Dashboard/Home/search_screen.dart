@@ -40,7 +40,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   sufFix: Badge(
                       backgroundColor: redLight,
                       label: Text(
-                        '10',
+                        '${kCartController.cartItems.length}',
                         style:
                             AppFontStyle.blackOpenSans12W600.copyWith(color: white, fontSize: 10),
                       ),

@@ -1,9 +1,9 @@
 class MyCartModel {
   MyCartModel({
-   this.success,
-   this.message,
-   this.code,
-   this.data,
+    this.success,
+    this.message,
+    this.code,
+    this.data,
   });
 
   final bool? success;
@@ -33,20 +33,32 @@ class Data {
   Data({
     required this.totalAmt,
     required this.totalQty,
+    required this.totalProduct,
     required this.totalDiscount,
+    required this.discount,
+    required this.packagingFee,
+    required this.deliveryCharges,
     required this.finalCartData,
   });
 
   final num? totalAmt;
   final num? totalQty;
+  final num? totalProduct;
   final num? totalDiscount;
+  final num? discount;
+  final num? packagingFee;
+  final num? deliveryCharges;
   final List<FinalCartDatum> finalCartData;
 
   factory Data.fromJson(Map<String, dynamic> json){
     return Data(
       totalAmt: json["totalAmt"],
       totalQty: json["totalQty"],
+      totalProduct: json["totalProduct"],
       totalDiscount: json["totalDiscount"],
+      discount: json["discount"],
+      packagingFee: json["packagingFee"],
+      deliveryCharges: json["deliveryCharges"],
       finalCartData: json["finalCartData"] == null ? [] : List<FinalCartDatum>.from(json["finalCartData"]!.map((x) => FinalCartDatum.fromJson(x))),
     );
   }
@@ -54,7 +66,11 @@ class Data {
   Map<String, dynamic> toJson() => {
     "totalAmt": totalAmt,
     "totalQty": totalQty,
+    "totalProduct": totalProduct,
     "totalDiscount": totalDiscount,
+    "discount": discount,
+    "packagingFee": packagingFee,
+    "deliveryCharges": deliveryCharges,
     "finalCartData": finalCartData.map((x) => x.toJson()).toList(),
   };
 

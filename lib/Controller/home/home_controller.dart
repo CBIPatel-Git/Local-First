@@ -3,7 +3,6 @@ import 'package:local_first/Models/HomeModels/dashboard_model.dart';
 import '../../Models/CartModels/get_all_review_model.dart';
 import 'package:dio/dio.dart' as dio;
 
-import '../../Models/StoreModels/store_detail_model.dart';
 import '../../Models/WishListModels/wishlist_model.dart';
 import '../../Utility/utility_export.dart';
 
@@ -56,7 +55,7 @@ class HomeController extends GetxController {
 
   Rx<DashboardModel> dashboardModel = DashboardModel().obs;
 
-  void getDashboardAPICall(Map<String, dynamic> params, Function() callBack) {
+  void getDashboardAPICall(Map<String, dynamic> params, Function() callBack, {bool? showProgress}) {
     apiServiceCall(
       serviceUrl: ApiConfig.getDashboardApi,
       success: (dio.Response<dynamic> response) {
@@ -68,7 +67,7 @@ class HomeController extends GetxController {
           printLog(e);
         }
       },
-      isProgressShow: true,
+      isProgressShow: showProgress ?? false,
       methodType: ApiConfig.methodGET,
       params: params,
       error: (dio.Response<dynamic> response) {
@@ -114,19 +113,25 @@ class HomeController extends GetxController {
   }
 
   Rx<WishlistModel> wishlistModel = WishlistModel().obs;
+  RxList<FinalwishDatum> finalWishData = <FinalwishDatum>[].obs;
 
-  void getWishlistAPICall(Map<String, dynamic> params, Function() callBack) {
+  void getWishlistAPICall(Map<String, dynamic> params, Function() callBack, {bool? showProgress}) {
     apiServiceCall(
       serviceUrl: ApiConfig.myWishlistApi,
       success: (dio.Response<dynamic> response) {
         try {
           wishlistModel.value = WishlistModel.fromJson(response.data);
+          if (wishlistModel.value.data != null &&
+              wishlistModel.value.data!.finalwishData.isNotEmpty) {
+            finalWishData.value =
+                wishlistModel.value.data!.finalwishData;
+          }
           callBack();
         } catch (e) {
           printLog(e);
         }
       },
-      isProgressShow: true,
+      isProgressShow: showProgress ?? false,
       methodType: ApiConfig.methodPOST,
       params: params,
       error: (dio.Response<dynamic> response) {

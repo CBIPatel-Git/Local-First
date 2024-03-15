@@ -60,7 +60,14 @@ class _StoreScreenState extends State<StoreScreen> {
                                   highlightColor: white,
                                   splashColor: white,
                                   onTap: () {
-                                    Get.to(() => const StoreDetailScreen());
+                                    if (kHomeController
+                                            .dashboardModel.value.data!.nearStore[index].storeId !=
+                                        null) {
+                                      Get.to(() => StoreDetailScreen(
+                                            storeId: kHomeController.dashboardModel.value.data!
+                                                .nearStore[index].storeId!,
+                                          ));
+                                    }
                                   },
                                   child: Stack(
                                     children: [

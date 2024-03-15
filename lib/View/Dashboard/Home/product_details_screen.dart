@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:local_first/View/Dashboard/MyCart/my_cart_screen.dart';
@@ -40,6 +39,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   RxInt selectedRam = 0.obs;
   List<model.Attribute> subVariant = <model.Attribute>[].obs;
 
+
   @override
   void initState() {
     super.initState();
@@ -58,19 +58,22 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           children: [
             Expanded(
               child: commonIconTextButton(
-                  bgColor: colorPrimary2,
-                  icon: Image(
-                    image: iconsCart,
-                    color: white,
-                  ),
-                  title: 'Add to Cart',
-                  callBack: () {
-                    Map<String, dynamic> params = {
-                      "user_id": kAuthenticationController.userId,
-                      "product_id": widget.productId
-                    };
-                    kCartController.addToCartApiCall(params, () {});
-                  }).marginOnly(right: 5),
+                      bgColor: colorPrimary2,
+                      icon: Image(
+                        image: iconsCart,
+                        color: white,
+                      ),
+                      title: 'Add to Cart',
+                      callBack: () {
+
+                        Map<String, dynamic> params = {
+                          "user_id": kAuthenticationController.userId,
+                          "product_id": widget.productId
+                        };
+                        kCartController.addToCartApiCall(params, () {});
+
+                      })
+                  .marginOnly(right: 5),
             ),
             Expanded(
               child: commonIconTextButton(title: 'Buy Now', callBack: () {}).marginOnly(left: 5),
@@ -103,7 +106,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   sufFix: Badge(
                       backgroundColor: redLight,
                       label: Text(
-                        '10',
+                        '${kCartController.cartItems.length}',
                         style:
                             AppFontStyle.blackOpenSans12W600.copyWith(color: white, fontSize: 10),
                       ),
@@ -823,7 +826,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               ),
                             ),
                           )
-                        : const SizedBox()
+                        : Expanded(child: Center(child: noDataPlaceholder()))
                     : const Expanded(child: Center(child: CircularProgressIndicator())),
               ],
             );

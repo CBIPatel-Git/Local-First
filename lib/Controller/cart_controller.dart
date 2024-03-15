@@ -1,6 +1,6 @@
 import 'package:local_first/Models/CartModels/my_cart_model.dart';
 
-import '../Models/CartModels/shipping_address_model.dart';
+import '../Models/CartModels/shipping_address_model.dart' as shippingModel;
 import '../Utility/utility_export.dart';
 
 import 'package:dio/dio.dart' as dio;
@@ -51,7 +51,7 @@ class CartController extends GetxController {
       serviceUrl: ApiConfig.addCartQuantityApi,
       success: (dio.Response<dynamic> response) {
         try {
-          showSnackBar(message: response.data["message"], title: ApiConfig.success);
+          // showSnackBar(message: response.data["message"], title: ApiConfig.success);
           callBack();
         } catch (e) {
           printModelLog(e);
@@ -67,19 +67,25 @@ class CartController extends GetxController {
   }
 
   Rx<MyCartModel> myCartModel = MyCartModel().obs;
+  RxList<FinalCartDatum> cartItems = <FinalCartDatum>[].obs;
 
-  void myCartApiCall(Map<String, dynamic> params, Function() callBack) {
+  void myCartApiCall(Map<String, dynamic> params, Function() callBack, {bool? showProgress}) {
+    // printLog("call :: $params");
     apiServiceCall(
       serviceUrl: ApiConfig.myCartApi,
       success: (dio.Response<dynamic> response) {
         try {
           myCartModel.value = MyCartModel.fromJson(response.data);
+          if (myCartModel.value.data != null) {
+            cartItems.clear();
+            cartItems.addAll(myCartModel.value.data!.finalCartData);
+          }
           callBack();
         } catch (e) {
           printModelLog(e);
         }
       },
-      isProgressShow: true,
+      isProgressShow: showProgress ?? false,
       methodType: ApiConfig.methodPOST,
       params: params,
       error: (dio.Response<dynamic> response) {
@@ -128,8 +134,8 @@ class CartController extends GetxController {
     );
   }
 
-  Rx<ShippingAddressModel> shippingAddressModel = ShippingAddressModel().obs;
-  RxList<Datum> shippingAddress = <Datum>[].obs;
+  Rx<shippingModel.ShippingAddressModel> shippingAddressModel = shippingModel.ShippingAddressModel().obs;
+  RxList<shippingModel.Datum> shippingAddress = <shippingModel.Datum>[].obs;
 
   void getUserAddressApiCall(Map<String, dynamic> params, Function() callBack,
       {bool? showProgress}) {
@@ -137,9 +143,9 @@ class CartController extends GetxController {
       serviceUrl: ApiConfig.userAddressApi,
       success: (dio.Response<dynamic> response) {
         try {
-          shippingAddressModel.value = ShippingAddressModel.fromJson(response.data);
+          shippingAddressModel.value = shippingModel.ShippingAddressModel.fromJson(response.data);
           shippingAddress.clear();
-          shippingAddress.addAll(shippingAddressModel.value.data ?? <Datum>[]);
+          shippingAddress.addAll(shippingAddressModel.value.data ?? <shippingModel.Datum>[]);
           callBack();
         } catch (e) {
           printModelLog(e);

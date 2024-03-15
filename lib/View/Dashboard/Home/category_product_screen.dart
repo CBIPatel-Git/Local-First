@@ -1,7 +1,5 @@
-import 'dart:ffi';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:local_first/View/Dashboard/Home/product_details_screen.dart';
 import 'package:local_first/View/Dashboard/MyCart/my_cart_screen.dart';
 import '../../../Utility/utility_export.dart';
@@ -66,12 +64,14 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
                 sufFix: Badge(
                     backgroundColor: redLight,
                     label: Text(
-                      '9',
+                      '${kCartController.cartItems.length}',
                       style: AppFontStyle.blackOpenSans12W600.copyWith(color: white, fontSize: 10),
                     ),
-                    child: appBarButton(image: iconsCart, callBack: () {
-                      Get.to(() => const MyCartScreen());
-                    })),
+                    child: appBarButton(
+                        image: iconsCart,
+                        callBack: () {
+                          Get.to(() => const MyCartScreen());
+                        })),
               ),
               SizedBox(
                 height: 40,
@@ -181,7 +181,7 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
                             ],
                           ),
                         )
-                      : Expanded(child: Center(child: noDataPlaceHolder()));
+                      : Expanded(child: Center(child: noDataPlaceholder()));
                 } else {
                   return const Expanded(child: Center(child: CircularProgressIndicator()));
                 }

@@ -31,7 +31,7 @@ class ApiConfig {
   static const String getDashboardApi = '${baseUrl}dashboard/get-dashboard';
 
   /// Store
-  static const String getStoreDetailApi = '${baseUrl}vendor/get-vendor/55';
+  static const String getStoreDetailApi = '${baseUrl}vendor/get-vendor/';
 
   /// Wishlist
   static const String addToWishlistApi = '${baseUrl}wish/add-to-wish-list';
@@ -50,6 +50,7 @@ class ApiConfig {
   static const String addAddressApi = '${baseUrl}user/add-address';
   static const String editAddressApi = '${baseUrl}user/edit-address';
   static const String userAddressApi = '${baseUrl}user/user-address';
+  static const String getMyOrderApi = '${baseUrl}order/get-order';
 
   /// Profile
 
